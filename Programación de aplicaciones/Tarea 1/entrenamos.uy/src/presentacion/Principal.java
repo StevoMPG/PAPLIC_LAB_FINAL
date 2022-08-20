@@ -137,7 +137,7 @@ public class Principal {
 				
 				JLabel lblNewLabel = new JLabel("Bienvenidos!");
 				lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 26));
-				lblNewLabel.setBounds(0, 0, 434, 32);
+				lblNewLabel.setBounds(462, 0, 434, 32);
 				desktopPane.add(lblNewLabel);
 				
 
