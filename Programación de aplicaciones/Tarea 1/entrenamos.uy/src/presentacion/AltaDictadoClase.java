@@ -3,6 +3,8 @@ package presentacion;
 import java.awt.EventQueue;
 
 import javax.swing.JInternalFrame;
+import javax.swing.JLabel;
+import java.awt.BorderLayout;
 
 public class AltaDictadoClase extends JInternalFrame {
 
@@ -27,6 +29,9 @@ public class AltaDictadoClase extends JInternalFrame {
 	 */
 	public AltaDictadoClase() {
 		setBounds(100, 100, 450, 300);
+		
+		JLabel lblNewLabel = new JLabel("agregar actividad");
+		getContentPane().add(lblNewLabel, BorderLayout.NORTH);
 
 	}
 

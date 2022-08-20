@@ -51,7 +51,7 @@ public class AgregarActividadDeportivaCuponera extends JInternalFrame {
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		getContentPane().setLayout(gridBagLayout);
 		
-		JLabel cupo = new JLabel("Cuponeras");
+		JLabel cupo = new JLabel("Cuponeras"); 
 		GridBagConstraints gbc_cupo = new GridBagConstraints();
 		gbc_cupo.fill = GridBagConstraints.HORIZONTAL;
 		gbc_cupo.gridwidth = 11;
