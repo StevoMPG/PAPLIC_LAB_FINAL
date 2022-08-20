@@ -13,6 +13,9 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import java.awt.Font;
+import java.awt.BorderLayout;
 
 
 public class Principal {
@@ -65,7 +68,9 @@ public class Principal {
 				altaUsuario = new AltaUsuario();
 				altaUsuario.setLocation(462, 25);
 				altaUsuario.setVisible(false);
-				desktopPane.add(altaUsuario);	
+				
+				desktopPane.add(altaUsuario);
+				
 				
 				//AltaActividadDeportiva
 				altaActDep = new AltaActividadDeportiva();
@@ -73,6 +78,7 @@ public class Principal {
 				altaActDep.setSize(450, 500);
 				altaActDep.setVisible(false);
 				desktopPane.add(altaActDep);
+				
 
 				// AltaDictadoClase:
 				altaClase = new AltaDictadoClase();
@@ -128,6 +134,11 @@ public class Principal {
 				aggCup = new AgregarActividadDeportivaCuponera();
 				aggCup.setVisible(false);
 				desktopPane.add(aggCup);
+				
+				JLabel lblNewLabel = new JLabel("Bienvenidos!");
+				lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 26));
+				lblNewLabel.setBounds(0, 0, 434, 32);
+				desktopPane.add(lblNewLabel);
 				
 
 	}
@@ -411,7 +422,7 @@ public class Principal {
 		consultaUsu.setVisible(false);
 		modificarUsu.setVisible(false);
 		aggCup.setVisible(false);
+		
 	}
-	
 }
 

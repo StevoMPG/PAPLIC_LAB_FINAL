@@ -27,6 +27,7 @@ public class ModificarDatosUsuario extends JInternalFrame {
 	 */
 	public ModificarDatosUsuario() {
 		setBounds(100, 100, 450, 300);
+		
 
 	}
 }
