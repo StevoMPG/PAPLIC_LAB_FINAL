@@ -1,0 +1,106 @@
+package presentacion;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JMenuBar;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+import javax.swing.AbstractAction;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.Action;
+import javax.swing.JDesktopPane;
+import java.awt.BorderLayout;
+import javax.swing.ButtonGroup;
+import javax.swing.JInternalFrame;
+
+public class Principal {
+
+	private JFrame entrenamosUy;
+    private AltaUsuario AltaUsuarioInternalFrame;
+
+
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Principal window = new Principal();
+					window.entrenamosUy.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the application.
+	 */
+	public Principal() {
+		initialize();
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		
+		// Frame con las dimensiones indicadas.
+		entrenamosUy = new JFrame();
+		entrenamosUy.setTitle("entrenamos.uy - Administrador");
+		entrenamosUy.setBounds(100, 100, 900, 700);
+		entrenamosUy.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		JDesktopPane desktopPane = new JDesktopPane();
+		entrenamosUy.getContentPane().add(desktopPane);
+		
+		JMenuBar menuBar = new JMenuBar();
+        entrenamosUy.setJMenuBar(menuBar);
+
+        JMenu menuSistema = new JMenu("Sistema");
+        menuBar.add(menuSistema);
+		
+        JMenuItem menuSalir = new JMenuItem("Salir");
+        menuSalir.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+                // Salgo de la aplicación
+            	entrenamosUy.setVisible(false);
+            	entrenamosUy.dispose();
+            }
+        });
+        menuSistema.add(menuSalir);
+
+        JMenu menuUsuarios = new JMenu("Usuarios");
+        menuBar.add(menuUsuarios);
+
+        
+        JMenuItem menuItemRegistrar = new JMenuItem("Alta de Usuario");
+        menuItemRegistrar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Muestro el InternalFrame para registrar un usuario
+            	AltaUsuarioInternalFrame.setVisible(true);
+            }
+        });
+        menuUsuarios.add(menuItemRegistrar);
+		
+		
+		
+
+	}
+
+	private class SwingAction extends AbstractAction {
+		public SwingAction() {
+			putValue(NAME, "SwingAction");
+			putValue(SHORT_DESCRIPTION, "Some short description");
+		}
+		public void actionPerformed(ActionEvent e) {
+		}
+	}
+	}
+

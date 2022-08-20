@@ -1,0 +1,14 @@
+package presentacion;
+
+import javax.swing.JPanel;
+
+public class AltaUsuario extends JPanel {
+
+	/**
+	 * Create the panel.
+	 */
+	public AltaUsuario() {
+
+	}
+
+}

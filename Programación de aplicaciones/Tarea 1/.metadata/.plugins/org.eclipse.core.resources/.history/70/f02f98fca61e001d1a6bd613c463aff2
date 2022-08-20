@@ -1,0 +1,15 @@
+package presentacion;
+
+
+import javax.swing.JInternalFrame;
+
+public class AltaUsuario extends JInternalFrame{
+
+	/**
+	 * Create the panel.
+	 */
+	public AltaUsuario() {
+
+	}
+
+}
