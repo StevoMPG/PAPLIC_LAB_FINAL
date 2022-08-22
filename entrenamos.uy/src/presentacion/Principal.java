@@ -143,7 +143,7 @@ public class Principal {
 		entrenamosUy.setBounds(100, 100, 900, 700);
 		entrenamosUy.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		entrenamosUy.setResizable(true);
-		entrenamosUy.setIconImage(new ImageIcon(getClass().getResource("/img/entrenamosUy.png")).getImage());
+		entrenamosUy.setIconImage(new ImageIcon(getClass().getResource("/img/entrenamos.png")).getImage());
 		
 		// El "escritorio"
 		desktopPane = new JDesktopPane();
