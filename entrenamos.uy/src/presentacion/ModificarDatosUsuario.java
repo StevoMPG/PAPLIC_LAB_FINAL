@@ -499,5 +499,4 @@ public class ModificarDatosUsuario extends JInternalFrame {
     	textAreaBiografia.setText("");
 	}
 
-
 }
