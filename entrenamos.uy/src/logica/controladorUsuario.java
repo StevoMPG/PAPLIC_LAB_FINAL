@@ -1,5 +1,6 @@
 package logica;
 
-public class controladorUsuario {
+
+public class controladorUsuario implements IcontroladorUsuario {
 
 }
