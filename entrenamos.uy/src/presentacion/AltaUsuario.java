@@ -1,5 +1,7 @@
 package presentacion;
 
+
+
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -9,6 +11,8 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
+
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
@@ -67,6 +71,7 @@ public class AltaUsuario extends JInternalFrame {
 	private JComboBox<String> boxIDia; // Depende de mes;
 	private JComboBox<String> boxIMes;
 	private Component verticalStrut;
+	private JButton btnNewButton;
 	
 	public AltaUsuario() {
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
@@ -441,6 +446,20 @@ public class AltaUsuario extends JInternalFrame {
 					setVisible(false);
 			}
 		});
+		
+		btnNewButton = new JButton("Open File");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser chooser = new JFileChooser();
+				chooser.showOpenDialog(chooser);
+				chooser.setVisible(true);
+			}
+		});
+		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
+		gbc_btnNewButton.insets = new Insets(0, 0, 5, 5);
+		gbc_btnNewButton.gridx = 1;
+		gbc_btnNewButton.gridy = 19;
+		getContentPane().add(btnNewButton, gbc_btnNewButton);
 		GridBagConstraints gbc_btnAceptar = new GridBagConstraints();
 		gbc_btnAceptar.anchor = GridBagConstraints.NORTH;
 		gbc_btnAceptar.insets = new Insets(0, 0, 5, 5);
@@ -521,4 +540,8 @@ public class AltaUsuario extends JInternalFrame {
         
         return true;
 	}
+	
+	
 }
+
+ 
