@@ -5,6 +5,7 @@ import datatypes.DtClase;
 import datatypes.DtActividadDeportiva;
 import datatypes.DtFechaHora;
 import excepciones.ClaseException;
+import datatypes.DtActividadDeportivaExtra;
 
 import java.util.Map;
 import java.util.HashMap;
@@ -24,6 +25,7 @@ public class ActividadDeportiva {
 	private float costo;
 	private DtFechaHora fechaRegistro;
 	private Logger log;
+	private Map <String, ClasesCuponera> clCuponera;
 	
 
 	public ActividadDeportiva(DtActividadDeportiva x) {
@@ -36,6 +38,7 @@ public class ActividadDeportiva {
 	}
 	private void crearHandler() {
 		clases = new HashMap<>();
+		clCuponera= new HashMap<>();
 		log = Logger.getLogger(manejadorInstitucion.class.getName());
 		log.setLevel(Level.INFO);
 		Handler handler = new ConsoleHandler();
@@ -45,7 +48,13 @@ public class ActividadDeportiva {
 	public String getNombre() {
 		return nombre;
 	}
-	
+	public int addClasesCup(ClasesCuponera cp) {
+		if(clCuponera.containsKey(cp.getNombreCuponera()))
+			return 1;
+		clCuponera.put(cp.getNombreCuponera(), cp);
+		log.info("ActDep "+nombre+" event: "+" new cup added "+cp.getNombreCuponera());
+		return 0;
+	}
 	
 	public int addClase(DtClase cl, Profesor p) {
 		if(clases.containsKey(cl.getNombre()))
@@ -77,8 +86,7 @@ public class ActividadDeportiva {
 		return resultado;
 	}
 	
-	
-	
+
 	public Clase findClase(String c) throws ClaseException {	
 		Clase res = clases.get(c);
 		if (res == null) {
@@ -98,6 +106,12 @@ public class ActividadDeportiva {
 				return true;
         return false;
 	}
-	
+	public DtActividadDeportivaExtra getDtExt() {
+		Set<String> q = new HashSet<>(clases.keySet());
+		Set<String> r = new HashSet<>(clCuponera.keySet());
+		DtActividadDeportivaExtra x = new DtActividadDeportivaExtra(getNombre(), getDescripcion(), getDuracionMinutos(), 
+				getCosto(), getFechaRegistro(),q,r);
+		return x;
+	}
 
 }

@@ -1,10 +1,11 @@
 package logica;
 
 import datatypes.DtProfesor;
-
-
+import datatypes.DtProfesorExtra;
+import java.util.Set;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.HashSet;
 
 
 public class Profesor extends Usuario {
@@ -73,4 +74,27 @@ public class Profesor extends Usuario {
 		return misClases;
 	}
 	
+	public DtProfesorExtra getDtExt() {
+    	Set<String> clasesDictadas = new HashSet<>(misClases.keySet());
+    	Map<String,Set<String>> x = new HashMap<>();
+    	for(String aa: instituto.getMiTrabajo(this)) {
+    		Set<String> y = new HashSet<>();
+    		x.put(aa,y);
+    		for(String c: clasesDictadas) {
+    			if(misClases.get(c).tieneActividadDeportiva(aa)) {
+    				y.add(c);
+    			}
+    		}
+    	}
+    	DtProfesorExtra datosExt = new DtProfesorExtra(nickname,nombre,apellido,correo,fechaNacimiento,instituto.getNombre(),
+    			descripcion,biografia,website,x);
+    	return datosExt;
+    }
+    
+    public void editarDatos(DtProfesor datos) {
+    	super.editarDatos(datos);
+    	this.setDescripcion(datos.getDescripcion());
+    	this.setBiografia(datos.getBiografia());
+    	this.setWebsite(datos.getLink());
+    }
 }
