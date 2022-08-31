@@ -39,6 +39,13 @@ import javax.swing.border.Border;
 import java.awt.Color;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
+
+import logica.IcontroladorUsuario; 
+import datatypes.DtUsuario;
+import datatypes.DtSocioExtra;
+import datatypes.DtFechaHora;
+import datatypes.DtProfesorExtra;
+
 import javax.swing.tree.DefaultMutableTreeNode;
 
 import excepciones.UsuarioNoExisteException;
@@ -49,6 +56,7 @@ public class ConsultaUsuario extends JInternalFrame {
 	//Datos del caso de uso
 
 	Set<String> usuarios;
+	DtUsuario datosUsuarioActual;
 	
 	private IcontroladorUsuario controlUsr;
 	private JTextField textFieldNombre;
@@ -79,14 +87,7 @@ public class ConsultaUsuario extends JInternalFrame {
 	ConsultaDictadoClase refCDC;
 	ConsultaActividadDeportiva refCAD;
 	
-/*
- * AVISO IMPORTANTE: EL WINDOW BUILDER ESTA BUGEADO PARA ESTA CLASE
- * NO ABRIR!!!
- * SI SE ABRE EL WINDOW BUILDER, LEER LOS COMENTARIOS SOBRE COMO CORREGIR
- * LOS ERRORES QUE GENERA.
- * 
- */
-	public ConsultaUsuario() {
+	public ConsultaUsuario(IcontroladorUsuario IUC) {
 
 		setClosable(true);
 		setMaximizable(true);
@@ -94,6 +95,8 @@ public class ConsultaUsuario extends JInternalFrame {
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setResizable(true);
 		this.usuarios = new HashSet<>();
+		this.datosUsuarioActual = null;
+		this.controlUsr = IUC;
 
 		
 		/* 
@@ -134,7 +137,10 @@ public class ConsultaUsuario extends JInternalFrame {
 				modeloUsuarios.addElement("-");
 				
 				
-			
+				usuarios = controlUsr.obtenerUsuario();
+				for(String us:usuarios) {
+					modeloUsuarios.addElement(us);
+				}
 				comboBoxUsuario.setModel(modeloUsuarios);
 				
 			}
@@ -142,9 +148,98 @@ public class ConsultaUsuario extends JInternalFrame {
 		comboBoxUsuario.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				
-				// Tengo que pensar la funcion de aqui (recordar el video de yt)
-				
-				
+				String tipoUsuario = "-";
+				if(comboBoxUsuario.getSelectedIndex() > 0) {
+					String nickUsuario = comboBoxUsuario.getItemAt(comboBoxUsuario.getSelectedIndex());
+					try {
+						datosUsuarioActual = controlUsr.seleccionarUsuario(nickUsuario);
+					} catch (UsuarioNoExisteException ignore) { }
+					textFieldNombre.setText(datosUsuarioActual.getNombre());
+					textFieldApellido.setText(datosUsuarioActual.getApellido());
+					textFieldEmail.setText(datosUsuarioActual.getEmail());
+					DtFechaHora fechaNacimiento = datosUsuarioActual.getFechaNacimiento();
+					textFieldDia.setText(String.valueOf(fechaNacimiento.getDia()));
+					textFieldMes.setText(String.valueOf(fechaNacimiento.getMes()));
+					textFieldAnio.setText(String.valueOf(fechaNacimiento.getAnio()));
+					
+					//El usuario es profesor
+					if(datosUsuarioActual instanceof DtProfesorExtra) {
+						tipoUsuario = "Profesor";
+						DtProfesorExtra datosProfesorActual = (DtProfesorExtra)datosUsuarioActual;
+						textFieldInstitucion.setText(datosProfesorActual.getNombreInstitucion());
+						textAreaDescripcion.setText(datosProfesorActual.getDescripcion());
+						textAreaBiografia.setText(datosProfesorActual.getBiografia());
+						textFieldWebsite.setText(datosProfesorActual.getLink());
+						labelWebsite_1.setText("Clases dictadas (ordenadas por actividad deportiva)");
+						Set<Entry<String, Set<String>>> m = datosProfesorActual.getClasesxActividades().entrySet();
+						if(m.size()==0) {
+							tree.setModel(new DefaultTreeModel(
+									new DefaultMutableTreeNode("root") {
+										{
+											add(new DefaultMutableTreeNode("El profesor no dicta ninguna clase."));
+										}
+									}
+								));
+						} else {
+							tree.setModel(new DefaultTreeModel(
+								new DefaultMutableTreeNode("root") {
+									{
+									
+									for(Entry<String, Set<String>> ad: m) {
+										DefaultMutableTreeNode nodoAct = new DefaultMutableTreeNode(ad.getKey());
+										for(String c: ad.getValue()) {
+											nodoAct.add(new DefaultMutableTreeNode(c));
+										}
+										add(nodoAct);
+									}
+									
+									}
+								}
+							));
+						}
+					}
+					else {
+						labelWebsite_1.setText("Clases inscripto (ordenadas por actividad deportiva)");
+						DtSocioExtra datosSocioActual = (DtSocioExtra)datosUsuarioActual;
+						Set<Entry<String, Set<String>>> m = datosSocioActual.getAguadeUwu().entrySet();
+						if(m.size()==0) {
+							tree.setModel(new DefaultTreeModel(
+									new DefaultMutableTreeNode("root") {
+										{
+											add(new DefaultMutableTreeNode("El socio no está inscripto a ninguna clase."));
+										}
+									}
+								));
+						} else {
+							tree.setModel(new DefaultTreeModel(
+								new DefaultMutableTreeNode("root") {
+									{
+									
+									for(Entry<String, Set<String>> ad: m) {
+										DefaultMutableTreeNode nodoAct = new DefaultMutableTreeNode(ad.getKey());
+										for(String c: ad.getValue()) {
+											nodoAct.add(new DefaultMutableTreeNode(c));
+										}
+										add(nodoAct);
+									}
+									
+									}
+								}
+							));
+						}
+						tipoUsuario = "Socio";
+						
+						textFieldInstitucion.setText("");
+						textAreaDescripcion.setText("");
+						textAreaBiografia.setText("");
+						textFieldWebsite.setText("");
+//						textAreaActividades.setText("");
+					}
+					textPaneTipoDeUsuario.setText(tipoUsuario);
+				}
+				else {
+					//clear();
+				}
 			}
 		});
 		

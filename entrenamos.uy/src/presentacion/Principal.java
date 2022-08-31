@@ -14,12 +14,37 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
 
+import logica.Fabrica;
+import logica.IcontroladorUsuario;
+import logica.IcontroladorActividadDeportiva;
+import logica.IcontroladorClase;
+import logica.IcontroladorCuponera;
+
+import datatypes.DtActividadDeportiva;
+import datatypes.DtClase;
+import datatypes.DtFechaHora;
+import datatypes.DtProfesor;
+import datatypes.DtSocio;
+import datatypes.tipoRegistro;
+
+
+import excepciones.NoExisteCuponeraException;
+import excepciones.ActividadDeportivaException;
+import excepciones.ClaseException;
+import excepciones.CuponeraRepetidaException;
+import excepciones.InstitucionException;
+import excepciones.UsuarioNoExisteException;
+
+
 
 public class Principal {
 
 	private JFrame entrenamosUy;
 	private JDesktopPane desktopPane;
-	
+	private IcontroladorUsuario IUC;
+	private IcontroladorActividadDeportiva IADC;
+	private IcontroladorCuponera IDC;
+	private IcontroladorClase IDCC;
 	
 	// Declaracion de los JInternalFrames
 	
@@ -59,10 +84,14 @@ public class Principal {
 	public Principal() {
 		initialize();
 		
+		Fabrica fabrica = Fabrica.getInstance();
+		IUC = fabrica.obtenerIcontroladorUsuario();
+
+		
 		//Preinicializacion de JInternalFrames con visibilidad = false
 		
 				//AltaUsuario:
-				altaUsuario = new AltaUsuario();
+				altaUsuario = new AltaUsuario(IUC);
 				altaUsuario.setLocation(462, 25);
 				altaUsuario.setVisible(false);
 				desktopPane.add(altaUsuario);	
@@ -81,7 +110,7 @@ public class Principal {
 				desktopPane.add(altaClase);
 				
 				// AltaInstitucionDeporitva:
-				altaIns = new AltaInstitucionDeportiva();
+				altaIns = new AltaInstitucionDeportiva(IADC);
 				altaIns.setBounds(212, 37, 354, 344);
 				altaIns.setVisible(false);
 				desktopPane.add(altaIns);
@@ -105,7 +134,7 @@ public class Principal {
 				desktopPane.add(consultaCup);
 				
 				//ConsultaUsuario
-				consultaUsu = new ConsultaUsuario();
+				consultaUsu = new ConsultaUsuario(IUC);
 				consultaUsu.setVisible(false);
 				desktopPane.add(consultaUsu);
 
@@ -325,7 +354,7 @@ public class Principal {
 				if (consultaUsu.isVisible()) 
 					consultaUsu.toFront();
 				else {
-					//consultaUsu.clear(); Descomentar cuando este implementado en el caso de uso
+					consultaUsu.clear(); //Descomentar cuando este implementado en el caso de uso
 					consultaUsu.setVisible(true);
 				}
 			}

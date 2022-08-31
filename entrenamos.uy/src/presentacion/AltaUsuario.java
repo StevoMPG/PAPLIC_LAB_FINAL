@@ -35,9 +35,13 @@ import java.awt.event.MouseEvent;
 import javax.swing.event.PopupMenuListener;
 import javax.swing.event.PopupMenuEvent;
 
-
-// La parte logica
 import logica.IcontroladorUsuario;
+import datatypes.DtUsuario;
+import excepciones.InstitucionException;
+import datatypes.DtSocio;
+import datatypes.DtProfesor;
+import datatypes.DtFechaHora;
+
 
 @SuppressWarnings("serial")
 public class AltaUsuario extends JInternalFrame {
@@ -73,7 +77,7 @@ public class AltaUsuario extends JInternalFrame {
 	private Component verticalStrut;
 	private JButton btnNewButton;
 	
-	public AltaUsuario() {
+	public AltaUsuario(IcontroladorUsuario controlUsr) {
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setResizable(true);
 		setMaximizable(true);
@@ -81,6 +85,7 @@ public class AltaUsuario extends JInternalFrame {
 		setIconifiable(true);
 		
 		this.instituciones = new HashSet<>();
+		this.controlUsr = controlUsr;
 		
 		/* 
 		 *  Parametrizacion de dimensiones
@@ -441,9 +446,10 @@ public class AltaUsuario extends JInternalFrame {
 		JButton btnAceptar = new JButton("Aceptar");
 		btnAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(tomarDatos()==0)
+				if(tomarDatos()==0) {
 					clear();
 					setVisible(false);
+				}
 			}
 		});
 		
@@ -503,10 +509,59 @@ public class AltaUsuario extends JInternalFrame {
     }
 	
 	
-	// En caso de ser los datos validos, esta funcion toma los datos, de momento le meto 1 para que no de error, hay que hacerla
+	
 	 
 	private int tomarDatos() {
-		return 1;
+		try {
+			String tipoU;
+			String nicknameU;
+			String nombreU;
+	        String apellidoU;
+	        String emailU;
+	        int diaU;
+	        int mesU;
+	        int anioU;
+	        String institutoU;
+	        String descripcionU;
+	        String biografiaU;
+	        String websiteU;
+	        
+	        if(!checkFormulario()) {
+	        	return 1;
+	        }
+			tipoU = this.comboBoxTipoDeUsuario.getSelectedItem().toString().trim();
+			nicknameU = this.textFieldNickname.getText().trim();
+			nombreU = this.textFieldNombre.getText().trim();
+	        apellidoU = this.textFieldApellido.getText().trim();
+	        emailU = this.textFieldEmail.getText().trim();
+	        diaU = boxIDia.getSelectedIndex();
+	        mesU = boxIMes.getSelectedIndex();
+	        anioU = Integer.parseInt(inicioAnio.getText().trim());
+	        institutoU = this.comboBoxInstitucion.getSelectedItem().toString().trim();
+	        descripcionU = this.textAreaDescripcion.getText().trim();
+	        biografiaU = this.textAreaBiografia.getText().trim();
+	        websiteU = this.textFieldWebsite.getText().trim();
+	        
+			/*
+			 * Crea el tipo de dato segun el tipo de usuario seleccionado
+			 */
+			DtUsuario datosUser;
+			if(tipoU == "Profesor") {
+				datosUser = new DtProfesor(nicknameU,nombreU,apellidoU,emailU, new DtFechaHora(anioU,mesU,diaU,0,0,0),institutoU, descripcionU,biografiaU,websiteU);
+			}else { //Se asume que si no es profesor es socio
+				datosUser = new DtSocio(nicknameU,nombreU,apellidoU,emailU, new DtFechaHora(anioU,mesU,diaU,0,0,0));
+			}
+			if(controlUsr.ingresarDatosUsuario(datosUser) != 0) {
+				JOptionPane.showMessageDialog(this, "Ya existe un usuario con los datos ingresados.", this.getTitle(), JOptionPane.ERROR_MESSAGE);
+				return 1;
+			} else {
+				JOptionPane.showMessageDialog(this, "El usuario ha sido registrado de forma exitosa.", this.getTitle(), JOptionPane.INFORMATION_MESSAGE);
+				return 0;
+			}
+		} catch (InstitucionException e) {
+	        JOptionPane.showMessageDialog(this, e.getMessage(), getTitle(), JOptionPane.ERROR_MESSAGE);
+	        return 0;
+		}
 	}
 	
 	

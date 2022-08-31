@@ -29,7 +29,7 @@ import logica.IcontroladorActividadDeportiva;
 public class AltaInstitucionDeportiva extends JInternalFrame{
 	
 	//Controller
-
+	private IcontroladorActividadDeportiva IDC;
 	//Inputs
 	private JTextField inputNombre;
 	private JTextField inputURL;
@@ -37,8 +37,8 @@ public class AltaInstitucionDeportiva extends JInternalFrame{
 	//Scroll Descripcion
 	private JScrollPane scrollPane;
 	
-	public AltaInstitucionDeportiva() {
-
+	public AltaInstitucionDeportiva(IcontroladorActividadDeportiva IDC) {
+		this.IDC = IDC;
 		//Configuracion del JFRAME
 		setResizable(true);
 		setIconifiable(true);
@@ -147,7 +147,7 @@ public class AltaInstitucionDeportiva extends JInternalFrame{
 		btnAceptar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				// Va una funcion 
+				altaIns(); 
 			}
 		});
 		panel.add(btnAceptar);
@@ -170,7 +170,20 @@ public class AltaInstitucionDeportiva extends JInternalFrame{
 
 	}
 
-	
+	private void altaIns() {
+		if(inputNombre.getText().trim().isEmpty()|| inputDescripcion.getText().trim().isEmpty()|| inputURL.getText().trim().isEmpty()) {
+			JOptionPane.showMessageDialog(this, "No se permite el ingreso de campos vacios", this.getTitle(), JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+		if(IDC.altaInstitucion(inputNombre.getText(), inputDescripcion.getText(), inputURL.getText())!=0) {
+			JOptionPane.showMessageDialog(this, "Ya existe una institucion con el nombre ingresado", this.getTitle(), JOptionPane.ERROR_MESSAGE);
+		}
+		else {
+			JOptionPane.showMessageDialog(this, "La institucion ha sido registrada de forma exitosa.", this.getTitle(),JOptionPane.INFORMATION_MESSAGE);
+			clear();
+			setVisible(false);
+		}
+	}
 	
 	public void clear() {
 		inputNombre.setText("");
