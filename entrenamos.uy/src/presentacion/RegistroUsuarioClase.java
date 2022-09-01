@@ -203,6 +203,7 @@ public class RegistroUsuarioClase extends JInternalFrame {
         			z=(String) boxActividad.getSelectedItem();
         		if(boxClase.isEnabled())
         			x=(String) boxClase.getSelectedItem();
+        		cargarDatos();
         		boxInstitucion.setSelectedItem(t);
         		if(boxActividad.isEnabled()) 
         			boxActividad.setSelectedItem(z);
@@ -345,6 +346,7 @@ public class RegistroUsuarioClase extends JInternalFrame {
         gbc_btnLimpiar.gridy = 13;
         getContentPane().add(btnLimpiar, gbc_btnLimpiar);
         
+        cargarDatos();
 	}
 	
 	// Metodo de invocacion de la Consulta de Clase
@@ -411,6 +413,25 @@ public class RegistroUsuarioClase extends JInternalFrame {
             return false;
         }
         return true;
+    }
+    
+    private void cargarDatos() {
+    	// Cargar Usuarios:
+    	DefaultComboBoxModel<String> modelUsuario;
+    	modelUsuario = new DefaultComboBoxModel<>();
+    	modelUsuario.addElement("-");
+        for(String x: controlClase.obtenerSocios()) {
+        	modelUsuario.addElement(x);
+        }
+        boxSocio.setModel(modelUsuario);
+    	// Cargar Instituciones:
+        DefaultComboBoxModel<String> modelInstitucion;
+        modelInstitucion = new DefaultComboBoxModel<>();
+        modelInstitucion.addElement("-");
+        for(String x: controlClase.obtenerInstituciones()) {
+        	modelInstitucion.addElement(x);
+        }
+        boxInstitucion.setModel(modelInstitucion);
     }
 	// Limpia el JInternalFrame
 	public void clear() {
