@@ -13,7 +13,7 @@ import datatypes.DtActividadDeportivaExtra;
 import datatypes.DtClaseExtra;
 import datatypes.DtInstitucion;
 
-public class controladorActividadDeportiva {
+public class controladorActividadDeportiva  implements IcontroladorActividadDeportiva {
 
 	private static controladorActividadDeportiva instance = null;
 	

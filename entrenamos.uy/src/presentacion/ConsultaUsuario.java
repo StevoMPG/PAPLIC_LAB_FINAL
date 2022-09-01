@@ -40,7 +40,6 @@ import java.awt.Color;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 
-import logica.IcontroladorUsuario; 
 import datatypes.DtUsuario;
 import datatypes.DtSocioExtra;
 import datatypes.DtFechaHora;
@@ -97,7 +96,6 @@ public class ConsultaUsuario extends JInternalFrame {
 		this.usuarios = new HashSet<>();
 		this.datosUsuarioActual = null;
 		this.controlUsr = IUC;
-
 		
 		/* 
 		 *  Parametrizacion de dimensiones
@@ -148,6 +146,12 @@ public class ConsultaUsuario extends JInternalFrame {
 		comboBoxUsuario.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				
+				/*
+				 * Habilita determinados campos segun el tipo de usuario.
+				 * Ademas rellena cada campo con sus datos actuales
+				 * Si no se seleccionan usuarios se limpian los campos
+				 */	
+				
 				String tipoUsuario = "-";
 				if(comboBoxUsuario.getSelectedIndex() > 0) {
 					String nickUsuario = comboBoxUsuario.getItemAt(comboBoxUsuario.getSelectedIndex());
@@ -176,6 +180,7 @@ public class ConsultaUsuario extends JInternalFrame {
 							tree.setModel(new DefaultTreeModel(
 									new DefaultMutableTreeNode("root") {
 										{
+											//WindowBuilder BUG: se cambia a getContentPane.add() por algun motivo. Dejarlo solo como add();
 											add(new DefaultMutableTreeNode("El profesor no dicta ninguna clase."));
 										}
 									}
@@ -206,6 +211,7 @@ public class ConsultaUsuario extends JInternalFrame {
 							tree.setModel(new DefaultTreeModel(
 									new DefaultMutableTreeNode("root") {
 										{
+											//WindowBuilder BUG: se cambia a getContentPane.add() por algun motivo. Dejarlo solo como add();
 											add(new DefaultMutableTreeNode("El socio no está inscripto a ninguna clase."));
 										}
 									}
@@ -228,6 +234,9 @@ public class ConsultaUsuario extends JInternalFrame {
 							));
 						}
 						tipoUsuario = "Socio";
+						/*
+						 * Borro campos no relevantes para socio
+						 */
 						
 						textFieldInstitucion.setText("");
 						textAreaDescripcion.setText("");
@@ -524,7 +533,8 @@ public class ConsultaUsuario extends JInternalFrame {
 		tree.setModel(new DefaultTreeModel(
 			new DefaultMutableTreeNode("root") {
 				{
-					
+					//WindowBuilder BUG: se cambia a getContentPane.add() por algun motivo. Dejarlo solo como add();
+					// Cada vez que se abre la ventan design hay que corregirlo xddd;
 					add(new DefaultMutableTreeNode("Aqui se listan las clases."));
 					add(new DefaultMutableTreeNode("Las clases estan organizadas por actividad deportiva."));
 				}
@@ -539,14 +549,17 @@ public class ConsultaUsuario extends JInternalFrame {
 			        if(selPath==null) return;
 			        if(selPath.getPathCount()==2 && (((DefaultMutableTreeNode) selPath.getPathComponent(1)).getChildCount())>0) {
 			        	String q = (String) ((DefaultMutableTreeNode) selPath.getPathComponent(1)).getUserObject();
-
+			        	//AQUI VA LA REFERENCIA A LA ACTIVIDAD DEPORTIVA
+			        	//System.out.println("DEBUG: selection: "+q);
+			        	refCAD.refEntry(q);
 			        	
 			        }
 			        if(selPath.getPathCount()==3 && (((DefaultMutableTreeNode) selPath.getPathComponent(2)).getChildCount())==0) {
 			        	String act = (String) ((DefaultMutableTreeNode) selPath.getPathComponent(1)).getUserObject();
 			        	String cla = (String) ((DefaultMutableTreeNode) selPath.getPathComponent(2)).getUserObject();
-
-
+			        	//AQUI VA LA REFERENCIA A LA CLASE SELECCIONADA
+			        	//System.out.println("DEBUG: selection: "+act+" "+cla);
+			        	refCDC.refEntry(act,cla);
 			        }
 			    }
 			}

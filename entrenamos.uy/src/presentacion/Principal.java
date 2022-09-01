@@ -86,6 +86,9 @@ public class Principal {
 		
 		Fabrica fabrica = Fabrica.getInstance();
 		IUC = fabrica.obtenerIcontroladorUsuario();
+		IADC = fabrica.obtenerIcontroladorActDeportiva();
+		IDC = fabrica.obtenerIcontroladorCuponera();
+		IDCC = fabrica.obtenerIcontroladorDictadoClase();	
 
 		
 		//Preinicializacion de JInternalFrames con visibilidad = false
@@ -97,14 +100,14 @@ public class Principal {
 				desktopPane.add(altaUsuario);	
 				
 				//AltaActividadDeportiva
-				altaActDep = new AltaActividadDeportiva();
+				altaActDep = new AltaActividadDeportiva(IADC);
 				altaActDep.setLocation(20, 20);
 				altaActDep.setSize(450, 500);
 				altaActDep.setVisible(false);
 				desktopPane.add(altaActDep);
 
 				// AltaDictadoClase:
-				altaClase = new AltaDictadoClase();
+				altaClase = new AltaDictadoClase(IDCC);
 				altaClase.setLocation(10, 11);
 				altaClase.setVisible(false);
 				desktopPane.add(altaClase);
@@ -116,18 +119,18 @@ public class Principal {
 				desktopPane.add(altaIns);
 				
 				// RegistroUsuarioClase:
-				regUsuClass = new RegistroUsuarioClase();
+				regUsuClass = new RegistroUsuarioClase(IDCC);
 				regUsuClass.setVisible(false);
 				desktopPane.add(regUsuClass);
 				
 				// ConsultaDictadoClase:
-				consultaClass = new ConsultaDictadoClase();
+				consultaClass = new ConsultaDictadoClase(IDCC);
 				consultaClass.setBounds(10, 40, 382, 545);
 				consultaClass.setVisible(false);
 				desktopPane.add(consultaClass);
 				
 				// ConsultaCuponeras:
-				consultaCup = new ConsultaCuponeras();
+				consultaCup = new ConsultaCuponeras(IDC);
 				consultaCup.setBounds(200, 100, 400, 458);
 				consultaCup.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 				consultaCup.setVisible(false);
@@ -139,26 +142,28 @@ public class Principal {
 				desktopPane.add(consultaUsu);
 
 				// ConsultaActividadDeportiva
-				consActDep = new ConsultaActividadDeportiva();
+				consActDep = new ConsultaActividadDeportiva(IADC);
 				consActDep.setBounds(143, 20, 457, 719);
 				consActDep.setVisible(false);
 				desktopPane.add(consActDep);
 				
 				//ModificarDatosUsuario
-				modificarUsu = new ModificarDatosUsuario();
+				modificarUsu = new ModificarDatosUsuario(IUC);
 				modificarUsu.setVisible(false);
 				desktopPane.add(modificarUsu);
 				
-				altaCup = new CrearCuponera();
+				altaCup = new CrearCuponera(IDC);
 				altaCup.setBounds(100, 100, 500, 483);
 				altaCup.setVisible(false);
 				desktopPane.add(altaCup);
 				
-				aggCup = new AgregarActividadDeportivaCuponera();
+				aggCup = new AgregarActividadDeportivaCuponera(IDC, IADC);
 				aggCup.setVisible(false);
 				desktopPane.add(aggCup);
 				
-
+				consActDep.setRef(consultaClass,consultaCup);
+				consultaCup.setRef(consActDep);
+				consultaUsu.setRef(consultaClass,consActDep);
 	}
 
 	/**
@@ -241,7 +246,7 @@ public class Principal {
 		JMenu subMenuInstitucion = new JMenu("Institucion");
 		menuRegistro.add(subMenuInstitucion);
 		
-		// Caso de uso para Alta de Institución deportiva (SI PARA LA TAREA 2 LO PIDE LO DESCOMENTAMOS)
+
 		JMenuItem itemAltaInstitucion = new JMenuItem("Alta Institucion Deportiva");
 		subMenuInstitucion.add(itemAltaInstitucion);
 		itemAltaInstitucion.addActionListener(new ActionListener() {
@@ -249,7 +254,7 @@ public class Principal {
 				if (altaIns.isVisible()) 
 					altaIns.toFront();
 				else {
-					//altaIns.clear(); Descomentar cuando este implementado en el caso de uso
+					altaIns.clear(); 
 					altaIns.setVisible(true);
 				}
 			}
@@ -267,7 +272,7 @@ public class Principal {
 				if (altaActDep.isVisible()) 
 					altaActDep.toFront();
 				else {
-					//altaActDep.clear(); Descomentar cuando este implementado en el caso de uso
+					altaActDep.clear();
 					altaActDep.setVisible(true);
 				}
 			}
@@ -284,7 +289,7 @@ public class Principal {
 				if (altaClase.isVisible())
 					altaClase.toFront();
 				else {
-					//altaClase.clear(); Descomentar cuando este implementado en el caso de uso
+					altaClase.clear(); 
 					altaClase.setVisible(true);
 				}
 			}
@@ -299,7 +304,7 @@ public class Principal {
 				if (regUsuClass.isVisible())
 					regUsuClass.toFront();
 				else {
-					//regUsuClass.clear(); Descomentar cuando este implementado en el caso de uso
+					regUsuClass.clear(); 
 					regUsuClass.setVisible(true);
 				}
 			}
@@ -318,7 +323,7 @@ public class Principal {
 				if (altaCup.isVisible()) 
 					altaCup.toFront();
 				else {
-					//altaCup.clear(); Descomentar cuando este implementado en el caso de uso
+					altaCup.clear(); 
 					altaCup.setVisible(true);
 				}
 			}
@@ -332,7 +337,7 @@ public class Principal {
 				if (aggCup.isVisible()) 
 					aggCup.toFront();
 				else {
-					//aggCup.clear(); Descomentar cuando este implementado en el caso de uso
+					aggCup.clear();
 					aggCup.setVisible(true);
 				}
 			}
@@ -368,7 +373,7 @@ public class Principal {
 				if (consActDep.isVisible()) 
 					consActDep.toFront();
 				else {
-					//consActDep.clear(); Descomentar cuando este implementado en el caso de uso
+					consActDep.clear(); 
 					consActDep.setVisible(true);
 				}
 			}
@@ -382,7 +387,7 @@ public class Principal {
 				if (consultaClass.isVisible()) 
 					consultaClass.toFront();
 				else {
-					//consultaClass.clear(); Descomentar cuando este implementado en el caso de uso
+					consultaClass.clear(); 
 					consultaClass.setVisible(true);
 				}
 			}
@@ -396,7 +401,7 @@ public class Principal {
 				if (consultaCup.isVisible())
 					consultaCup.toFront();
 				else {
-					// altaClase.limpiar() //Verificar luego
+					//altaClase.limpiar() //Verificar luego
 					consultaCup.setVisible(true);
 				}
 			}
@@ -418,7 +423,7 @@ public class Principal {
 				if (modificarUsu.isVisible()) 
 					modificarUsu.toFront();
 				else {
-					//modificarUsu.clear(); Descomentar cuando este implementado en el caso de uso
+					modificarUsu.clear();
 					modificarUsu.setVisible(true);
 				}
 			}

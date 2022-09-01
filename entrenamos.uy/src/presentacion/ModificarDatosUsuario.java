@@ -19,8 +19,10 @@ import java.awt.event.ActionEvent;
 import javax.swing.DefaultComboBoxModel;
 
 import logica.IcontroladorUsuario; 
-
-
+import datatypes.DtUsuario;
+import datatypes.DtSocio;
+import datatypes.DtFechaHora;
+import datatypes.DtProfesor;
 import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
 import java.awt.event.ItemListener;
@@ -39,7 +41,7 @@ import excepciones.UsuarioNoExisteException;
 public class ModificarDatosUsuario extends JInternalFrame {
 
 	//Datos del caso de uso
-
+	DtUsuario datosUsuarioActual;
 	Set<String> usuarios;
 	Set<String> instituciones;
 	
@@ -72,7 +74,7 @@ public class ModificarDatosUsuario extends JInternalFrame {
 	private JTextField textFieldInstitucion;
 	private JTextField textFieldTipoDeUsuario;
 		
-	public ModificarDatosUsuario() {
+	public ModificarDatosUsuario(IcontroladorUsuario controlUsr) {
 		addInternalFrameListener(new InternalFrameAdapter() {
 			@Override
 			public void internalFrameClosed(InternalFrameEvent e) {
@@ -87,7 +89,8 @@ public class ModificarDatosUsuario extends JInternalFrame {
 		
 		this.usuarios = new HashSet<>();
 		this.instituciones = new HashSet<>();
-
+		this.datosUsuarioActual = null;
+		this.controlUsr = controlUsr;
 		
 		/* 
 		 *  Parametrizacion de dimensiones
@@ -119,7 +122,10 @@ public class ModificarDatosUsuario extends JInternalFrame {
 				DefaultComboBoxModel<String> modeloUsuario = new DefaultComboBoxModel<>();
 				comboBoxUsuario.removeAllItems();
 				modeloUsuario.addElement("-");
-				
+				usuarios = controlUsr.obtenerUsuario();
+				for(String us:usuarios) {
+					modeloUsuario.addElement(us);
+				}
 				comboBoxUsuario.setModel(modeloUsuario);
 			}
 		});
@@ -133,8 +139,41 @@ public class ModificarDatosUsuario extends JInternalFrame {
 				 */
 				
 				String tipoUsuario = "-";
-				
-				
+				if(comboBoxUsuario.getSelectedIndex() > 0) {
+					String nickUsuario = comboBoxUsuario.getItemAt(comboBoxUsuario.getSelectedIndex());
+					try {
+						datosUsuarioActual = controlUsr.seleccionarUsuario(nickUsuario);
+					} catch  (UsuarioNoExisteException ignore) { }
+					textFieldNombre.setText(datosUsuarioActual.getNombre());
+					textFieldApellido.setText(datosUsuarioActual.getApellido());
+					textFieldEmail.setText(datosUsuarioActual.getEmail());
+					DtFechaHora fechaNacimiento = datosUsuarioActual.getFechaNacimiento();
+					boxIDia.setSelectedIndex(fechaNacimiento.getDia());
+					boxIMes.setSelectedIndex(fechaNacimiento.getMes());
+					inicioAnio.setText(String.valueOf(fechaNacimiento.getAnio()));
+					
+					//El usuario es profesor
+					if(datosUsuarioActual instanceof DtProfesor) {
+						tipoUsuario = "Profesor";
+						DtProfesor datosProfesorActual = (DtProfesor)datosUsuarioActual;
+						textFieldInstitucion.setText(datosProfesorActual.getNombreInstitucion());
+						textAreaDescripcion.setText(datosProfesorActual.getDescripcion());
+						textAreaBiografia.setText(datosProfesorActual.getBiografia());
+						textFieldWebsite.setText(datosProfesorActual.getLink());
+					}
+					else {
+						
+						tipoUsuario = "Socio";
+
+						textFieldInstitucion.setText("");
+						textAreaDescripcion.setText("");
+						textAreaBiografia.setText("");
+						textFieldWebsite.setText("");
+					}
+				}
+				else {
+					//clear();
+				}
 				textFieldTipoDeUsuario.setText(tipoUsuario);
 				boolean esUsuario = tipoUsuario != "-";
 				textFieldNombre.setEnabled(esUsuario);
@@ -455,8 +494,11 @@ public class ModificarDatosUsuario extends JInternalFrame {
 		JButton btnAceptar = new JButton("Aceptar");
 		btnAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				if(tomarDatos()==0) {
+					clear();
+					setVisible(false);
 				}
+			}
 		});
 		GridBagConstraints gbc_btnAceptar = new GridBagConstraints();
 		gbc_btnAceptar.anchor = GridBagConstraints.NORTH;
@@ -482,6 +524,63 @@ public class ModificarDatosUsuario extends JInternalFrame {
 
 	}
 	
+	/*
+	 * En caso de ser los datos validos, esta funcion se encarga de ejecutar el caso de uso correspondiente
+	 */
+	private int tomarDatos() {
+		String tipoDeUsuario;
+		String nicknameU;
+		String nombreU;
+        String apellidoU;
+        String emailU;
+        int diaU;
+        int mesU;
+        int anioU;
+        String institucionU;
+        String descripcionU;
+        String biografiaU;
+        String websiteU;
+        if (!checkFormulario())
+        	return 1;
+		nicknameU = comboBoxUsuario.getItemAt(comboBoxUsuario.getSelectedIndex()).trim();
+		nombreU = this.textFieldNombre.getText().trim();
+        apellidoU = this.textFieldApellido.getText().trim();
+        emailU = this.textFieldEmail.getText().trim();
+        diaU = Integer.parseInt(boxIDia.getSelectedItem().toString().trim());
+        mesU = boxIMes.getSelectedIndex();
+        anioU = Integer.parseInt(inicioAnio.getText().trim());
+        tipoDeUsuario = textFieldTipoDeUsuario.getText().trim();
+
+		/*
+		 * Crea el tipo de dato segun el tipo de usuario seleccionado
+		 */
+		DtUsuario datosUser;
+		
+		if(tipoDeUsuario.contains("Profesor")) {
+			descripcionU = textAreaDescripcion.getText().trim();
+            biografiaU = textAreaBiografia.getText().trim();
+            websiteU = textFieldWebsite.getText().trim();
+            institucionU = textFieldInstitucion.getText().trim();
+			datosUser = new DtProfesor(nicknameU,nombreU,apellidoU,emailU, new DtFechaHora(anioU,mesU,diaU,0,0,0),institucionU, descripcionU,biografiaU,websiteU);
+		}
+		else //Se asume que si no es profesor es socio
+		{
+			datosUser = new DtSocio(nicknameU,nombreU,apellidoU,emailU, new DtFechaHora(anioU,mesU,diaU,0,0,0));
+		}
+		
+		/*
+		 * Fin de caso de uso y MessageDialog final
+		 */
+		try {
+			this.controlUsr.editarDatosBasicos(nicknameU, datosUser);
+			JOptionPane.showMessageDialog(this, "El usuario ha sido modificado con de forma exitosa", this.getTitle(), JOptionPane.INFORMATION_MESSAGE);
+			return 0;
+		} catch (UsuarioNoExisteException e) {
+			JOptionPane.showMessageDialog(this, e.getMessage(), this.getTitle(), JOptionPane.ERROR_MESSAGE);
+			return 1;
+		}
+	}
+	
 	
 	public void clear() {
 		// TODO Auto-generated method stub
@@ -499,4 +598,38 @@ public class ModificarDatosUsuario extends JInternalFrame {
     	textAreaBiografia.setText("");
 	}
 
+	private boolean checkFormulario() {
+		String tipoU  = this.textFieldTipoDeUsuario.getText().trim();
+		int nicknameU = this.comboBoxUsuario.getSelectedIndex();
+		String nombreU = this.textFieldNombre.getText().trim();
+        String apellidoU = this.textFieldApellido.getText().trim();
+        String emailU = this.textFieldEmail.getText().trim();
+        int diaU = boxIDia.getSelectedIndex();
+        int mesU = boxIMes.getSelectedIndex();
+        String anioU = inicioAnio.getText().trim();
+        //String websiteU = this.textFieldWebsite.getText();
+        String descripcionU = this.textAreaDescripcion.getText().trim();
+
+        //Celdas vacias
+        if (nicknameU == 0 || nombreU.isEmpty() || apellidoU.isEmpty() || emailU.isEmpty() || diaU < 1 || mesU < 1 || anioU.isEmpty() ||  ((tipoU.contains("Profesor")) &&  descripcionU.isEmpty())) {
+            JOptionPane.showMessageDialog(this, "No puede haber campos vacios", this.getTitle(), JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        
+      //Numeros no son numeros
+        try {
+            Integer.parseInt(anioU);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "El anio ingresado debe ser un numero", this.getTitle(), JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        
+        //Fechas inexistentes
+        int numAnioU = Integer.parseInt(anioU);
+        if (numAnioU < 1900 || numAnioU > 2021) {
+        	JOptionPane.showMessageDialog(this, "El anio ingresado debe ser valido", this.getTitle(), JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        return true;
+    }
 }

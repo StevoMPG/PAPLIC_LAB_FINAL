@@ -9,6 +9,11 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import excepciones.InstitucionException;
+import excepciones.UsuarioNoExisteException;
+import excepciones.ActividadDeportivaException;
+import excepciones.ClaseException;
+import excepciones.FechaInvalidaException;
+
 
 import javax.swing.JButton;
 import javax.swing.DefaultComboBoxModel;
@@ -23,8 +28,11 @@ import java.awt.event.FocusEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
 
+import java.util.Set;
 
 import logica.IcontroladorClase;
+import datatypes.DtFechaHora;
+import datatypes.DtClase;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -35,8 +43,6 @@ public class AltaDictadoClase extends JInternalFrame {
 	//Controlador de Dictado de Clase para las acciones del JInternalFrame 
 	private IcontroladorClase controlClase;
 	
-	// Componentes graficas 
-	// JLabel:
 	private JLabel lblIngreseNombre;
 	private JLabel lblIngreseSocios;
 	private JLabel lblIngreseFechaI;
@@ -47,15 +53,14 @@ public class AltaDictadoClase extends JInternalFrame {
 	private JLabel lblIngreseUrl;
 	private JLabel lblIngreseFechaR;
 	
-	// JTextField:
-	private JTextField nombreClase; // Es unico.
+
+	private JTextField nombreClase;
 	private JTextField sociosMin;
 	private JTextField sociosMax;
 	private JTextField inicioAnio;
 	private JTextField regAnio;
 	private JTextField url;
 	
-	// JComboBox:
 	private JComboBox<String> boxInstitucion;
 	private JComboBox<String> boxActividad;
 	private JComboBox<String> boxProfesor;
@@ -73,8 +78,9 @@ public class AltaDictadoClase extends JInternalFrame {
     private JButton btnCancelar;
     
     /* Crear frame */
-	public AltaDictadoClase() {
+	public AltaDictadoClase(IcontroladorClase idcc) {
 
+		controlClase = idcc;
 		
 		// Propiedades del JInternalFrame:
 		setResizable(true);
@@ -353,6 +359,7 @@ public class AltaDictadoClase extends JInternalFrame {
         			z=(String) boxActividad.getSelectedItem();
         		if(boxProfesor.isEnabled())
         			x=(String) boxProfesor.getSelectedItem();
+        		cargarInstitucion();
         		boxInstitucion.setSelectedItem(t);
         		if(boxActividad.isEnabled()) 
         			boxActividad.setSelectedItem(z);
@@ -371,8 +378,14 @@ public class AltaDictadoClase extends JInternalFrame {
 	    			DefaultComboBoxModel<String> modelProfesor = new DefaultComboBoxModel<>();
 	    			modelProfesor.addElement("-");        		
 	    			if (selectIndex > 0) {
-	     
-	                    
+	        			Set<String> actividades = controlClase.obtenerActividades(boxInstitucion.getItemAt(selectIndex));
+	                    for (String x: actividades) {
+	                    	modelActividad.addElement(x);
+	                    }
+	                    Set<String> profesores = controlClase.obtenerProfesores(boxInstitucion.getItemAt(selectIndex));
+	                    for (String x: profesores) {
+	                    	modelProfesor.addElement(x);
+	                    }
 	                    boxActividad.setEnabled(true);
 	                    boxProfesor.setEnabled(true);
 	        		} else {
@@ -381,7 +394,7 @@ public class AltaDictadoClase extends JInternalFrame {
 	        		}
 	            	boxActividad.setModel(modelActividad);
 	            	boxProfesor.setModel(modelProfesor);
-        		} catch (Exception ignore) { }
+        		} catch (InstitucionException ignore) { }
         	}
         });
         GridBagConstraints gbc_boxInstitucion = new GridBagConstraints();
@@ -454,7 +467,7 @@ public class AltaDictadoClase extends JInternalFrame {
         btnAceptar = new JButton("Aceptar");
         btnAceptar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
-            	// Va la funcion de dar alta a la clase
+            	darAltaDeClase(arg0);
             }
         });
         GridBagConstraints gbc_btnAceptar = new GridBagConstraints();
@@ -479,10 +492,117 @@ public class AltaDictadoClase extends JInternalFrame {
         gbc_btnCancelar.gridy = 15;
         getContentPane().add(btnCancelar, gbc_btnCancelar);
         
-        
+        cargarInstitucion();
 	}
 	
+	// Metodo de invocacion del Alta de Dictado de Clase
+    protected void darAltaDeClase(ActionEvent arg0) {
+        if (checkDatos()) {
+        	// Obtengo datos de los controles Swing:
+        	String nombre = nombreClase.getText().trim();
+            int socioMin = Integer.parseInt(sociosMin.getText());
+            int socioMax = Integer.parseInt(sociosMax.getText());
+            int dia = boxIDia.getSelectedIndex();
+            int mes = boxIMes.getSelectedIndex();
+            int anio = Integer.parseInt(inicioAnio.getText());
+            int hora = Integer.parseInt(boxIHora.getItemAt(boxIHora.getSelectedIndex()));
+            int minuto = boxIMinuto.getSelectedIndex();
+            int rDia = boxRDia.getSelectedIndex();
+            int rMes = boxRMes.getSelectedIndex();
+            int rAnio = Integer.parseInt(regAnio.getText());
+            String urlWeb = url.getText().trim();
+            String nombreInstitucion = boxInstitucion.getItemAt(boxInstitucion.getSelectedIndex()).trim();
+            String nombreActividad = boxActividad.getItemAt(boxActividad.getSelectedIndex()).trim();
+            String nombreProfesor = boxProfesor.getItemAt(boxProfesor.getSelectedIndex()).trim();
+            DtFechaHora fechaClase = new DtFechaHora(anio, mes, dia, hora, minuto, 0);
+            DtFechaHora fechaRegistro = new DtFechaHora(rAnio, rMes, rDia, 0, 0, 0);
+            DtClase datos = new DtClase(nombre, nombreProfesor,nombreProfesor,socioMin, socioMax, urlWeb, fechaClase, fechaRegistro);
+            if (!fechaRegistro.esMenor(fechaClase)) {
+            	JOptionPane.showMessageDialog(this, "La fecha de registro debe ser anterior a la fecha de inicio de la clase", 
+            			"Alta Dictado de Clase", JOptionPane.ERROR_MESSAGE);
+            }
+            else {
+	            try {
+	            	if(controlClase.ingresarDatosClase(nombreInstitucion, nombreActividad, datos) == 0) {
+		            	JOptionPane.showMessageDialog(this, "El Dictado de la Clase se ha dado de alta con Ã©xito", 
+		            			"Alta Dictado de Clase", JOptionPane.INFORMATION_MESSAGE);
+		                clear();
+	            	} else {
+	            		JOptionPane.showMessageDialog(this, "Ya existe una clase con ese nombre ingresada en el sistema.",
+	            				"Registro de Usuario a Dictado de Clase", JOptionPane.ERROR_MESSAGE);
+	            	}
+	            } catch (FechaInvalidaException e) {
+	            	JOptionPane.showMessageDialog(this, e.getMessage(), getTitle(), JOptionPane.ERROR_MESSAGE);
+	            } catch (InstitucionException e) {
+	    			JOptionPane.showMessageDialog(this, e.getMessage(), getTitle(), JOptionPane.ERROR_MESSAGE);
+	    		} catch (ClaseException e) {
+	    			JOptionPane.showMessageDialog(this, e.getMessage(), getTitle(), JOptionPane.ERROR_MESSAGE);
+				} catch (UsuarioNoExisteException e) {
+	    			JOptionPane.showMessageDialog(this, e.getMessage(), getTitle(), JOptionPane.ERROR_MESSAGE);
+				} catch (ActividadDeportivaException e) {
+	    			JOptionPane.showMessageDialog(this, e.getMessage(), getTitle(), JOptionPane.ERROR_MESSAGE);
+				} 
+            }    
+        }
+    }
 	
+	// Realiza el checkeo de la entrada de datos.
+    private boolean checkDatos() {
+        String campoNombre = nombreClase.getText().trim();
+        String campoMin = sociosMin.getText().trim();
+        String campoMax = sociosMax.getText().trim();
+        String campoAnio = inicioAnio.getText().trim();
+        String campoAnioR = regAnio.getText().trim();
+        String campoWeb = url.getText().trim();
+        int indexDia = boxIDia.getSelectedIndex();
+        int indexMes = boxIMes.getSelectedIndex();
+        int indexHora = boxIHora.getSelectedIndex();
+        int indexMinuto = boxIMinuto.getSelectedIndex();
+        int indexInstitucion = boxInstitucion.getSelectedIndex();
+        int indexActividad = boxActividad.getSelectedIndex();
+        int indexProfesor = boxProfesor.getSelectedIndex();
+        int indexDiaR = boxRDia.getSelectedIndex();
+        int indexMesR = boxRMes.getSelectedIndex();
+        if (campoNombre.isEmpty() || campoMin.isEmpty() || campoMax.isEmpty() || campoAnio.isEmpty() || campoAnioR.isEmpty() ||
+        		campoWeb.isEmpty() || indexDia < 1 || indexMes < 1 || indexHora < 1 || indexMinuto < 1 || indexInstitucion < 1 || 
+        		indexActividad < 1 || indexProfesor < 1 || indexDiaR < 1 || indexMesR < 1) {
+            JOptionPane.showMessageDialog(this, "No puede haber campos vacios", this.getTitle(),
+                    JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        try {
+            int x = Integer.parseInt(campoMin);
+            int y = Integer.parseInt(campoMax);
+            if(x>y) {
+                JOptionPane.showMessageDialog(this, "La cantidad maxima de alumnos debe ser mayor o igual a la minima.", this.getTitle(),
+                        JOptionPane.ERROR_MESSAGE);
+                return false; 	
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Los campos de Cantidad Socios debe ser un numero", this.getTitle(),
+                    JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        try {
+            Integer.parseInt(campoAnio);
+            Integer.parseInt(campoAnioR);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "La fecha de ingresada no es valida", this.getTitle(),
+                    JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        return true;
+    }
+	
+    public void cargarInstitucion() {
+        DefaultComboBoxModel<String> model;
+        model = new DefaultComboBoxModel<>();
+        model.addElement("-");
+        for(String x: controlClase.obtenerInstituciones()) {
+            model.addElement(x);
+        }
+        boxInstitucion.setModel(model);
+    }
 	
 	// Limpia el JInternalFrame
 	public void clear() {
@@ -504,5 +624,4 @@ public class AltaDictadoClase extends JInternalFrame {
         boxProfesor.removeAllItems();
         boxProfesor.setEnabled(false);
     }
-
 }

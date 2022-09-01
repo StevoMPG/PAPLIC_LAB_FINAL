@@ -66,6 +66,12 @@ public class Cuponera {
 		return nomnom;
 	}
 	
+	public void addActDep(ActividadDeportiva act, int num) {
+		ClasesCuponera claCup = new ClasesCuponera(num,this,act);
+		cp.add(claCup);
+		act.addClasesCup(claCup);
+		costo = costo + (1 - descuento/100)*act.getCosto()*num;
+	}
 	
 	public int cantidadClases(ActividadDeportiva actDep) {
 		for(ClasesCuponera cc: cp) {

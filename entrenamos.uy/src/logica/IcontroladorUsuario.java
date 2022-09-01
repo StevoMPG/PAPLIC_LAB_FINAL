@@ -13,6 +13,6 @@ public interface IcontroladorUsuario {
 	
 	public int ingresarDatosUsuario(DtUsuario datoUsuario) throws InstitucionException;
 	public DtUsuario seleccionarUsuario (String usuarioNickname) throws UsuarioNoExisteException;
-	
+	public void editarDatosBasicos(String userNick, DtUsuario datoUser) throws UsuarioNoExisteException;
 	
 }

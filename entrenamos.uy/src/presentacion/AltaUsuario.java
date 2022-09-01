@@ -334,6 +334,8 @@ public class AltaUsuario extends JInternalFrame {
 			public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
 				comboBoxInstitucion.removeAllItems();
 				comboBoxInstitucion.addItem("-");
+				for(String ins:controlUsr.obtenerInstituciones())
+					comboBoxInstitucion.addItem(ins);
 			}
 		});
 		comboBoxInstitucion.addMouseListener(new MouseAdapter() {
@@ -446,26 +448,11 @@ public class AltaUsuario extends JInternalFrame {
 		JButton btnAceptar = new JButton("Aceptar");
 		btnAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(tomarDatos()==0) {
+				if(tomarDatos()==0)
 					clear();
 					setVisible(false);
-				}
 			}
 		});
-		
-		btnNewButton = new JButton("Open File");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				JFileChooser chooser = new JFileChooser();
-				chooser.showOpenDialog(chooser);
-				chooser.setVisible(true);
-			}
-		});
-		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
-		gbc_btnNewButton.insets = new Insets(0, 0, 5, 5);
-		gbc_btnNewButton.gridx = 1;
-		gbc_btnNewButton.gridy = 19;
-		getContentPane().add(btnNewButton, gbc_btnNewButton);
 		GridBagConstraints gbc_btnAceptar = new GridBagConstraints();
 		gbc_btnAceptar.anchor = GridBagConstraints.NORTH;
 		gbc_btnAceptar.insets = new Insets(0, 0, 5, 5);
@@ -489,6 +476,7 @@ public class AltaUsuario extends JInternalFrame {
 		
 
 	}
+	
 	
 	
 	 //Se encarga de limpiar datos ingresados por el usuario

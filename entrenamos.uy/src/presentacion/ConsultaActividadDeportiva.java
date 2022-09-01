@@ -32,14 +32,16 @@ import javax.swing.JTextArea;
 import java.util.Set;
 
 import logica.IcontroladorActividadDeportiva;
-
-
+import excepciones.ActividadDeportivaException;
+import excepciones.InstitucionException;
+import datatypes.DtActividadDeportivaExtra;
+import datatypes.DtFechaHora;
 
 @SuppressWarnings("serial")
 public class ConsultaActividadDeportiva extends JInternalFrame {
 	
 	//Controller
-
+	private IcontroladorActividadDeportiva IADC;
 	private JLabel lblCabecera;
 	private JPanel panelInsActDep;
 	private JLabel lblIns;
@@ -72,9 +74,10 @@ public class ConsultaActividadDeportiva extends JInternalFrame {
 	private ConsultaDictadoClase refClase;
 	private ConsultaCuponeras refCup;
 	
-	public ConsultaActividadDeportiva() {
+	public ConsultaActividadDeportiva(IcontroladorActividadDeportiva IADC) {
 		
-
+		
+		this.IADC = IADC;
 		
 		//Configuracion del frame
 		setTitle("Consulta Actividad Deportiva");
@@ -131,6 +134,7 @@ public class ConsultaActividadDeportiva extends JInternalFrame {
         		String z = null,t=(String) comboBoxIns.getSelectedItem();
         		if(comboBoxActDep.isEnabled()) 
         			z=(String) comboBoxActDep.getSelectedItem();
+        		cargarInstitucion();
         		comboBoxIns.setSelectedItem(t);
         		if(comboBoxActDep.isEnabled()) 
         			comboBoxActDep.setSelectedItem(z);
@@ -144,6 +148,10 @@ public class ConsultaActividadDeportiva extends JInternalFrame {
 	    			DefaultComboBoxModel<String> modelActividad = new DefaultComboBoxModel<>();
 	    			modelActividad.addElement("-");     		
 	    			if (selectIndex > 0) {
+	        			Set<String> actividades = IADC.obtenerActividades((String) comboBoxIns.getItemAt(selectIndex));
+	                    for (String x: actividades) {
+	                    	modelActividad.addElement(x);
+	                    }
 	                    comboBoxActDep.setEnabled(true);
 	        		} else {
 	        			comboBoxActDep.setEnabled(false);
@@ -155,10 +163,10 @@ public class ConsultaActividadDeportiva extends JInternalFrame {
 	    				nodoAct = new DefaultMutableTreeNode("No hay actividad deportiva seleccionada.");
 	    				add(nodoAct);
 	    				}}));
-        		} catch (Exception ignore) { }
+        		} catch (InstitucionException ignore) { }
         	}
         });
-
+		cargarInstitucion();
 		GridBagConstraints gbc_comboBoxIns = new GridBagConstraints();
 		gbc_comboBoxIns.insets = new Insets(0, 0, 5, 0);
 		gbc_comboBoxIns.fill = GridBagConstraints.HORIZONTAL;
@@ -187,7 +195,7 @@ public class ConsultaActividadDeportiva extends JInternalFrame {
 		comboBoxActDep.addItemListener(new ItemListener() {
         	public void itemStateChanged(ItemEvent e) {
         		if (comboBoxIns.getSelectedIndex() >0 && comboBoxActDep.getSelectedIndex() > 0) {
-        			// Falta funcion
+        			loadData();
         		} else {
         			textFieldNombre.setText("");
         			textFieldDesc.setText("");
@@ -267,7 +275,7 @@ public class ConsultaActividadDeportiva extends JInternalFrame {
 		panelDatosAD.add(lblDesc, gbc_lblDesc);
 		textFieldDesc.setBorder(BorderFactory.createCompoundBorder(border, 
 			      BorderFactory.createEmptyBorder(10, 10, 10, 10)));
-
+		//panelDatosAD.add(textFieldDesc, gbc_textFieldDesc);
 		
 		lblDuracion = new JLabel("Duracion:");
 		GridBagConstraints gbc_lblDuracion = new GridBagConstraints();
@@ -445,6 +453,7 @@ public class ConsultaActividadDeportiva extends JInternalFrame {
 		gbc_tree.fill = GridBagConstraints.BOTH;
 		gbc_tree.gridx = 0;
 		gbc_tree.gridy = 0;
+		//panelClasesCuponeras.add(tree, gbc_tree);
 		tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
 		TreeSelectionListener lst = new TreeSelectionListener() {
 			public void valueChanged(TreeSelectionEvent e) {
@@ -452,7 +461,14 @@ public class ConsultaActividadDeportiva extends JInternalFrame {
 				 if(node == null) 
 					 return;
 				 DefaultMutableTreeNode dad = (DefaultMutableTreeNode) node.getParent();
-				
+				 if(dad != null && dad.getUserObject().equals("Cuponeras")) {
+					 //Ref CU. Consulta Cuponeras
+					 refCup.refEntry((String) node.getUserObject());
+				 }
+				 if(dad != null && dad.getUserObject().equals("Clases")) {
+					 //Ref CU. Consulta Clases
+					 refClase.refEntry((String)comboBoxActDep.getSelectedItem(), (String) node.getUserObject());
+				 }
 			}
 		};
 		tree.addTreeSelectionListener(lst);
@@ -465,6 +481,57 @@ public class ConsultaActividadDeportiva extends JInternalFrame {
 
 	}
 	
+	private void loadData() {
+		try {
+			DtActividadDeportivaExtra actDep = IADC.getActDepExt((String)comboBoxIns.getSelectedItem(),(String)comboBoxActDep.getSelectedItem());
+			textFieldNombre.setText(actDep.getNombre());
+			textFieldDesc.setText(actDep.getDescripcion());
+			textFieldDur.setText(Integer.toString(actDep.getDuracionMinutos()));
+			textFieldCosto.setText(Float.toString(actDep.getCosto()));
+			DtFechaHora fecha = actDep.getFechaRegistro();
+			textFieldDia.setText(Integer.toString(fecha.getDia()));
+			textFieldMes.setText(Integer.toString(fecha.getMes()));
+			textFieldAnio.setText(Integer.toString(fecha.getAnio()));
+			
+			tree.setModel(new DefaultTreeModel(
+					new DefaultMutableTreeNode("lol") {
+						{
+							DefaultMutableTreeNode nodoCl = new DefaultMutableTreeNode("Clases");
+							DefaultMutableTreeNode nodoCup = new DefaultMutableTreeNode("Cuponeras");
+							for(String x: actDep.getClases()) {
+								nodoCl.add(new DefaultMutableTreeNode(x));
+							}
+							for(String x: actDep.getCuponeras()) {
+								nodoCup.add(new DefaultMutableTreeNode(x));
+							}
+							add(nodoCl);
+							add(nodoCup);
+						}
+					}
+				));
+		} catch (InstitucionException e) {
+			JOptionPane.showMessageDialog(this, e.getMessage(), getTitle(), JOptionPane.ERROR_MESSAGE);
+		} catch (ActividadDeportivaException e) {
+			JOptionPane.showMessageDialog(this, e.getMessage(), getTitle(), JOptionPane.ERROR_MESSAGE);
+		}
+	}
+	
+	private void cargarInstitucion() {
+        DefaultComboBoxModel<String> modelInstituciones;
+        modelInstituciones = new DefaultComboBoxModel<>();
+        //modelInstituciones.addElement("---Seleccione una institucion---");
+		modelInstituciones.addElement("-");
+        for (String ins: IADC.obtenerInstituciones()) {
+        	modelInstituciones.addElement(ins);
+        }
+        comboBoxIns.setModel(modelInstituciones);
+    }
+	
+    public void setRef(ConsultaDictadoClase Refcdc,ConsultaCuponeras Refcc) {
+    	refClase = Refcdc;
+    	refCup = Refcc;
+    }
+    
 	
     
 	public void clear() {
@@ -478,4 +545,49 @@ public class ConsultaActividadDeportiva extends JInternalFrame {
 		textFieldMes.setText("");
 		textFieldAnio.setText("");
 	}
+	
+	public void refEntry(String actDep) {
+		
+		try {
+			if(actDep.contains("/")) {
+				actDep = actDep.split("/")[0];
+				actDep = actDep.trim();
+			}
+	        DefaultComboBoxModel<String> model;
+	        String institf=null;
+	        model = new DefaultComboBoxModel<>();
+	        model.addElement("-");
+	        for(String x: IADC.obtenerInstituciones()) {
+	            model.addElement(x);
+	            for(String y: IADC.obtenerActividades(x)) {
+	            	if(y.equals(actDep)) {
+	            		institf = x;
+	            	}
+	            }
+	            if(institf != null)
+	            	break;
+	        }
+	        comboBoxIns.setModel(model);
+	        comboBoxIns.getModel().setSelectedItem(institf);
+			Set<String> actividades = IADC.obtenerActividades(institf);
+			DefaultComboBoxModel<String> modelActividad = new DefaultComboBoxModel<>();
+			modelActividad.addElement("-");
+	        for (String x: actividades) {
+	        	modelActividad.addElement(x);
+	        }
+	        comboBoxActDep.setEnabled(true);
+	        comboBoxActDep.setModel(modelActividad);
+	        comboBoxActDep.getModel().setSelectedItem(actDep);
+			loadData();
+			if (this.isVisible()) 
+				this.toFront();
+			else {
+				this.setVisible(true);
+			}
+		} catch (InstitucionException e) {
+			JOptionPane.showMessageDialog(this, e.getMessage(), 
+					"Alta actividad deportiva", JOptionPane.ERROR_MESSAGE);
+		}
+	}
 }
+

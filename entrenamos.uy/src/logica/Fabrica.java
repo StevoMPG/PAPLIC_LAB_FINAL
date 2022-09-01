@@ -16,7 +16,22 @@ public class Fabrica {
 		return icu;
 	}
 	
-
+	public IcontroladorActividadDeportiva obtenerIcontroladorActDeportiva() {
+		IcontroladorActividadDeportiva iact = controladorActividadDeportiva.getInstance();
+		return iact;
+	}
+	
+	
+	
+	public IcontroladorClase obtenerIcontroladorDictadoClase(){
+    	IcontroladorClase idic = controladorClase.getInstance();
+    	return idic;
+     }
+    
+    public IcontroladorCuponera obtenerIcontroladorCuponera() {
+    	IcontroladorCuponera idep = controladorCuponera.getInstance();
+    	return idep;
+     }
 		
 	
 }

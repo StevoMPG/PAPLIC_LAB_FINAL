@@ -14,8 +14,6 @@ public class controladorUsuario implements IcontroladorUsuario {
 	
 	private static controladorUsuario instancia = null;
 	
-	private controladorUsuario () {}
-	
 	public static controladorUsuario getInstance() {
 		if (instancia == null) {
 			instancia = new controladorUsuario();
@@ -64,6 +62,16 @@ public class controladorUsuario implements IcontroladorUsuario {
 		}else {
 			DtProfesorExtra dtExtra = ((Profesor)user).getDtExt();
 			return dtExtra;
+		}
+	}
+
+	public void editarDatosBasicos(String userNick, DtUsuario datoUser) throws UsuarioNoExisteException {
+		manejadorUsuario hu = manejadorUsuario.getInstance();
+		Usuario user = hu.findUsuario(userNick);
+		if (user instanceof Profesor) {
+			((Profesor)user).editarDatos(((DtProfesor)datoUser));
+		} else {
+			user.editarDatos(datoUser);
 		}
 	}
 }

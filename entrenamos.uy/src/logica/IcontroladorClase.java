@@ -1,5 +1,43 @@
 package logica;
 
+import java.util.Set;
+
+import datatypes.DtClase;
+import datatypes.DtClaseExtra;
+import datatypes.DtFechaHora;
+import datatypes.tipoRegistro;
+
+import excepciones.ActividadDeportivaException;
+import excepciones.ClaseException;
+import excepciones.FechaInvalidaException;
+import excepciones.InstitucionException;
+import excepciones.NoExisteCuponeraException;
+import excepciones.UsuarioNoExisteException;
+
+
 public interface IcontroladorClase {
 
+	
+	public Set<String> obtenerUsuarios();
+	
+	public Set<String> obtenerInstituciones();
+	
+	public Set<String> obtenerActividades(String ins) throws InstitucionException ;
+	
+	public Set<String> obtenerProfesores(String ins) throws InstitucionException ;
+	
+	public Set<String> obtenerClases(String ins, String actDep) throws InstitucionException ;
+	
+	public DtClaseExtra seleccionarClase(String  ins, String actDep, String clase) throws InstitucionException, ClaseException,
+			ActividadDeportivaException;
+	
+	public int ingresarDatosClase(String ins, String actDep, DtClase datos) throws  InstitucionException, FechaInvalidaException,
+			ClaseException, UsuarioNoExisteException, ActividadDeportivaException;
+	
+	public void inscribirSocio(String ins, String actDep, String clase, String socio, tipoRegistro tipoRegistro, DtFechaHora fechaReg) 
+			throws  ClaseException, FechaInvalidaException, NoExisteCuponeraException, InstitucionException, 
+			UsuarioNoExisteException, ActividadDeportivaException;
+
+	public Set<String> obtenerSocios();
+	
 }

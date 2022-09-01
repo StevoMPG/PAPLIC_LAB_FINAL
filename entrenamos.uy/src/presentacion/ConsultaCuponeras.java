@@ -33,21 +33,26 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
 
-
+import datatypes.DtClasesCuponeras;
+import datatypes.DtCuponera;
+import excepciones.NoExisteCuponeraException;
 
 @SuppressWarnings("serial")
 public class ConsultaCuponeras extends JInternalFrame{
 	
 	
 	//Controller
+	private IcontroladorCuponera IDC;
 	//Components
 	private JComboBox<String> cbCuponera;
 	private JTree treeCuponera;
 	private ConsultaActividadDeportiva refAd;
 	JScrollPane scrollPane;
 	
-	public ConsultaCuponeras() {
-
+	public ConsultaCuponeras (IcontroladorCuponera IDC) {
+		
+		this.IDC = IDC;
+		
 		//Configuracion del JFRAME
 		setResizable(true);
 		setIconifiable(true);
@@ -99,13 +104,41 @@ public class ConsultaCuponeras extends JInternalFrame{
 					treeCuponera.setModel(new DefaultTreeModel(
 							new DefaultMutableTreeNode("No hay cuponera seleccionada.")));
 				}
+				else {
+					try {
+						DtCuponera x = IDC.seleccionarCuponera((String) cbCuponera.getSelectedItem());
+						treeCuponera.setModel(new DefaultTreeModel(
+								new DefaultMutableTreeNode("Cuponera \""+x.getNombre()+"\"") {
+									{
+										DefaultMutableTreeNode nodoAct;
+										add(new DefaultMutableTreeNode("Nombre: "+x.getNombre()));
+										add(new DefaultMutableTreeNode("Descripcion: "+x.getDescripcion()));
+										add(new DefaultMutableTreeNode("Valida a partir del: "+x.getFechaInicio().toFecha()));
+										add(new DefaultMutableTreeNode("Valida hasta el: "+x.getFechaFin().toFecha()));
+										add(new DefaultMutableTreeNode("Fecha de registro: "+x.getFechaAlta().toFecha()));
+										add(new DefaultMutableTreeNode("Costo: "+Math.round(x.getCosto())));
+										add(new DefaultMutableTreeNode("Descuento que aplica: "+x.getDescuento()+"%"));
+										nodoAct = new DefaultMutableTreeNode("Actividades deportivas");
+										for(DtClasesCuponeras v: x.getContenido()) {
+											nodoAct.add(new DefaultMutableTreeNode(v.getNombreActividad()+" / "+v.getCantidadClases()+" clases."));
+										}
+										if(nodoAct.getChildCount()==0) {
+											nodoAct.add(new DefaultMutableTreeNode("No hay actividades asociadas a esta cuponera."));
+										}
+										add(nodoAct);
+									}
+								}
+							));
+					} catch (NoExisteCuponeraException ignore) { }
+				}
 			}
 		});
-		
 		DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>();
-
+		Set<String> ss= IDC.getNombreCuponeras();
 		model.addElement("-");
-		
+		for(String x: ss ) {
+			model.addElement(x);
+		}
 		cbCuponera.setModel(model);
 		cbCuponera.addPopupMenuListener(new PopupMenuListener() {
 			public void popupMenuCanceled(PopupMenuEvent e) {
@@ -113,7 +146,16 @@ public class ConsultaCuponeras extends JInternalFrame{
 			public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
 			}
 			public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
-				// Falta la funcion del pop up
+				Set<String> tt = IDC.getNombreCuponeras();
+				if(cbCuponera.getItemCount()!=tt.size()+1) {
+					String t = (String) cbCuponera.getSelectedItem();
+					cbCuponera.removeAllItems();
+					model.addElement("-");
+					for(String x: IDC.getNombreCuponeras()) {
+						cbCuponera.addItem(x);
+					}
+					cbCuponera.setSelectedItem(t);
+				}
 			}
 		});
 
@@ -158,7 +200,11 @@ public class ConsultaCuponeras extends JInternalFrame{
 				 DefaultMutableTreeNode node = (DefaultMutableTreeNode) treeCuponera.getLastSelectedPathComponent();
 				 if(node == null) 
 					 return;
-				 
+				 DefaultMutableTreeNode dad = (DefaultMutableTreeNode) node.getParent();
+				 if(dad != null && dad.getUserObject().equals("Actividades deportivas")) {
+					 //Ref actdep.
+					 refAd.refEntry((String) node.getUserObject());
+				 }
 			}
 		};
 		treeCuponera.addTreeSelectionListener(lst);
@@ -177,5 +223,29 @@ public class ConsultaCuponeras extends JInternalFrame{
 		getContentPane().add(verticalStrut_1, gbc_verticalStrut_1);
 		
 	}
+	
+    public void cbCuponeraLoad() {
+		DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>();
+		Set<String> ss= IDC.getNombreCuponeras();
+		model.addElement("-");
+		for(String x: ss ) {
+			model.addElement(x);
+		}
+    }
+    public void setRef(ConsultaActividadDeportiva a) {
+    	refAd = a;
+    }
+    public void refEntry(String c) {
+    	
+			
+		cbCuponeraLoad();
+		cbCuponera.getModel().setSelectedItem(c);
+		if (this.isVisible()) 
+			this.toFront();
+		else {
+			this.setVisible(true);
+		}
+    }
 }
+
    
