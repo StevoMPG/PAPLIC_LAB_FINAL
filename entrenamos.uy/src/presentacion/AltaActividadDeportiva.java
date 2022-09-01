@@ -74,6 +74,8 @@ public class AltaActividadDeportiva extends JInternalFrame{
 	
 	public AltaActividadDeportiva(IcontroladorActividadDeportiva IADC) {
 		
+		this.IADC = IADC;
+		
 		setResizable(true);
 		//Configuracion del internal frame
 		setTitle("Alta Actividad Deportiva");
