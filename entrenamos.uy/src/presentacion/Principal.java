@@ -96,13 +96,13 @@ public class Principal {
 		
 				//AltaUsuario:
 				altaUsuario = new AltaUsuario(IUC);
-				altaUsuario.setLocation(462, 25);
+				altaUsuario.setLocation(125, 11);
 				altaUsuario.setVisible(false);
 				desktopPane.add(altaUsuario);	
 				
 				//AltaActividadDeportiva
 				altaActDep = new AltaActividadDeportiva(IADC);
-				altaActDep.setLocation(20, 20);
+				altaActDep.setLocation(181, 11);
 				altaActDep.setSize(450, 500);
 				altaActDep.setVisible(false);
 				desktopPane.add(altaActDep);
