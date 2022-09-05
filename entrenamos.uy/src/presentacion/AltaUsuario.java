@@ -124,7 +124,7 @@ public class AltaUsuario extends JInternalFrame {
 		int gridWidth = iframeWidth/columns;
 		int gridHeight = iframeHeight/rows;
 		int x = gridWidth+gridHeight;
-		setBounds(100, 25, 440, 700); // w,h
+		setBounds(100, 25, 440, 710); // w,h
 		
 		setTitle("Alta de usuario");
 		getContentPane().setLayout(new FormLayout(new ColumnSpec[] {
@@ -406,18 +406,18 @@ public class AltaUsuario extends JInternalFrame {
 				v.setDialogTitle("Imagenes");
 				if(Abrir==JFileChooser.APPROVE_OPTION) {
 					String url = v.getSelectedFile().getPath();
-					lblFoto.setIcon(new ImageIcon(url));
+					lblFoto.setIcon(new ImageIcon(new ImageIcon(url).getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH)));
 					
 					
 				}
 				
 			}
 		});
-		getContentPane().add(btnNewButton_1, "5, 36, center, center");
+		getContentPane().add(btnNewButton_1, "9, 36, 2, 1, center, center");
 		
 		lblFoto = new JLabel("");
 		lblFoto.setBackground(Color.GRAY);
-		getContentPane().add(lblFoto, "5, 38, 1, 10, center, center");
+		getContentPane().add(lblFoto, "5, 37, 1, 11, center, center");
 		getContentPane().add(btnAceptar, "9, 37, center, top");
 		
 		JButton btnCancelar = new JButton("Limpiar");

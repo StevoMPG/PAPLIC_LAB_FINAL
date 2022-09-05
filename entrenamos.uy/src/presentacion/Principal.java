@@ -175,7 +175,7 @@ public class Principal {
 		// Frame con dimensiones 
 		entrenamosUy = new JFrame();
 		entrenamosUy.setTitle("entrenamos.uy - Administrador");
-		entrenamosUy.setBounds(100, 100, 1200, 700);
+		entrenamosUy.setBounds(100, 100, 1200, 870);
 		entrenamosUy.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		entrenamosUy.setResizable(true);
 		entrenamosUy.setIconImage(new ImageIcon(getClass().getResource("/img/entrenamos.png")).getImage());
