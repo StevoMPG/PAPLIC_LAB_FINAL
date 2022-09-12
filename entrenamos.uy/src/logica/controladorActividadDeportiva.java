@@ -14,7 +14,7 @@ import datatypes.DtActividadDeportiva;
 import datatypes.DtActividadDeportivaExtra;
 import datatypes.DtClaseExtra;
 import datatypes.DtInstitucion;
-import datatypes.tipoEstado;
+
 
 public class controladorActividadDeportiva  implements IcontroladorActividadDeportiva {
 
