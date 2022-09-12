@@ -4,13 +4,15 @@ public class DtUsuario {
 
 	private String nickname, nombre, apellido, email;
 	private DtFechaHora fechaNacimiento;
+	private byte[] imagen;
 	
-	public DtUsuario (String nickname, String nombre, String apellido, String email, DtFechaHora fechaNacimiento) {
+	public DtUsuario (String nickname, String nombre, String apellido, String email, DtFechaHora fechaNacimiento,  byte[] imagen2) {
 		this.nickname = nickname;
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.email = email;
 		this.fechaNacimiento = fechaNacimiento;
+		this.imagen = imagen2;
 	}
 	
 	public String getNombre() {
@@ -31,5 +33,9 @@ public class DtUsuario {
 	
 	public DtFechaHora getFechaNacimiento() {
 		return this.fechaNacimiento;
+	}
+	
+	public byte[] getImagen() {
+		return imagen;
 	}
 }

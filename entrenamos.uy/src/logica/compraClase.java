@@ -1,6 +1,7 @@
 package logica;
 
 import datatypes.DtFechaHora;
+import datatypes.DtcompraClase;
 import datatypes.tipoRegistro;
 
 public class compraClase {
@@ -13,12 +14,12 @@ public class compraClase {
 	
 
 	
-	compraClase(DtFechaHora f,tipoRegistro t, float cc, Clase c, Socio s, Cuponera cupon){
-		aSocio = s;
-		aClase = c;
-		fechaInscripcion = f;
-		tipo = t;
-		costo = cc;
+	compraClase(DtFechaHora fecha,  tipoRegistro tipoRegistro,  float precio,  Clase aula,  Socio individuoAsociadoAlClub,  Cuponera cupon){
+		aSocio = individuoAsociadoAlClub;
+		aClase = aula;
+		fechaInscripcion = fecha;
+		tipo = tipoRegistro;
+		costo = precio;
 		cup = cupon;
 	}
 	
@@ -58,5 +59,14 @@ public class compraClase {
 
 	public Clase getClase() {
 		return aClase;
+	}
+	public Socio getSocio() {
+		return aSocio;
+	}
+	
+	public DtcompraClase getDt() {
+		String cuponera = (cup == null) ? new String() : cup.getNombre();
+		return new DtcompraClase(aClase.getNombre(), aSocio.getNickname(), cuponera, fechaInscripcion,
+				tipo, costo);
 	}
 }

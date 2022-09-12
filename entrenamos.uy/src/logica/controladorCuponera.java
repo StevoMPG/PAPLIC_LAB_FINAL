@@ -1,10 +1,12 @@
 package logica;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import datatypes.DtCuponera;
 import datatypes.DtFechaHora;
 import excepciones.ActividadDeportivaException;
+import excepciones.CuponeraInmutableException;
 import excepciones.CuponeraRepetidaException;
 import excepciones.FechaInvalidaException;
 import excepciones.InstitucionException;
@@ -36,11 +38,12 @@ public class controladorCuponera implements IcontroladorCuponera {
 	public Set<String> getNombreCuponeras(){
 		return getHC().getNombreCuponeras();
 	}
-		
-	public void agregarActividadCuponera(String nombreCuponera, String institucion, String actividadDeportiva, int cantidadClases) 
-			throws InstitucionException, ActividadDeportivaException {
-		getHC().getCup(nombreCuponera).addActDep(getHI().findInstitucion(institucion).getActDep(actividadDeportiva),cantidadClases);
+
+	public void agregarActividadCuponera(String nombreCuponera,  String institucion,  String actividadDeportiva,  int cantidadClases) 
+			throws InstitucionException,  ActividadDeportivaException,  CuponeraInmutableException{
+		getHC().getCup(nombreCuponera).addActDep(getHI().findInstitucion(institucion).getActDep(actividadDeportiva),  cantidadClases);
 	}
+		
 		
 	public DtCuponera seleccionarCuponera(String n) throws NoExisteCuponeraException {
 		manejadorCuponera hu = manejadorCuponera.getInstance();
@@ -57,4 +60,15 @@ public class controladorCuponera implements IcontroladorCuponera {
 	private manejadorCuponera getHC() {
 		return manejadorCuponera.getInstance();
 	}
+	
+	public Set<String> getNombreCuponerasSinRecibos(){
+		Set<String> res = new HashSet<>();
+		for (String x: getHC().getNombreCuponeras()) {
+			if (getHC().getCup(x).getRc().size()==0)
+				res.add(x);
+
+		}
+		return res;
+	}
 }
+

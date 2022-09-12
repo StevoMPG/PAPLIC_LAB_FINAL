@@ -561,11 +561,11 @@ public class ModificarDatosUsuario extends JInternalFrame {
             biografiaU = textAreaBiografia.getText().trim();
             websiteU = textFieldWebsite.getText().trim();
             institucionU = textFieldInstitucion.getText().trim();
-			datosUser = new DtProfesor(nicknameU,nombreU,apellidoU,emailU, new DtFechaHora(anioU,mesU,diaU,0,0,0),institucionU, descripcionU,biografiaU,websiteU);
+			datosUser = new DtProfesor(nicknameU,nombreU,apellidoU,emailU, new DtFechaHora(anioU,mesU,diaU,0,0,0),institucionU, descripcionU,biografiaU,websiteU, null);
 		}
 		else //Se asume que si no es profesor es socio
 		{
-			datosUser = new DtSocio(nicknameU,nombreU,apellidoU,emailU, new DtFechaHora(anioU,mesU,diaU,0,0,0));
+			datosUser = new DtSocio(nicknameU,nombreU,apellidoU,emailU, new DtFechaHora(anioU,mesU,diaU,0,0,0), null);
 		}
 		
 		/*

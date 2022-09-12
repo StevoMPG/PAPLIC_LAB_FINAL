@@ -26,6 +26,7 @@ import logica.IcontroladorCuponera;
 import java.util.Set;
 
 import excepciones.ActividadDeportivaException;
+import excepciones.CuponeraInmutableException;
 import excepciones.InstitucionException;
 
 @SuppressWarnings("serial")
@@ -279,6 +280,8 @@ public class AgregarActividadDeportivaCuponera extends JInternalFrame {
 			JOptionPane.showMessageDialog(this, e.getMessage(), this.getTitle(), JOptionPane.ERROR_MESSAGE); 
 		} catch (ActividadDeportivaException e) {
 			JOptionPane.showMessageDialog(this, e.getMessage(), this.getTitle(), JOptionPane.ERROR_MESSAGE); 
+		} catch (CuponeraInmutableException e) {
+			JOptionPane.showMessageDialog(this,  e.getMessage(),  this.getTitle(),  JOptionPane.ERROR_MESSAGE); 
 		}
 	}
 

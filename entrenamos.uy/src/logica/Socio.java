@@ -24,7 +24,7 @@ public class Socio extends Usuario {
 	
 	
 	public Socio(DtSocio datos) {
-		super(datos.getNickname(), datos.getNombre(), datos.getApellido(), datos.getEmail(), datos.getFechaNacimiento());
+		super(datos.getNickname(), datos.getNombre(), datos.getApellido(), datos.getEmail(), datos.getFechaNacimiento(), datos.getImagen());
 		compraCuponeras = new LinkedList<>();
 		compraClases = new LinkedList<>();
 	}
@@ -42,7 +42,7 @@ public class Socio extends Usuario {
 	}
 	
 	public DtSocio getDt() {
-		DtSocio datos = new DtSocio(this.getNickname(), this.getNombre(), this.getApellido(), this.getCorreo(), this.getFecha());
+		DtSocio datos = new DtSocio(this.getNickname(), this.getNombre(), this.getApellido(), this.getCorreo(), this.getFecha(), this.getImagen());
 		return datos;
 	}
 	
@@ -59,7 +59,7 @@ public class Socio extends Usuario {
     			}
     		}
     	}
-    	DtSocioExtra datosExt = new DtSocioExtra(this.getNickname(), this.getNombre(), this.getApellido(), this.getCorreo(), this.getFecha(), x);
+    	DtSocioExtra datosExt = new DtSocioExtra(this.getNickname(), this.getNombre(), this.getApellido(), this.getCorreo(), this.getFecha(), x, this.getImagen());
     	return datosExt;
     }
 	
@@ -105,5 +105,12 @@ public class Socio extends Usuario {
 		} else {
 			throw new ClaseException("Este Usuario ya esta inscripto a esta Clase.");
 		}
+	}
+	
+	
+	
+	
+	public void remClase(compraClase rec) {
+		compraClases.remove(rec);
 	}
 }

@@ -17,7 +17,7 @@ import excepciones.UsuarioNoExisteException;
 
 public interface IcontroladorClase {
 
-	
+
 	public Set<String> obtenerUsuarios();
 	
 	public Set<String> obtenerInstituciones();
@@ -39,5 +39,12 @@ public interface IcontroladorClase {
 			UsuarioNoExisteException, ActividadDeportivaException;
 
 	public Set<String> obtenerSocios();
+	
+	public String obtenerInstitucionActDep(String actDep);
+	
+	public Set<String> getCuponerasSocioClase(String nombreSocio, String nombreInst, String nombreAd, String nombreClase);
+	
+	public Set<String> getCuponerasDisponibles(String nombreSocio,  String nombreInst,  String nombreAd) 
+			throws UsuarioNoExisteException,  InstitucionException,  ActividadDeportivaException;
 	
 }

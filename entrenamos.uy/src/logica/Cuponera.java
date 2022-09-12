@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import datatypes.DtFechaHora;
+import excepciones.CuponeraInmutableException;
 import datatypes.DtClasesCuponeras;
 import datatypes.DtCuponera;
 
@@ -13,7 +14,7 @@ public class Cuponera {
 	private float descuento,costo;
 	
 	private List<ClasesCuponera> cp;
-	private List<compraCuponera> rc;
+	private List<compraCuponera> comprasCuponardos;
 	
 	Cuponera(String nombre, String descripcion, int descuento, DtFechaHora fechaInicio, DtFechaHora fechaFin, DtFechaHora fechaAlta){
 		this.nombre = nombre;
@@ -23,7 +24,7 @@ public class Cuponera {
 		this.fechaFin = new DtFechaHora(fechaFin);
 		this.fechaAlta = new DtFechaHora(fechaAlta);
 		this.cp = new ArrayList<>();
-		this.rc = new ArrayList<>();
+		this.comprasCuponardos = new ArrayList<>();
 		costo = 0;
 	}
 	
@@ -66,12 +67,15 @@ public class Cuponera {
 		return nomnom;
 	}
 	
-	public void addActDep(ActividadDeportiva act, int num) {
-		ClasesCuponera claCup = new ClasesCuponera(num,this,act);
+	public void addActDep(ActividadDeportiva act,  int num) throws CuponeraInmutableException{
+		if (comprasCuponardos.size()>0)
+			throw new CuponeraInmutableException("No es posible modificar la cuponera dado que ya hay socios que la compraron.");
+		ClasesCuponera claCup = new ClasesCuponera(num,  this,  act);
 		cp.add(claCup);
 		act.addClasesCup(claCup);
 		costo = costo + (1 - descuento/100)*act.getCosto()*num;
 	}
+
 	
 	public int cantidadClases(ActividadDeportiva actDep) {
 		for(ClasesCuponera cc: cp) {
@@ -99,6 +103,11 @@ public class Cuponera {
 	}
 
 	public List<compraCuponera> getRc() {
-		return rc;
+		return comprasCuponardos;
 	}
+	
+	public void addRecibo(compraCuponera reciboCup) {
+		comprasCuponardos.add(reciboCup);
+	}
+	
 }

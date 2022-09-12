@@ -4,28 +4,28 @@ import datatypes.DtFechaHora;
 
 public class compraCuponera {
 	private DtFechaHora fechaCompra;
-	private Cuponera c;
-	private Socio s;
+	private Cuponera cuponera;
+	private Socio socio;
 	
-	compraCuponera(DtFechaHora compra,Cuponera c,Socio s){
-		this.c = c;
-		this.s = s;
+	compraCuponera(DtFechaHora compra,  Cuponera cupi,  Socio socio){
+		this.cuponera = cupi;
+		this.socio = socio;
 		fechaCompra = new DtFechaHora(compra);
 	}
 	
 	public DtFechaHora getFechaCompra() {
-		DtFechaHora r = new DtFechaHora(fechaCompra);
-		return r;
+		DtFechaHora fecha = new DtFechaHora(fechaCompra);
+		return fecha;
 	}
 	public int cantidadClases(ActividadDeportiva act) {
-		return c.cantidadClases(act);
+		return cuponera.cantidadClases(act);
 	}
 
 	public Socio getSocio() {
-		return s;
+		return socio;
 	}
 	
 	public Cuponera getCuponera() {
-		return c;
+		return cuponera;
 	}
 }

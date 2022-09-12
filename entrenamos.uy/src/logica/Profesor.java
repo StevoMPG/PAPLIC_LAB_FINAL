@@ -4,6 +4,7 @@ import datatypes.DtProfesor;
 import datatypes.DtProfesorExtra;
 import java.util.Set;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -13,10 +14,11 @@ public class Profesor extends Usuario {
 	private String descripcion, biografia, website;
 	private Institucion instituto;
 	private Map<String, Clase> misClases;
+	private Map<String,  ActividadDeportiva> misActividades;
 	
 	
 	public Profesor(DtProfesor datos) {
-		super(datos.getNickname(), datos.getNombre(), datos.getApellido(), datos.getEmail(), datos.getFechaNacimiento());
+		super(datos.getNickname(), datos.getNombre(), datos.getApellido(), datos.getEmail(), datos.getFechaNacimiento(), datos.getImagen());
 		this.setDescripcion(datos.getDescripcion());
 		this.setBiografia(datos.getBiografia());
 		this.setWebsite(datos.getLink());
@@ -86,8 +88,8 @@ public class Profesor extends Usuario {
     			}
     		}
     	}
-    	DtProfesorExtra datosExt = new DtProfesorExtra(nickname,nombre,apellido,correo,fechaNacimiento,instituto.getNombre(),
-    			descripcion,biografia,website,x);
+    	DtProfesorExtra datosExt = new DtProfesorExtra(getNickname(), getNombre(), getApellido(), getCorreo(), getFecha(), getInstitucion().getNombre(),
+    			getDescripcion(), getBiografia(), getWebsite(),x, getImagen());
     	return datosExt;
     }
     
@@ -97,4 +99,22 @@ public class Profesor extends Usuario {
     	this.setBiografia(datos.getBiografia());
     	this.setWebsite(datos.getLink());
     }
+    
+    
+    
+    
+	public void addActDep(ActividadDeportiva dasdf) {
+		misActividades.put(dasdf.getNombre(),  dasdf);
+	}
+    
+	public void remActDep(ActividadDeportiva ad) {
+		Set<String> todel = new HashSet<>();
+		for(Entry<String, Clase> d: misClases.entrySet()) {
+			if(d.getValue().getAD()==ad)
+				todel.add(d.getKey());
+		}
+		for(String x: todel)
+			misClases.remove(x);
+		misActividades.remove(ad.getNombre());
+	}
 }

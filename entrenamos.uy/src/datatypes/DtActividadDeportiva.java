@@ -7,6 +7,7 @@ public class DtActividadDeportiva {
 	private int duracionMinutos;
 	private float costo;
 	private DtFechaHora fechaRegistro;
+	
 
 	public DtActividadDeportiva(String nom, String desc, int dur, float cos, DtFechaHora fech){
 		this.nombre = nom;
@@ -14,6 +15,7 @@ public class DtActividadDeportiva {
 		this.duracionMinutos = dur;
 		this.costo = cos;
 		this.fechaRegistro = fech;
+
 	}
 	
 	public String getNombre() {
@@ -35,5 +37,5 @@ public class DtActividadDeportiva {
 	public DtFechaHora getFechaRegistro() {
 		return this.fechaRegistro;
 	}
-
+	
 }

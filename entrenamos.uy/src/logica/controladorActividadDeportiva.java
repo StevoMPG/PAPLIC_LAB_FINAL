@@ -2,16 +2,19 @@ package logica;
 
 
 import java.util.HashSet;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import excepciones.ActividadDeportivaException;
 import excepciones.ClaseException;
 import excepciones.InstitucionException;
-
+import excepciones.UsuarioNoExisteException;
+import logica.persistencia.DataPersistencia;
 import datatypes.DtActividadDeportiva;
 import datatypes.DtActividadDeportivaExtra;
 import datatypes.DtClaseExtra;
 import datatypes.DtInstitucion;
+import datatypes.tipoEstado;
 
 public class controladorActividadDeportiva  implements IcontroladorActividadDeportiva {
 
@@ -31,37 +34,46 @@ public class controladorActividadDeportiva  implements IcontroladorActividadDepo
 	public Set<String> obtenerActividades(String ins) throws InstitucionException {
 		return getHI().findInstitucion(ins).obtenerNombresActDep();
 	}
-	public Boolean ingresarDatosActividadDep(String nombreInsti, DtActividadDeportiva datosAD) throws InstitucionException,
-			ActividadDeportivaException{
+	
+	
+	public Boolean ingresarDatosActividadDep(String nombreInsti,  DtActividadDeportiva datosAD) throws InstitucionException, ActividadDeportivaException{
 		Institucion inst = getHI().findInstitucion(nombreInsti);
 		for (String x : getHI().obtenerInstituciones()) {
 			if (getHI().findInstitucion(x).existeActDep(datosAD.getNombre())) {
 				throw new ActividadDeportivaException("La Actividad Deportiva ya existe en el Sistema.");
 			}
 		}
+/*		try {
+			if (DataPersistencia.getInstance().obtenerActividades().contains(datosAD.getNombre())) {
+				throw new ActividadDeportivaException("La Actividad Deportiva ya existe en la base de datos del Sistema.");
+			}
+		} catch(ActividadDeportivaException ignore) { } */
 		if (!inst.existeActDep(datosAD.getNombre())) {
-			inst.addActividadDeportiva(datosAD);
+			inst.addActividadDeportiva(datosAD, null);
 			return true;
 		}
 		return false;
 	}
+
 	
 	public Set<String> seleccionarInstitucion(String ins) throws InstitucionException {
 		return getHI().findInstitucion(ins).obtenerNombresActDep();
 	}
 	
-	public Set<String> obtenerDeltaInstituciones(String nombreCup, String ins) throws InstitucionException {
-		Set<String> x = new HashSet<>();
-		for(String y: getHI().findInstitucion(ins).getActsDeps().keySet()) {
-			x.add(y);
-			for(String z: getHC().getCup(nombreCup).getNombresActDep()) {
-				if(y.equals(z)) {
-					x.remove(y);
+	public Set<String> obtenerDeltaInstituciones(String nombreCup,  String ins) throws InstitucionException {
+		Set<String> actividadesDeportivas = new HashSet<>();
+		for (String y: getHI().findInstitucion(ins).getActsDeps().keySet()) {
+			actividadesDeportivas.add(y);
+			for (String z: getHC().getCup(nombreCup).getNombresActDep()) {
+				if (y.equals(z)) {
+					actividadesDeportivas.remove(y);
 					break;
 				}
 			}
 		}
-		return x;
+		Set<String> res = new HashSet<>();
+		res.addAll(actividadesDeportivas);
+		return res;
 	}
 	
 	public DtClaseExtra seleccionarClase(String inst, String actDep, String clase) throws InstitucionException, 
@@ -101,4 +113,6 @@ public class controladorActividadDeportiva  implements IcontroladorActividadDepo
 		Institucion instit = getHI().findInstitucion(inst);
 		return instit.obtenerDatos();
 	}
+
+
 }

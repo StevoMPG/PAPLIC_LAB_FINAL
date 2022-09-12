@@ -35,5 +35,6 @@ public interface IcontroladorActividadDeportiva {
 	public int altaInstitucion(String nombre, String descripcion, String URL);
 	
 	public DtInstitucion obtenerDatosInstitucion(String inst) throws InstitucionException;
+
 }
 

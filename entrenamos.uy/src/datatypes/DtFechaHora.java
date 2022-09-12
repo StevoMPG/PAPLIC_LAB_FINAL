@@ -1,6 +1,8 @@
 package datatypes;
 
 import java.time.LocalDateTime;    
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 public class DtFechaHora {
 
@@ -29,6 +31,15 @@ public class DtFechaHora {
 		this.horas = q.getHoras();
 		this.minutos = q.getMinutos();
 		this.segundos = q.getSegundos();
+	}
+	
+	public DtFechaHora(Calendar c) {
+		this.anio = c.get(Calendar.YEAR);
+		this.mes = c.get(Calendar.MONTH) + 1;
+		this.dia = c.get(Calendar.DAY_OF_MONTH);
+		this.horas = c.get(Calendar.HOUR_OF_DAY);
+		this.minutos = c.get(Calendar.MINUTE);
+		this.segundos = c.get(Calendar.SECOND);
 	}
 	
 	public int getAnio() {
@@ -77,5 +88,13 @@ public class DtFechaHora {
 		min2 = fechaAComp.getMinutos() + (fechaAComp.getHoras() + (fechaAComp.getDia() + (fechaAComp.getMes() + 
 				(fechaAComp.getAnio()) * 12) * 31) * 24) * 60;
 		return (min1 <= min2);
+	}
+	
+	public boolean equals(DtFechaHora f) {
+		return anio==f.getAnio() && mes==f.getMes() && dia==f.getDia() && horas==f.getHoras() && minutos==f.getMinutos() && segundos==f.getSegundos();
+	}
+	
+	public Calendar toCalendar() {
+		return new GregorianCalendar(getAnio(),getMes()-1,getDia(),getHoras(),getMinutos(),getSegundos());
 	}
 }

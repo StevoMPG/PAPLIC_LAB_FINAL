@@ -5,6 +5,7 @@ import java.util.Set;
 import datatypes.DtCuponera;
 import datatypes.DtFechaHora;
 import excepciones.ActividadDeportivaException;
+import excepciones.CuponeraInmutableException;
 import excepciones.CuponeraRepetidaException;
 import excepciones.FechaInvalidaException;
 import excepciones.InstitucionException;
@@ -18,9 +19,10 @@ public interface IcontroladorCuponera {
 	
 	public Set<String> getNombreCuponeras();
 	
-	public void agregarActividadCuponera(String nombre, String instituto,String actividadDeportiva, int cantidadClases) 
-			throws InstitucionException, ActividadDeportivaException;
+	public void agregarActividadCuponera(String nombre,  String instituto,  String actividadDeportiva,  int cantidadClases) 
+			throws InstitucionException,  ActividadDeportivaException,  CuponeraInmutableException;
 	
 	public DtCuponera seleccionarCuponera(String n) throws NoExisteCuponeraException;
 }
+
 

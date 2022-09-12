@@ -16,6 +16,7 @@ import javax.swing.ImageIcon;
 
 import logica.Fabrica;
 import logica.IcontroladorUsuario;
+import main.Main;
 import logica.IcontroladorActividadDeportiva;
 import logica.IcontroladorClase;
 import logica.IcontroladorCuponera;
@@ -31,7 +32,10 @@ import datatypes.tipoRegistro;
 import excepciones.NoExisteCuponeraException;
 import excepciones.ActividadDeportivaException;
 import excepciones.ClaseException;
+import excepciones.CuponeraInmutableException;
+import excepciones.CuponeraNoExisteException;
 import excepciones.CuponeraRepetidaException;
+import excepciones.FechaInvalidaException;
 import excepciones.InstitucionException;
 import excepciones.UsuarioNoExisteException;
 
@@ -65,7 +69,9 @@ public class Principal {
 
 	/**
 	 * Launch the application.
-	 */
+	 
+	 VIEJO MAIN
+	 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -78,7 +84,7 @@ public class Principal {
 			}
 		});
 	}
-
+*/
 	/**
 	 * Create the application.
 	 */
@@ -173,22 +179,23 @@ public class Principal {
 	private void initialize() {
 		
 		// Frame con dimensiones 
-		entrenamosUy = new JFrame();
-		entrenamosUy.setTitle("entrenamos.uy - Administrador");
-		entrenamosUy.setBounds(100, 100, 1200, 870);
-		entrenamosUy.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		entrenamosUy.setResizable(true);
-		entrenamosUy.setIconImage(new ImageIcon(getClass().getResource("/img/entrenamos.png")).getImage());
-		
+		setEntrenamosUy ( new JFrame());
+		getEntrenamosUy().setTitle("entrenamos.uy - Administrador");
+		getEntrenamosUy().setBounds(100, 100, 1200, 870);
+		getEntrenamosUy().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	    getEntrenamosUy().setResizable(true);
+		getEntrenamosUy().setIconImage(new ImageIcon(getClass().getResource("/img/entrenamos.png")).getImage());
+				
 		// El "escritorio"
 		desktopPane = new JDesktopPane();
 		desktopPane.setBackground(new Color(111,188,199));
-		entrenamosUy.getContentPane().add(desktopPane);
-		
-		
+		getEntrenamosUy().getContentPane().add(desktopPane);
+				
+				
 		// Crea el JMenuBar (la barra del menu de arriba)
 		JMenuBar menuBar = new JMenuBar();
-        entrenamosUy.setJMenuBar(menuBar);
+		getEntrenamosUy().setJMenuBar(menuBar);
+
 
         
         
@@ -205,6 +212,14 @@ public class Principal {
         		cerrar();
         	}
         });
+        
+		JMenuItem itemPueba = new JMenuItem("Cargar Datos Prueba");
+		menuSistema.add(itemPueba);
+		itemPueba.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cargarDatosPrueba();
+			}
+		});
         
         // Salgo de la aplicación
         JMenuItem itemSalir = new JMenuItem("Salir");
@@ -432,6 +447,14 @@ public class Principal {
 	}
 
 
+	public JFrame getEntrenamosUy() {
+		return entrenamosUy;
+	}
+
+	public void setEntrenamosUy(JFrame entrenamosUy) {
+		this.entrenamosUy = entrenamosUy;
+	}
+
 	// Funcion para limpiar el desktop
 	private void cerrar() {
 		altaUsuario.setVisible(false);
@@ -448,5 +471,47 @@ public class Principal {
 		aggCup.setVisible(false);
 	}
 	
+	
+	private void cargarDatosPrueba() {
+		try {
+			if(IADC.obtenerInstituciones().size()>0) {
+	        	JOptionPane.showMessageDialog(desktopPane, "Los datos de prueba solo pueden cargarse con el sistema vacío.",  "Info",  JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			Main.cargaDeCasos();
+		    JOptionPane.showMessageDialog(desktopPane,  "Se han cargado los datos de prueba exitosamente.",  
+		    		"Info",  JOptionPane.INFORMATION_MESSAGE);
+        } catch (FechaInvalidaException e) {
+        	JOptionPane.showMessageDialog(desktopPane,  "Ha ocurrido un error durante la carga de casos de prueba: " +
+        			e.getMessage(),  "Info",  JOptionPane.ERROR_MESSAGE);
+        } catch (ClaseException e) {
+        	JOptionPane.showMessageDialog(desktopPane,  "Ha ocurrido un error durante la carga de casos de prueba: " +
+        			e.getMessage(),  "Info",  JOptionPane.ERROR_MESSAGE);
+        } catch (NoExisteCuponeraException e) {
+        	JOptionPane.showMessageDialog(desktopPane,  "Ha ocurrido un error durante la carga de casos de prueba: " +
+        			e.getMessage(),  "Info",  JOptionPane.ERROR_MESSAGE);
+        } catch (InstitucionException e) {
+        	JOptionPane.showMessageDialog(desktopPane,  "Ha ocurrido un error durante la carga de casos de prueba: " +
+        			e.getMessage(),  "Info",  JOptionPane.ERROR_MESSAGE);
+        } catch (UsuarioNoExisteException e) {
+        	JOptionPane.showMessageDialog(desktopPane,  "Ha ocurrido un error durante la carga de casos de prueba: " +
+        			e.getMessage(),  "Info",  JOptionPane.ERROR_MESSAGE);
+        } catch (ActividadDeportivaException e) {
+        	JOptionPane.showMessageDialog(desktopPane,  "Ha ocurrido un error durante la carga de casos de prueba: " +
+        			e.getMessage(),  "Info",  JOptionPane.ERROR_MESSAGE);
+		} catch (CuponeraRepetidaException e) {
+			JOptionPane.showMessageDialog(desktopPane,  "Ha ocurrido un error durante la carga de casos de prueba: " +
+        			e.getMessage(),  "Info",  JOptionPane.ERROR_MESSAGE);
+		} catch (CuponeraInmutableException e) {
+			JOptionPane.showMessageDialog(desktopPane,  "Ha ocurrido un error durante la carga de casos de prueba: " +
+	    			e.getMessage(),  "Info",  JOptionPane.ERROR_MESSAGE);
+		} catch (CuponeraNoExisteException e) {
+			JOptionPane.showMessageDialog(desktopPane,  "Ha ocurrido un error durante la carga de casos de prueba: " +
+	    			e.getMessage(),  "Info",  JOptionPane.ERROR_MESSAGE);
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(desktopPane,  "Ha ocurrido un error excepcional durante la carga de casos de prueba: " +
+	    			e.getMessage(),  "Info",  JOptionPane.ERROR_MESSAGE);
+		}
+    }
 }
 

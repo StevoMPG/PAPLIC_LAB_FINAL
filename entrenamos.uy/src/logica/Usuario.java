@@ -9,13 +9,15 @@ public abstract class Usuario {
     
     protected DtFechaHora fechaNacimiento;
 
-
-    public Usuario(String nick, String nombre, String apellido, String correo, DtFechaHora fecha) {
+    private byte[] imagen;
+    
+    public Usuario(String nick, String nombre, String apellido, String correo, DtFechaHora fecha,  byte[] imagen) {
         this.setNickname(nick);
     	this.setNombre(nombre);
         this.setApellido(apellido);
         this.setCorreo(correo);
         this.setFecha(fecha);
+        this.setImagen(imagen);
     }
     
 
@@ -59,6 +61,16 @@ public abstract class Usuario {
     public DtFechaHora getFecha() {
     	return fechaNacimiento;
     }
+    
+    
+    private void setImagen(byte[] imagen) {
+    	this.imagen = imagen;
+    }
+    
+    public byte[] getImagen() {
+    	return imagen;
+    }
+    
     
     public abstract boolean esSocio();
 

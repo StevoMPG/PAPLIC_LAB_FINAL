@@ -24,10 +24,10 @@ public class Institucion {
     private Set<Profesor> profesores;
 	private Logger log;
 	
-    public Institucion(String n, String u, String d) {
-        this.nombre = n;
-        this.URL = u;
-        this.descripcion = d;
+    public Institucion(String nombre,   String descripcion,   String url) {
+        this.nombre = nombre;
+        this.URL = url;
+        this.descripcion = descripcion;
         this.actsDeps = new HashMap<>();
         this.profesores = new HashSet<>();
         
@@ -37,12 +37,25 @@ public class Institucion {
 		log.addHandler(handler);
     }
 
-    public String getNombre() {return nombre;}
-    public String getURL() {return URL;}
-    public String getDescripcion() {return this.descripcion;}
-    public Map<String, ActividadDeportiva> getActsDeps() {return this.actsDeps;}
-    public Set<Profesor> getProfesores() {return profesores;}  
-    public ActividadDeportiva findActividad(String actDepNombre) {return actsDeps.get(actDepNombre);}
+
+    public String getNombre() {
+    	return nombre;
+    }
+    public String getURL() {
+    	return URL;
+    }
+    public String getDescripcion() {
+    	return this.descripcion;
+    }
+    public Map<String,   ActividadDeportiva> getActsDeps(){ 
+    	return this.actsDeps;
+    }
+    public Set<Profesor> getProfesores() {
+    	return profesores;
+    }  
+    public ActividadDeportiva findActividad(String actDepNombre) {
+    	return actsDeps.get(actDepNombre);
+    }
 
     public void addProfesor(Profesor profe) {
     	profesores.add(profe);
@@ -50,14 +63,15 @@ public class Institucion {
     }
     
 
-    public int addActividadDeportiva(DtActividadDeportiva datosAD) {
-        ActividadDeportiva actDep = new ActividadDeportiva(datosAD);
+    public int addActividadDeportiva(DtActividadDeportiva datosAD, Profesor creador) {
+        ActividadDeportiva actDep = new ActividadDeportiva(datosAD, creador);
         if (actsDeps.containsKey(datosAD.getNombre()))
         	return 1;
-		actsDeps.put(datosAD.getNombre(), actDep);
+		actsDeps.put(datosAD.getNombre(),   actDep);
     	log.info("Institucion "+nombre+" event: "+" new actDep "+actDep.getNombre());
 		return 0;
     }
+
 
     public Boolean existeActDep(String nombreActDep) {
         return actsDeps.containsKey(nombreActDep);
@@ -98,6 +112,6 @@ public class Institucion {
 	}
 	
 	public DtInstitucion obtenerDatos() {
-		return new DtInstitucion(nombre, descripcion, URL);
+		return new DtInstitucion(nombre,   getDescripcion(),   getURL());
 	}
 }

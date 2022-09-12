@@ -14,25 +14,27 @@ public class Clase {
 	private int maxSocios;
 	private String URL;
 	private DtFechaHora fechaRegistro;
-	private List<compraClase> ListReciboClase;
 	private Profesor p;
-	private ActividadDeportiva a;
+	private ActividadDeportiva actDep;
+	private List<compraClase> listaReciboClase;
 	
-	Clase(DtClase d, Profesor p, ActividadDeportiva a){
-		this.a = a;
-		this.nombre = d.getNombre();
-		this.fechaClase = d.getFechaClase();
-		this.minSocios = d.getMinSocios();
-		this.maxSocios = d.getMaxSocios();
-		this.URL = d.getURL();
-		this.fechaRegistro = d.getFechaRegistro();
-		this.p = p;
-		this.ListReciboClase = new ArrayList<compraClase>();
+	Clase(DtClase datoClase, Profesor profe, ActividadDeportiva actDep){
+		this.actDep = actDep;
+		this.nombre = datoClase.getNombre();
+		this.fechaClase = datoClase.getFechaClase();
+		this.minSocios = datoClase.getMinSocios();
+		this.maxSocios = datoClase.getMaxSocios();
+		this.URL = datoClase.getURL();
+		this.fechaRegistro = datoClase.getFechaRegistro();
+		this.p = profe;
+		this.listaReciboClase = new ArrayList<compraClase>();
+
 	}
 	
+	
 	public String getNombre() {
-		String s = nombre;
-		return s;
+		String res = nombre;
+		return res;
 	}
 	
 	public DtFechaHora getFechaClase() {
@@ -64,33 +66,39 @@ public class Clase {
 	public DtClaseExtra getDt() {
 		List<String> SoloNombres = new ArrayList<>();
 		List<String> ListNombres = new ArrayList<>();
-		for(compraClase x: ListReciboClase) {
+		for(compraClase x: listaReciboClase) {
 			ListNombres.add(x.getNickCorreoSocio());
 			SoloNombres.add(x.getNick());
 		}
-		DtClaseExtra x = new DtClaseExtra(nombre, p.getNickname(), p.getCorreo(), minSocios, maxSocios, URL, this.getFechaClase(),
-				this.getFechaRegistro(), ListNombres, SoloNombres);
-		return x;
+		
+		DtClaseExtra claseDatos = new DtClaseExtra(nombre,  p.getNickname(),  p.getCorreo(),  minSocios,  maxSocios,  URL,  this.getFechaClase(), 
+				this.getFechaRegistro(),  ListNombres,  SoloNombres);
+		return claseDatos;
 	}
 	
 	public boolean hayLugar() {
-		return ListReciboClase.size() < maxSocios;
+		return listaReciboClase.size() < maxSocios;
 	}
 	
 	public boolean tieneActividadDeportiva(ActividadDeportiva actDep) {
-		return actDep == a;
+		return this.actDep == actDep;
+	}
+
+	public void addRecibo(compraClase recibo) {
+		listaReciboClase.add(recibo);
+	}
+
+	public boolean tieneActividadDeportiva(String activity) {
+		return actDep.getNombre().equals(activity);
 	}
 	
-	public void addRecibo(compraClase rc) {
-		ListReciboClase.add(rc);
-	}
-	
-	public boolean tieneActividadDeportiva(String aa) {
-		return a.getNombre().equals(aa);
-	}
-	
+
 	public ActividadDeportiva getAD() {
-		return a;
+		return actDep;
+	}
+	
+	public List<compraClase> getRecibo(){
+		return listaReciboClase;
 	}
 	
 }
