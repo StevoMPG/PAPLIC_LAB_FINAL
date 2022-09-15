@@ -46,9 +46,9 @@ public class Main {
 	    		try {
 	    			// Nukeamos la persistencia.
 	    			DataPersistencia.getInstance().nuketownDetonator();
-	    			// cargaDeCasos();
+	    			cargaDeCasos();
 	    		} catch(Exception e) {
-	    			System.out.println("Oh noes! Ha habido un problema al cargar los casos de prueba. ");
+	    			System.out.println("UPS! Ha habido un problema al cargar los casos de prueba. ");
 	    			e.printStackTrace();
 	    		}
 	    	}
@@ -270,143 +270,143 @@ public class Main {
 		        // REGISTRO A CLASE
 	        	// #R1
 	        	IDCC.inscribirSocio("Fuerza Bruta",  "Aparatos y pesas",  "Calistenia",  "caro",  tipoRegistro.general,  
-	        			new DtFechaHora(2021, 4, 9, 0, 0, 0));
+	        			new DtFechaHora(2021, 4, 9, 0, 0, 0),  null);
 	        	// #R2
-	        	IDCC.inscribirSocio("Fuerza Bruta",  "Aparatos y pesas",  "Calistenia",  "sergiop",  tipoRegistro.general,  
-	        			new DtFechaHora(2021, 4, 10, 0, 0, 0));
+	      	    IDCC.inscribirSocio("Fuerza Bruta",  "Aparatos y pesas",  "Calistenia",  "sergiop",  tipoRegistro.general,  
+	        			new DtFechaHora(2021, 4, 10, 0, 0, 0),  null);
 	        	// #R3
 	        	IDCC.inscribirSocio("Fuerza Bruta",  "Aparatos y pesas",  "Calistenia",  "andy",  tipoRegistro.general,  
-	        			new DtFechaHora(2021, 4, 12, 0, 0, 0));
+	        			new DtFechaHora(2021, 4, 12, 0, 0, 0),  null);
 	        	// #R4
 	        	IDCC.inscribirSocio("Fuerza Bruta",  "Aparatos y pesas",  "Peso libre",  "andy",  tipoRegistro.general,  
-	        			new DtFechaHora(2021, 4, 15, 0, 0, 0));
+	        			new DtFechaHora(2021, 4, 15, 0, 0, 0),  null);
 	        	// #R5
 	        	IDCC.inscribirSocio("Fuerza Bruta",  "Aparatos y pesas",  "Peso libre",  "tonyp",  tipoRegistro.general,  
-	        			new DtFechaHora(2021, 4, 20, 0, 0, 0));
+	        			new DtFechaHora(2021, 4, 20, 0, 0, 0),  null);
 	        	// #R6
 	        	IDCC.inscribirSocio("Fuerza Bruta",  "Aparatos y pesas",  "Peso libre",  "caro",  tipoRegistro.general,  
-	        			new DtFechaHora(2021, 4, 25, 0, 0, 0));
+	        			new DtFechaHora(2021, 4, 25, 0, 0, 0),  null);
 	        	// #R7
 	        	IDCC.inscribirSocio("Fuerza Bruta",  "Aparatos y pesas",  "Peso libre",  "m1k4",  tipoRegistro.general,  
-	        			new DtFechaHora(2021, 4, 28, 0, 0, 0));
+	        			new DtFechaHora(2021, 4, 28, 0, 0, 0),  null);
 	        	// #R8
 	        	IDCC.inscribirSocio("Fuerza Bruta",  "Aparatos y pesas",  "Aparatos",  "charly",  tipoRegistro.general,  
-	        			new DtFechaHora(2021, 4, 16, 0, 0, 0));
+	        			new DtFechaHora(2021, 4, 16, 0, 0, 0),  null);
 	        	// #R9
 	        	IDCC.inscribirSocio("Fuerza Bruta",  "Aparatos y pesas",  "Aparatos",  "caro",  tipoRegistro.general,  
-	        			new DtFechaHora(2021, 5, 14, 0, 0, 0));
+	        			new DtFechaHora(2021, 5, 14, 0, 0, 0),  null);
 	        	// #R10
 	        	IDCC.inscribirSocio("Fuerza Bruta",  "Aparatos y pesas",  "Aparatos",  "m1k4",  tipoRegistro.general,  
-	        			new DtFechaHora(2021, 5, 20, 0, 0, 0));
+	        			new DtFechaHora(2021, 5, 20, 0, 0, 0),  null);
 	        	// #R11
 	        	IDCC.inscribirSocio("Telón",  "Voleibol",  "Voleibol",  "Emi71",  tipoRegistro.general,  
-	        			new DtFechaHora(2021, 5, 5, 0, 0, 0));
+	        			new DtFechaHora(2021, 5, 5, 0, 0, 0),  null);
 	        	// #R12
 	        	IDCC.inscribirSocio("Telón",  "Voleibol",  "Voleibol",  "euge",  tipoRegistro.general,  
-	        			new DtFechaHora(2021, 5, 10, 0, 0, 0));
+	        			new DtFechaHora(2021, 5, 10, 0, 0, 0),  null);
 	        	// #R13
 	        	IDCC.inscribirSocio("Telón",  "Voleibol",  "Voleibol",  "sergiop",  tipoRegistro.general,  
-	        			new DtFechaHora(2021, 5, 15, 0, 0, 0));
+	        			new DtFechaHora(2021, 5, 15, 0, 0, 0),  null);
 				// #R14
 				IDCC.inscribirSocio("Telón",  "Voleibol",  "Voleibol",  "tonyp",  tipoRegistro.general,  
-						new DtFechaHora(2021, 5, 20, 0, 0, 0));
+						new DtFechaHora(2021, 5, 20, 0, 0, 0),  null);
 				// #R15
 				IDCC.inscribirSocio("Telón",  "Voleibol",  "Braza",  "guille",  tipoRegistro.general,  
-						new DtFechaHora(2021, 6, 8, 0, 0, 0));
+						new DtFechaHora(2021, 6, 8, 0, 0, 0),  null);
 				// #R16
 				IDCC.inscribirSocio("Telón",  "Voleibol",  "Braza",  "euge",  tipoRegistro.general,  
-						new DtFechaHora(2021, 6, 13, 0, 0, 0));
+						new DtFechaHora(2021, 6, 13, 0, 0, 0),  null);
 				// #R17
 				IDCC.inscribirSocio("Telón",  "Voleibol",  "Braza",  "m1k4",  tipoRegistro.general,  
-						new DtFechaHora(2021, 6, 25, 0, 0, 0));
+						new DtFechaHora(2021, 6, 25, 0, 0, 0),  null);
 				// #R18
 				IDCC.inscribirSocio("Telón",  "Voleibol",  "Mariposa",  "charly",  tipoRegistro.general,  
-						new DtFechaHora(2021, 7, 5, 0, 0, 0));
+						new DtFechaHora(2021, 7, 5, 0, 0, 0),  null);
 				// #R19
 				IDCC.inscribirSocio("Telón",  "Voleibol",  "Mariposa",  "sergiop",  tipoRegistro.general,  
-						new DtFechaHora(2021, 7, 11, 0, 0, 0));
+						new DtFechaHora(2021, 7, 11, 0, 0, 0),  null);
 				// #R20
 				IDCC.inscribirSocio("Telón",  "Voleibol",  "Mariposa",  "andy",  tipoRegistro.general,  
-						new DtFechaHora(2021, 7, 18, 0, 0, 0));
-				// #R21 //cambiado tipoRegistro
-				IDCC.inscribirSocio("Instituto Natural",  "Aeróbica",  "Aeróbica niños",  "m1k4",  tipoRegistro.general,  
-						new DtFechaHora(2021, 8, 1, 0, 0, 0));
+						new DtFechaHora(2021, 7, 18, 0, 0, 0),  null);
+				// #R21
+				IDCC.inscribirSocio("Instituto Natural",  "Aeróbica",  "Aeróbica niños",  "m1k4",  tipoRegistro.cuponera,  
+						new DtFechaHora(2021, 8, 1, 0, 0, 0),  "Gimnasia");
 				// #R22
 				IDCC.inscribirSocio("Instituto Natural",  "Aeróbica",  "Aeróbico adulto mayor",  "Emi71",  tipoRegistro.general,  
-						new DtFechaHora(2021, 8, 17, 0, 0, 0));
+						new DtFechaHora(2021, 8, 17, 0, 0, 0),  null);
 				// #R23
 				IDCC.inscribirSocio("Instituto Natural",  "Aeróbica",  "Aeróbico adulto mayor",  "guille",  tipoRegistro.general,  
-						new DtFechaHora(2021, 8, 20, 0, 0, 0));
+						new DtFechaHora(2021, 8, 20, 0, 0, 0),  null);
 				// #R24
 				IDCC.inscribirSocio("Instituto Natural",  "Aeróbica",  "Aeróbico adulto mayor",  "andy",  tipoRegistro.general,  
-						new DtFechaHora(2021, 8, 23, 0, 0, 0));
-				// #R25 CAMBIADO
-				IDCC.inscribirSocio("Instituto Natural",  "Aeróbica",  "Aeróbica",  "caro",  tipoRegistro.general,  
-						new DtFechaHora(2021, 8, 15, 0, 0, 0)); // R25 C9 CO 15/08/21 560
+						new DtFechaHora(2021, 8, 23, 0, 0, 0),  null);
+				// #R25
+				IDCC.inscribirSocio("Instituto Natural",  "Aeróbica",  "Aeróbica",  "caro",  tipoRegistro.cuponera,  
+						new DtFechaHora(2021, 8, 15, 0, 0, 0),  "Gimnasia"); // R25 C9 CO 15/08/21 560
 				// #R26
 				IDCC.inscribirSocio("Instituto Natural",  "Aeróbica",  "Aeróbica",  "euge",  tipoRegistro.general,  
-						new DtFechaHora(2021, 8, 26, 0, 0, 0));
-				// #R27 CAMBIADO
-				IDCC.inscribirSocio("Fuerza Bruta",  "Kickboxing",  "Boxeo I",  "andy",  tipoRegistro.general,  
-						new DtFechaHora(2021, 7, 19, 0, 0, 0));
+						new DtFechaHora(2021, 8, 26, 0, 0, 0),  null);
+				// #R27
+				IDCC.inscribirSocio("Fuerza Bruta",  "Kickboxing",  "Boxeo I",  "andy",  tipoRegistro.cuponera,  
+						new DtFechaHora(2021, 7, 19, 0, 0, 0),  "Músculos");
 				// #R28
 				IDCC.inscribirSocio("Fuerza Bruta",  "Kickboxing",  "Boxeo I",  "tonyp",  tipoRegistro.general,  
-						new DtFechaHora(2021, 8, 16, 0, 0, 0));
+						new DtFechaHora(2021, 8, 16, 0, 0, 0),  null);
 				// #R29
 				IDCC.inscribirSocio("Fuerza Bruta",  "Kickboxing",  "Boxeo I",  "m1k4",  tipoRegistro.general,  
-						new DtFechaHora(2021, 8, 24, 0, 0, 0));
-				// #R30 CAMBIADO
-				IDCC.inscribirSocio("Fuerza Bruta",  "Kickboxing",  "Boxeo II",  "sergiop",  tipoRegistro.general,  
-						new DtFechaHora(2021, 8, 1, 0, 0, 0));
+						new DtFechaHora(2021, 8, 24, 0, 0, 0),  null);
+				// #R30
+				IDCC.inscribirSocio("Fuerza Bruta",  "Kickboxing",  "Boxeo II",  "sergiop",  tipoRegistro.cuponera,  
+						new DtFechaHora(2021, 8, 1, 0, 0, 0),  "Músculos");
 				// #R31
 				IDCC.inscribirSocio("Fuerza Bruta",  "Kickboxing",  "Boxeo II",  "guille",  tipoRegistro.general,  
-						new DtFechaHora(2021, 8, 30, 0, 0, 0));
+						new DtFechaHora(2021, 8, 30, 0, 0, 0),  null);
 				// #R32
 				IDCC.inscribirSocio("Fuerza Bruta",  "Kickboxing",  "Músculos para boxeo",  "Emi71",  tipoRegistro.general,  
-						new DtFechaHora(2021, 8, 16, 0, 0, 0));
+						new DtFechaHora(2021, 8, 16, 0, 0, 0),  null);
 				// #R33
 				IDCC.inscribirSocio("Fuerza Bruta",  "Kickboxing",  "Músculos para boxeo",  "caro",  tipoRegistro.general,  
-						new DtFechaHora(2021, 8, 16, 0, 0, 0));
+						new DtFechaHora(2021, 8, 16, 0, 0, 0),  null);
 				// #R34
 				IDCC.inscribirSocio("Fuerza Bruta",  "Kickboxing",  "Músculos para boxeo",  "euge",  tipoRegistro.general,  
-						new DtFechaHora(2021, 9, 1, 0, 0, 0));
+						new DtFechaHora(2021, 9, 1, 0, 0, 0),  null);
 				// #R35
 				IDCC.inscribirSocio("Fuerza Bruta",  "Kickboxing",  "Músculos para boxeo",  "sergiop",  tipoRegistro.general,  
-						new DtFechaHora(2021, 9, 5, 0, 0, 0));
+						new DtFechaHora(2021, 9, 5, 0, 0, 0),  null);
 				// #R36
 				IDCC.inscribirSocio("Telón",  "Atletismo",  "100 M",  "guille",  tipoRegistro.general,  
-						new DtFechaHora(2021, 8, 16, 0, 0, 0));
+						new DtFechaHora(2021, 8, 16, 0, 0, 0),  null);
 				// #R37
 				IDCC.inscribirSocio("Telón",  "Atletismo",  "100 M",  "charly",  tipoRegistro.general,  
-						new DtFechaHora(2021, 9, 3, 0, 0, 0));
+						new DtFechaHora(2021, 9, 3, 0, 0, 0),  null);
 				// #R38
 				IDCC.inscribirSocio("Telón",  "Atletismo",  "200 M",  "Emi71",  tipoRegistro.general,  
-						new DtFechaHora(2021, 8, 16, 0, 0, 0));
+						new DtFechaHora(2021, 8, 16, 0, 0, 0),  null);
 				// #R39
 				IDCC.inscribirSocio("Telón",  "Atletismo",  "200 M",  "charly",  tipoRegistro.general,  
-						new DtFechaHora(2021, 9, 6, 0, 0, 0));
-				// #R40 CAMBIADO
+						new DtFechaHora(2021, 9, 6, 0, 0, 0),  null);
+				// #R40
 				IDCC.inscribirSocio("Telón",  "Atletismo",  "Posta",  "caro",  tipoRegistro.general,  
-						new DtFechaHora(2021, 9, 1, 0, 0, 0));
+						new DtFechaHora(2021, 9, 1, 0, 0, 0), null);
 				// #R41
 				IDCC.inscribirSocio("Telón",  "Basquetbol",  "Basquet I",  "sergiop",  tipoRegistro.general,  
-						new DtFechaHora(2021, 8, 16, 0, 0, 0));
+						new DtFechaHora(2021, 8, 16, 0, 0, 0),  null);
 				// #R42
 				IDCC.inscribirSocio("Telón",  "Basquetbol",  "Basquet I",  "Emi71",  tipoRegistro.general,  
-						new DtFechaHora(2021, 8, 20, 0, 0, 0));
+						new DtFechaHora(2021, 8, 20, 0, 0, 0),  null);
 				// #R43
 				IDCC.inscribirSocio("Telón",  "Basquetbol",  "Basquet I",  "tonyp",  tipoRegistro.general,  
-						new DtFechaHora(2021, 8, 31, 0, 0, 0));
+						new DtFechaHora(2021, 8, 31, 0, 0, 0),  null);
 				// #R44
 				IDCC.inscribirSocio("Telón",  "Basquetbol",  "Basquet II",  "andy",  tipoRegistro.general,  
-						new DtFechaHora(2021, 8, 16, 0, 0, 0));
+						new DtFechaHora(2021, 8, 16, 0, 0, 0),  null);
 				// #R45
 				IDCC.inscribirSocio("Telón",  "Basquetbol",  "Basquet II",  "tonyp",  tipoRegistro.general,  
-						new DtFechaHora(2021, 8, 20, 0, 0, 0));
+						new DtFechaHora(2021, 8, 20, 0, 0, 0),  null);
 				// #R46
 				IDCC.inscribirSocio("Telón",  "Basquetbol",  "Basquet II",  "caro",  tipoRegistro.general,  
-						new DtFechaHora(2021, 9, 2, 0, 0, 0)); 
-				
+						new DtFechaHora(2021, 9, 2, 0, 0, 0),  null);
+			
 
 				
 			} catch (Exception e) {

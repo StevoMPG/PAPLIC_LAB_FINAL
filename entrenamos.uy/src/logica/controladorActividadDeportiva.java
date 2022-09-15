@@ -3,6 +3,11 @@ package logica;
 
 import java.util.HashSet;
 import java.util.Map.Entry;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
 import java.util.Set;
 
 import excepciones.ActividadDeportivaException;
@@ -20,8 +25,12 @@ public class controladorActividadDeportiva  implements IcontroladorActividadDepo
 
 	private static controladorActividadDeportiva instance = null;
 	
-	private controladorActividadDeportiva() {}
+	private controladorActividadDeportiva() {
+		
+
+	}
 	
+
 	public static controladorActividadDeportiva getInstance(){
 		if(instance == null)
 			instance = new controladorActividadDeportiva();
@@ -43,18 +52,16 @@ public class controladorActividadDeportiva  implements IcontroladorActividadDepo
 				throw new ActividadDeportivaException("La Actividad Deportiva ya existe en el Sistema.");
 			}
 		}
-/*		try {
-			if (DataPersistencia.getInstance().obtenerActividades().contains(datosAD.getNombre())) {
-				throw new ActividadDeportivaException("La Actividad Deportiva ya existe en la base de datos del Sistema.");
-			}
-		} catch(ActividadDeportivaException ignore) { } */
+
+		
 		if (!inst.existeActDep(datosAD.getNombre())) {
-			inst.addActividadDeportiva(datosAD, null);
+			
+			
+			inst.addActividadDeportiva(datosAD);
 			return true;
 		}
 		return false;
 	}
-
 	
 	public Set<String> seleccionarInstitucion(String ins) throws InstitucionException {
 		return getHI().findInstitucion(ins).obtenerNombresActDep();

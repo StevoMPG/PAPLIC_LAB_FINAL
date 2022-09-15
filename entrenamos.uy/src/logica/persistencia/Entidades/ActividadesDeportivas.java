@@ -1,19 +1,14 @@
 package logica.persistencia.Entidades;
 import java.io.Serializable;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -43,10 +38,6 @@ public class ActividadesDeportivas implements Serializable {
     @Column(name = "DESCRIPCION")
     private String descripcion;
     
-    
-    @Column(name = "INSTITUCION")
-    private String institucion;
-    
     @Column(name = "DURACION")
     private Integer duracion;
     
@@ -57,6 +48,9 @@ public class ActividadesDeportivas implements Serializable {
     @Column(name = "FECHA_ALTA")
     private Calendar fechaAlta;
     
+    @Column(name = "INSTITUCION")
+    private String institucion;
+    
     
     public String getNombre() {
         return nombre;
@@ -66,14 +60,7 @@ public class ActividadesDeportivas implements Serializable {
         this.nombre = nombre;
     }
     
-    public String getInsitucion() {
-        return institucion;
-    }
 
-    public void setInstitucion(String institucion) {
-        this.institucion = institucion;
-    }
-    
     public String getDescripcion() {
         return descripcion;
     }
@@ -106,6 +93,15 @@ public class ActividadesDeportivas implements Serializable {
         this.fechaAlta = fechaAlta;
     }
     
+    public String getInstitucion() {
+        return institucion;
+    }
+
+    public void setInstitucion(String institucion) {
+        this.institucion = institucion;
+    }
+    
+    
 	
     @Override
     public String toString() {
@@ -113,7 +109,6 @@ public class ActividadesDeportivas implements Serializable {
     			"/" + fechaAlta.get(Calendar.YEAR);
         return "ActividadesDeportivas [nombre = " + nombre +
         		", desripcion = " + descripcion +
-        		", institucion = " + institucion +
         		", duracion = " + duracion +
         		", costo = " + costo +
                 ", fechaAlt = " + fechaAlt +

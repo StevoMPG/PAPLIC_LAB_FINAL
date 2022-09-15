@@ -34,7 +34,7 @@ public interface IcontroladorClase {
 	public int ingresarDatosClase(String ins, String actDep, DtClase datos) throws  InstitucionException, FechaInvalidaException,
 			ClaseException, UsuarioNoExisteException, ActividadDeportivaException;
 	
-	public void inscribirSocio(String ins, String actDep, String clase, String socio, tipoRegistro tipoRegistro, DtFechaHora fechaReg) 
+	public void inscribirSocio(String ins, String actDep, String clase, String socio, tipoRegistro tipoRegistro, DtFechaHora fechaReg, String cuponera) 
 			throws  ClaseException, FechaInvalidaException, NoExisteCuponeraException, InstitucionException, 
 			UsuarioNoExisteException, ActividadDeportivaException;
 

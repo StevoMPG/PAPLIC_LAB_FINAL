@@ -43,13 +43,9 @@ public class Clases implements Serializable {
     @Column(name = "NICKNAME_PROFESOR")
     private String nicknameProfesor;
     
-	@Column(name = "FECHA_INICIO")
+	@Column(name = "FECHA_HORA_INICIO")
 	@Temporal(TemporalType.TIMESTAMP)
     private Calendar fechaInicio;
-	
-	@Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "HORA_INICIO")
-    private Calendar horaInicio;
 	
     @Column(name = "SOCIOS_MINIMOS")
     private Integer sociosMinimos;
@@ -64,11 +60,28 @@ public class Clases implements Serializable {
     @Column(name = "FECHA_ALTA")
     private Calendar fechaAlta;
     
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "NOMBRE_ACTIVIDAD")
-    private ActividadesDeportivas actividad;
+    @Column(name = "ACTIVIDAD")
+    private String actividad;
     
+    @Column(name = "INSTITUCION")
+    private String institucion;
+    
+    public String getActividad() {
+		return actividad;
+	}
 
+	public void setActividad(String actividad) {
+		this.actividad = actividad;
+	}
+	
+    public String getInstitucion() {
+		return institucion;
+	}
+
+	public void setInstitucion(String institucion) {
+		this.institucion = institucion;
+	}
+	
 	
     public String getNombre() {
 		return nombre;
@@ -78,20 +91,22 @@ public class Clases implements Serializable {
 		this.nombre = nombre;
 	}
 	
+	
+	public String getnicknameProfesor() {
+		return nicknameProfesor;
+	}
+
+	public void setnicknameProfesor(String nicknameProfesor) {
+		this.nicknameProfesor = nicknameProfesor;
+	}
+	
+	
     public Calendar getFechaInicio() {
         return fechaInicio;
     }
 
     public void setFechaInicio(Calendar fechaInicio) {
         this.fechaInicio = fechaInicio;
-    }
-    
-    public Calendar getHoraInicio() {
-        return horaInicio;
-    }
-
-    public void setHoraInicio(Calendar horaInicio) {
-        this.horaInicio = horaInicio;
     }
     
     public Integer getSociosMaximos() {
@@ -126,39 +141,29 @@ public class Clases implements Serializable {
         this.fechaAlta = fechaAlta;
     }
     
-    public ActividadesDeportivas getActividad() {
-		return actividad;
-	}
 
-	public void setActividad(ActividadesDeportivas actividad) {
-		this.actividad = actividad;
-	}
-
-
-    
-
-    
     @Override
     public String toString() {
     	DtFechaHora fechaIni = new DtFechaHora(fechaInicio);
-    	String horaIni = horaInicio.get(Calendar.HOUR_OF_DAY) + ":" + horaInicio.get(Calendar.MINUTE);
+    	
     	String fechaAlt = fechaAlta.get(Calendar.DAY_OF_MONTH) + "/" + String.valueOf(fechaAlta.get(Calendar.MONTH) + 1) + 
     			"/" + fechaAlta.get(Calendar.YEAR);
         return "Clases[ nombre = " + nombre +
+        		", nicknameProfesor = " + nicknameProfesor +
         		", fechaInicio = " + fechaIni +
-        		", horaInicio = " + horaIni +
         		", sociosMinimos = " + sociosMinimos +
         		", sociosMaximos = " + sociosMaximos +
                 ", url = " + url +
                 ", fechaAlta = " + fechaAlt +
-                ", actividad = " + actividad.getNombre() +
+                ", institucion = " + institucion +
+                ", actividad = " + actividad +
                 "]";
     }
     
     public DtClaseExtra toDtClaseExt() {
     	List<String> nickAlumnos = new ArrayList<>();
     	
-    	DtClaseExtra res = new DtClaseExtra(nombre, "", actividad.getNombre(), sociosMinimos, sociosMaximos, url, new DtFechaHora(fechaInicio),
+    	DtClaseExtra res = new DtClaseExtra(nombre, "", nicknameProfesor, sociosMinimos, sociosMaximos, url, new DtFechaHora(fechaInicio),
     			new DtFechaHora(fechaAlta), nickAlumnos, nickAlumnos);
     	return res;
     }   

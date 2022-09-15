@@ -1,6 +1,8 @@
 package logica;
 
+
 import datatypes.DtFechaHora;
+
 
 public class compraCuponera {
 	private DtFechaHora fechaCompra;

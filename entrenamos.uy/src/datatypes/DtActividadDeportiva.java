@@ -1,11 +1,20 @@
 package datatypes;
 
-public class DtActividadDeportiva {
-	
+import java.io.Serializable;
+
+
+public class DtActividadDeportiva implements Serializable {
+    private static final long serialVersionUID = 1L;
+    
+
 	private String nombre;
+
 	private String descripcion;
+
 	private int duracionMinutos;
+
 	private float costo;
+
 	private DtFechaHora fechaRegistro;
 	
 

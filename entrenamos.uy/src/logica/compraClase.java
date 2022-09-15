@@ -23,6 +23,8 @@ public class compraClase {
 		cup = cupon;
 	}
 	
+	
+	
 	public DtFechaHora getFechaInscripcion() {
 		DtFechaHora ret = new DtFechaHora(fechaInscripcion);
 		return ret;

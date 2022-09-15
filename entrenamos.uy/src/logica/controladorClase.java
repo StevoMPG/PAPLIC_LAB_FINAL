@@ -88,7 +88,7 @@ public class controladorClase implements IcontroladorClase {
 	}
 
 	
-	public void inscribirSocio(String ins,  String actDep,  String clase,  String socio,  tipoRegistro tipoRegistro,  DtFechaHora fechaReg) 
+	public void inscribirSocio(String ins,  String actDep,  String clase,  String socio,  tipoRegistro tipRegistro,  DtFechaHora fechaReg,  String cuponera) 
 			throws  ClaseException,  FechaInvalidaException,  NoExisteCuponeraException,  InstitucionException,  
 			UsuarioNoExisteException,  ActividadDeportivaException { 
 		ActividadDeportiva activity = getHI().findInstitucion(ins).getActDep(actDep);
@@ -103,9 +103,17 @@ public class controladorClase implements IcontroladorClase {
 		if (!fechaReg.esMenor(claseSelec.getFechaClase())) {
 			throw new FechaInvalidaException("La Fecha de Inscripcion es posterior a la Fecha en la que inicia la Clase seleccionada.");
 		}
-		((Socio) getHU().findUsuario(socio)).inscribirSocio(activity,  claseSelec,  tipoRegistro,  fechaReg);
+		if (tipRegistro==tipoRegistro.general) {
+			((Socio) getHU().findUsuario(socio)).inscribirSocio(activity,  claseSelec,  tipRegistro,  fechaReg, null);
+		}
+		else {
+			((Socio) getHU().findUsuario(socio)).inscribirSocio(activity,  claseSelec,  tipRegistro,  fechaReg,  getHC().getCup(cuponera));
+		}
 	
 	}
+	
+	
+
 	
 	public Set<String> obtenerSocios() {
 		return getHU().obtenerNicknameSocios();
@@ -118,6 +126,10 @@ public class controladorClase implements IcontroladorClase {
 	private static manejadorUsuario getHU() {
 		return  manejadorUsuario.getInstance();
 	}
+	
+	private static manejadorCuponera getHC() {
+		return  manejadorCuponera.getInstance();
+	}	
 	
 	public String obtenerInstitucionActDep(String actDep) {
 		String res = null;

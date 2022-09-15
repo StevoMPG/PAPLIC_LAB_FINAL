@@ -71,7 +71,7 @@ public class Socio extends Usuario {
 		return compraClases;
 	}
 	
-	public void inscribirSocio(ActividadDeportiva actDep, Clase cl, tipoRegistro t, DtFechaHora reg) throws NoExisteCuponeraException, ClaseException {
+/*	public void inscribirSocio(ActividadDeportiva actDep, Clase cl, tipoRegistro t, DtFechaHora reg,  Cuponera cupi) throws NoExisteCuponeraException, ClaseException {
 		boolean noEstaInsc = true;
 		for (compraClase res: compraClases) {
 			if (res.getNombreClase() == cl.getNombre()) {
@@ -84,6 +84,7 @@ public class Socio extends Usuario {
 				compraClases.add(nuevoRecibo);
 				cl.addRecibo(nuevoRecibo);	
 			} else {
+				int iteradorMagico=0;
 				for (compraCuponera y: compraCuponeras) {
 					Cuponera cupActual = y.getCuponera();
 					if (cupActual.tieneActividadDeportiva(actDep)) {
@@ -105,10 +106,37 @@ public class Socio extends Usuario {
 		} else {
 			throw new ClaseException("Este Usuario ya esta inscripto a esta Clase.");
 		}
+	}*/
+	
+	
+	public void inscribirSocio(ActividadDeportiva actDep,   Clase clase,   tipoRegistro tipoCuponera,   DtFechaHora reg,  Cuponera cupi) throws NoExisteCuponeraException,   
+	ClaseException {
+		boolean noEstaInsc = true;
+		for (compraClase res: compraClases) {
+			if (res.getNombreClase() == clase.getNombre()) {
+				noEstaInsc = false;
+			}
+		} 
+		if (noEstaInsc) {
+			if (tipoCuponera.equals(tipoRegistro.general)) {
+				compraClase nuevoRecibo = new compraClase(reg,   tipoRegistro.general,   actDep.getCosto(),   clase,   this,   null);
+				compraClases.add(nuevoRecibo);
+				clase.addRecibo(nuevoRecibo);	
+			} else {
+				int iteradorMagico=0;
+				for (compraClase reciboCl: compraClases)
+					if (reciboCl.esTipoCuponera() && reciboCl.getCuponera()==cupi)
+						iteradorMagico++;
+				if (iteradorMagico>=cupi.cantidadClases(actDep))
+					throw new NoExisteCuponeraException("La cuponera seleccionada no es válida.");
+				compraClase nuevoRecibo = new compraClase(reg,  tipoRegistro.cuponera,  actDep.getCosto(),  clase,  this,  cupi);
+				compraClases.add(nuevoRecibo);
+				clase.addRecibo(nuevoRecibo);
+			}
+		} else {
+			throw new ClaseException("Este Usuario ya esta inscripto a esta Clase.");
+		}
 	}
-	
-	
-	
 	
 	public void remClase(compraClase rec) {
 		compraClases.remove(rec);

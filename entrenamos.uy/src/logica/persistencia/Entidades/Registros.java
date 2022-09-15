@@ -5,16 +5,13 @@ import java.util.Calendar;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
-import datatypes.DtFechaHora;
-import datatypes.DtcompraClase;
-import datatypes.tipoRegistro;
 
 
 /**
@@ -24,23 +21,22 @@ import datatypes.tipoRegistro;
 
 
 @Entity
-@Table(name = "REGISTROS")
+@Table(name = "REGISTROS_CLASES")
 public class Registros implements Serializable {
     private static final long serialVersionUID = 1L;
-    //@EmbeddedId
-    //private RegistrosId primaryKey;
+
+   
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "ID")
+    private Long id;
     
-    //@Embeddable
-    //private class RegistrosId {
-	@Id
-	@ManyToOne
-    @JoinColumn(name = "ID_SOCIO")
-    private Socios socio;
     
-	@Id
-	@ManyToOne
-    @JoinColumn(name = "ID_CLASE")
-    private Clases clase;
+	@Column(name = "NOMBRE_SOCIO")
+    private String nsocio;
+    
+    @Column(name = "NOMBRE_CLASE")
+    private String nclase;
 
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -50,7 +46,18 @@ public class Registros implements Serializable {
     @Column(name = "COSTO")
     private Float costo;
     
+    
+    @Column(name = "TIPO_PAGO")
+    private boolean pago;
 
+    
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
     
     public Calendar getFechaRegistro() {
         return fechaRegistro;
@@ -68,36 +75,30 @@ public class Registros implements Serializable {
         this.costo = costo;
     }
 
-	public Socios getSocio() {
-		return socio;
+	public String getSocio() {
+		return nsocio;
 	}
 
-	public void setSocio(Socios socio) {
-		this.socio = socio;
+	public void setSocio(String nsocio) {
+		this.nsocio = nsocio;
 	}
 
-	public Clases getClase() {
-		return clase;
+	public String getClase() {
+		return nclase;
 	}
 
-	public void setClase(Clases clase) {
-		this.clase = clase;
+	public void setClase(String nclase) {
+		this.nclase = nclase;
 	}
-    
+	
+	
+	public boolean getTipoPago() {
+		return pago;
+	}
+
+	public void setTipoPago(boolean pago) {
+		this.pago = pago;
+	}
    
 
-    @Override
-    public String toString() {
-        return "Registros[Socio = " + socio.getNickname() +
-        		", Clase = " + clase.getNombre() +
-        		", FechaRegistro = " + new DtFechaHora(fechaRegistro) +
-        		", Costo = " + costo + 
-                "]";
-    }
-
-    public DtcompraClase toDtReciboClase() {
-    	DtcompraClase res = new DtcompraClase(clase.getNombre(), socio.getNickname(), "", 
-    			new DtFechaHora(fechaRegistro), tipoRegistro.general, costo);
-    	return res;
-    }
 }

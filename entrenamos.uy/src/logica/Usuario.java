@@ -1,11 +1,18 @@
 package logica;
 
+
 import datatypes.DtFechaHora;
 import datatypes.DtUsuario;
 
-public abstract class Usuario {
 
-    protected String nickname, nombre, apellido, correo;
+
+public abstract class Usuario {
+	
+
+    protected String nickname;
+	protected String nombre;
+	protected String apellido;
+	protected String correo;
     
     protected DtFechaHora fechaNacimiento;
 

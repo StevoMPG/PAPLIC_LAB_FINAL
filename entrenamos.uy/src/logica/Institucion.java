@@ -4,6 +4,7 @@ import datatypes.DtActividadDeportiva;
 import datatypes.DtInstitucion;
 
 import excepciones.UsuarioNoExisteException;
+import logica.persistencia.DataPersistencia;
 import excepciones.ActividadDeportivaException;
 
 import java.util.Set;
@@ -14,6 +15,7 @@ import java.util.logging.Logger;
 import java.util.Map;
 import java.util.HashSet;
 import java.util.HashMap;
+
 
 public class Institucion {
 	
@@ -59,15 +61,17 @@ public class Institucion {
 
     public void addProfesor(Profesor profe) {
     	profesores.add(profe);
+    	DataPersistencia.getInstance().persistirProfesor(profe);
     	log.info("Institucion "+nombre+" event: "+" new prof "+profe.getNickname());
     }
     
 
-    public int addActividadDeportiva(DtActividadDeportiva datosAD, Profesor creador) {
-        ActividadDeportiva actDep = new ActividadDeportiva(datosAD, creador);
+    public int addActividadDeportiva(DtActividadDeportiva datosAD) {
+        ActividadDeportiva actDep = new ActividadDeportiva(datosAD);
         if (actsDeps.containsKey(datosAD.getNombre()))
         	return 1;
 		actsDeps.put(datosAD.getNombre(),   actDep);
+		DataPersistencia.getInstance().persistirActividad(getActsDeps().get(datosAD.getNombre()));
     	log.info("Institucion "+nombre+" event: "+" new actDep "+actDep.getNombre());
 		return 0;
     }

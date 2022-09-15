@@ -3,6 +3,7 @@ package logica;
 import datatypes.DtClaseExtra;
 import datatypes.DtClase;
 import datatypes.DtFechaHora;
+import logica.persistencia.DataPersistencia;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -84,9 +85,6 @@ public class Clase {
 		return this.actDep == actDep;
 	}
 
-	public void addRecibo(compraClase recibo) {
-		listaReciboClase.add(recibo);
-	}
 
 	public boolean tieneActividadDeportiva(String activity) {
 		return actDep.getNombre().equals(activity);
@@ -100,5 +98,21 @@ public class Clase {
 	public List<compraClase> getRecibo(){
 		return listaReciboClase;
 	}
+	
+	public void addRecibo(compraClase recibo) {
+		listaReciboClase.add(recibo);
+		DataPersistencia.getInstance().persistirRegistroClase(recibo);
+	}
+
+	
+	/*  public int addActividadDeportiva(DtActividadDeportiva datosAD) {
+	ActividadDeportiva actDep = new ActividadDeportiva(datosAD);
+	if (actsDeps.containsKey(datosAD.getNombre()))
+		return 1;
+	actsDeps.put(datosAD.getNombre(),   actDep);
+	DataPersistencia.getInstance().persistirActividad(getActsDeps().get(datosAD.getNombre()));
+	log.info("Institucion "+nombre+" event: "+" new actDep "+actDep.getNombre());
+	return 0;
+	}*/
 	
 }

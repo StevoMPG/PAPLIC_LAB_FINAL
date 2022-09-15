@@ -12,6 +12,7 @@ import java.util.Collection;
 import java.util.Iterator;
 
 import excepciones.UsuarioNoExisteException;
+import logica.persistencia.DataPersistencia;
 
 public class manejadorUsuario {
 
@@ -45,10 +46,15 @@ public class manejadorUsuario {
 		} else {
 			usuarios.put(user.getNickname(), user);
 			correos.add(user.getCorreo());
+			if (user.esSocio()) {
+			DataPersistencia.getInstance().persistirSocio(user);
+			}
 			log.info("Usuario "+user.getNombre()+"registered, total: "+usuarios.size());
 			return true;
 		}
 	}
+	
+	
 	
 	public Usuario findUsuario(String userNick) throws UsuarioNoExisteException {
 		Usuario res = usuarios.get(userNick);

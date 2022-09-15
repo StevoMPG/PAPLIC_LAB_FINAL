@@ -5,6 +5,7 @@ import java.util.List;
 
 import datatypes.DtFechaHora;
 import excepciones.CuponeraInmutableException;
+import logica.persistencia.DataPersistencia;
 import datatypes.DtClasesCuponeras;
 import datatypes.DtCuponera;
 
@@ -74,6 +75,7 @@ public class Cuponera {
 		cp.add(claCup);
 		act.addClasesCup(claCup);
 		costo = costo + (1 - descuento/100)*act.getCosto()*num;
+		DataPersistencia.getInstance().persistirActividadesCuponeras(claCup);
 	}
 
 	

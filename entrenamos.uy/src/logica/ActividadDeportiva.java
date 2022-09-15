@@ -5,6 +5,7 @@ import datatypes.DtClase;
 import datatypes.DtActividadDeportiva;
 import datatypes.DtFechaHora;
 import excepciones.ClaseException;
+import logica.persistencia.DataPersistencia;
 import datatypes.DtActividadDeportivaExtra;
 
 import java.util.Map;
@@ -16,20 +17,36 @@ import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+
+
 public class ActividadDeportiva {
 	
-	private Map <String, Clase> clases;  // Nombre de clase y clase
+
 	private String nombre;
+
 	private String descripcion;
+
 	private int duracionMinutos;
+
 	private float costo;
+
 	private DtFechaHora fechaRegistro;
-	private Logger log;
-	private Map <String, ClasesCuponera> clCuponera;
-
 	
+	Institucion ins;
+	
+	private Map <String, ClasesCuponera> clCuponera;
+	private Map <String, Clase> clases;  // Nombre de clase y clase
+	
+	private Logger log;
 
-	public ActividadDeportiva(DtActividadDeportiva datosActDep,  Profesor profe) {
+	public ActividadDeportiva(DtActividadDeportiva datosActDep) {
 		nombre=datosActDep.getNombre();
 		descripcion=datosActDep.getDescripcion();
 		duracionMinutos=datosActDep.getDuracionMinutos();
@@ -38,6 +55,7 @@ public class ActividadDeportiva {
 		crearHandler();
 	}
 	private void crearHandler() {
+		
 		clases = new HashMap<>();
 		clCuponera= new HashMap<>();
 		log = Logger.getLogger(manejadorInstitucion.class.getName());
@@ -65,9 +83,11 @@ public class ActividadDeportiva {
 		Clase aula = new Clase(clase,  profe,  this);
 		clases.put(clase.getNombre(),  aula);
 		profe.addClase(aula);
+		DataPersistencia.getInstance().persistirClase(getClases().get(clase.getNombre()));
 		log.info("ActDep "+nombre+" event: "+" new clase "+clase.getNombre());
 		return 0;
 	}
+	
 
 	public DtActividadDeportiva getDt(){
 		DtActividadDeportiva x = new DtActividadDeportiva(nombre, descripcion, duracionMinutos, costo, fechaRegistro);
@@ -131,6 +151,10 @@ public class ActividadDeportiva {
 	
 	public Map<String,  ClasesCuponera> getClaseCuponeras() {
 		return clCuponera;
+	}
+	
+	public Institucion getINS() {
+		return ins;
 	}
 
 }

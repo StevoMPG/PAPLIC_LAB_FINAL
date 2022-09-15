@@ -16,6 +16,7 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 
 import logica.IcontroladorUsuario; 
 
@@ -82,6 +83,7 @@ public class ConsultaUsuario extends JInternalFrame {
 	private JScrollPane scrollPaneTree;
 	private JTree tree;
 	private JLabel labelWebsite_1;
+	private JLabel lblNewLabel_2;
 	
 	ConsultaDictadoClase refCDC;
 	ConsultaActividadDeportiva refCAD;
@@ -165,7 +167,7 @@ public class ConsultaUsuario extends JInternalFrame {
 					textFieldDia.setText(String.valueOf(fechaNacimiento.getDia()));
 					textFieldMes.setText(String.valueOf(fechaNacimiento.getMes()));
 					textFieldAnio.setText(String.valueOf(fechaNacimiento.getAnio()));
-					
+
 					//El usuario es profesor
 					if(datosUsuarioActual instanceof DtProfesorExtra) {
 						tipoUsuario = "Profesor";

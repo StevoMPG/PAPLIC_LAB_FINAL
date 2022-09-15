@@ -10,6 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import excepciones.InstitucionException;
+import logica.persistencia.DataPersistencia;
 
 public class manejadorInstitucion {
 	
@@ -50,11 +51,14 @@ public class manejadorInstitucion {
 	public int addInstitucion(Institucion ins) {
 		if (!existeInstitucion(ins.getNombre())) {
 			instituciones.put(ins.getNombre(), ins);
+			DataPersistencia.getInstance().persistirInstitucion(ins);
 			log.info("Institucion "+ins.getNombre()+"registered, total: "+instituciones.size());
 			return 0;
 		}
 		return 1;
 	}
+	
+
 
 	public boolean existeInstitucion(String nombre) {
 		return instituciones.containsKey(nombre);
