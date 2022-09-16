@@ -109,6 +109,7 @@ public class DataPersistencia {
 				s.setEmail(user.getCorreo());
 				s.setFechaNacimiento(user.getFecha().toCalendar());
 				s.setTipoUsuario(TipoUsuario.Socio);
+			//	s.setImagen(user.getImagen());
 				em.getTransaction().begin();
 				em.persist(s);
 				em.getTransaction().commit();

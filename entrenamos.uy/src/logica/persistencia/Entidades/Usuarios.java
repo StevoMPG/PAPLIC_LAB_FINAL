@@ -62,7 +62,18 @@ public abstract class Usuarios implements Serializable {
     @Column(name = "TIPO_USUARIO")
     protected TipoUsuario tipoUsuario;
     
+ /*   @Column(name = "IMAGEN")
+    protected  byte[] imagen;
     
+    public byte[] getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(byte[] imagen) {
+        this.imagen = imagen;
+    }
+    
+    */
     public String getNickname() {
         return nickname;
     }

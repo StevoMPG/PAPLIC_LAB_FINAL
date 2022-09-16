@@ -4,6 +4,10 @@ import java.util.Set;
 
 public class DtActividadDeportivaExtra extends DtActividadDeportiva{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Set<String> cl;
 	private Set<String> cup;
 	

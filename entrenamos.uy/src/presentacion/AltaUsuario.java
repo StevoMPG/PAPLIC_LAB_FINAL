@@ -406,9 +406,7 @@ public class AltaUsuario extends JInternalFrame {
 				v.setDialogTitle("Imagenes");
 				if(Abrir==JFileChooser.APPROVE_OPTION) {
 					String url = v.getSelectedFile().getPath();
-					lblFoto.setIcon(new ImageIcon(new ImageIcon(url).getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH)));
-					
-					
+					lblFoto.setIcon(new ImageIcon(new ImageIcon(url).getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH)));	
 				}
 				
 			}
