@@ -59,19 +59,22 @@ public class Institucion {
     	return actsDeps.get(actDepNombre);
     }
 
+    
     public void addProfesor(Profesor profe) {
     	profesores.add(profe);
     	DataPersistencia.getInstance().persistirProfesor(profe);
     	log.info("Institucion "+nombre+" event: "+" new prof "+profe.getNickname());
     }
     
-
-    public int addActividadDeportiva(DtActividadDeportiva datosAD) {
+    
+    
+    
+    public int addActividadDeportiva(DtActividadDeportiva datosAD, Institucion ins) {
         ActividadDeportiva actDep = new ActividadDeportiva(datosAD);
         if (actsDeps.containsKey(datosAD.getNombre()))
         	return 1;
 		actsDeps.put(datosAD.getNombre(),   actDep);
-		DataPersistencia.getInstance().persistirActividad(getActsDeps().get(datosAD.getNombre()));
+		DataPersistencia.getInstance().persistirActividad(getActsDeps().get(datosAD.getNombre()), ins);
     	log.info("Institucion "+nombre+" event: "+" new actDep "+actDep.getNombre());
 		return 0;
     }

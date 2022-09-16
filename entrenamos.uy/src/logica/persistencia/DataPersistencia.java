@@ -47,17 +47,17 @@ public class DataPersistencia {
 	}
 	
 
-	public void persistirActividad(ActividadDeportiva act) {
+	public void persistirActividad(ActividadDeportiva act, Institucion ins) {
 		EntityManager em = emFabrica.createEntityManager();
 		try {
 			
 			ActividadesDeportivas ap = new ActividadesDeportivas();
-		    ap.setNombre(act.getNombre());
+			ap.setNombre(act.getNombre());
 		    ap.setDescripcion(act.getDescripcion());
 		    ap.setDuracion(act.getDuracionMinutos());
 		    ap.setCosto(act.getCosto());
 		    ap.setFechaAlta(act.getFechaRegistro().toCalendar());
-		//    ap.setInstitucion(act.getINS().getNombre());
+		    ap.setInstitucion(ins.getNombre());
 		    em.getTransaction().begin();
 	    	em.persist(ap);
 	    	em.getTransaction().commit();
@@ -70,7 +70,7 @@ public class DataPersistencia {
 		}
 	}
 	
-	public void persistirClase(Clase clase) {
+	public void persistirClase(Clase clase, Institucion ins) {
 		EntityManager em = emFabrica.createEntityManager();
 		try {
 
@@ -83,7 +83,7 @@ public class DataPersistencia {
 				x.setUrl(clase.getURL());
 				x.setnicknameProfesor(clase.getProfesor().getNickname());
 				x.setActividad(clase.getAD().getNombre());
-			
+				x.setInstitucion(ins.getNombre());
 			    em.getTransaction().begin();
 		    	em.persist(x);
 		    	em.getTransaction().commit();
@@ -243,6 +243,7 @@ public class DataPersistencia {
 		    Query q5 = em.createQuery("DELETE FROM Socios");
 		    Query q6 = em.createQuery("DELETE FROM Instituciones");
 		    Query q7 = em.createQuery("DELETE FROM Cuponeras");
+		    Query q8 = em.createQuery("DELETE FROM ActividadesCuponeras");
 		    q1.executeUpdate();
 		    q2.executeUpdate();
 		    q3.executeUpdate();
@@ -250,6 +251,7 @@ public class DataPersistencia {
 		    q5.executeUpdate();
 		    q6.executeUpdate();
 		    q7.executeUpdate();
+		    q8.executeUpdate();
 		    em.getTransaction().commit();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -261,12 +263,3 @@ public class DataPersistencia {
 }
 
 
-/*  public int addActividadDeportiva(DtActividadDeportiva datosAD) {
-ActividadDeportiva actDep = new ActividadDeportiva(datosAD);
-if (actsDeps.containsKey(datosAD.getNombre()))
-	return 1;
-actsDeps.put(datosAD.getNombre(),   actDep);
-DataPersistencia.getInstance().persistirActividad(getActsDeps().get(datosAD.getNombre()));
-log.info("Institucion "+nombre+" event: "+" new actDep "+actDep.getNombre());
-return 0;
-}*/

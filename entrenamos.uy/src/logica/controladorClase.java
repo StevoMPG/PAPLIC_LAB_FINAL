@@ -83,7 +83,7 @@ public class controladorClase implements IcontroladorClase {
 		if (!actDept.getFechaRegistro().esMenor(datos.getFechaRegistro())) {
 			throw new FechaInvalidaException("La fecha de registro de la clase debe ser posterior a la fecha de registro de la actividad deportiva.");
 		} else {
-			return actDept.addClase(datos,  profe);
+			return actDept.addClase(datos,  profe, ins);
 		}
 	}
 

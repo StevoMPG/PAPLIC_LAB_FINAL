@@ -57,7 +57,7 @@ public class controladorActividadDeportiva  implements IcontroladorActividadDepo
 		if (!inst.existeActDep(datosAD.getNombre())) {
 			
 			
-			inst.addActividadDeportiva(datosAD);
+			inst.addActividadDeportiva(datosAD, inst);
 			return true;
 		}
 		return false;

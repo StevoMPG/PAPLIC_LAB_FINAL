@@ -71,45 +71,7 @@ public class Socio extends Usuario {
 		return compraClases;
 	}
 	
-/*	public void inscribirSocio(ActividadDeportiva actDep, Clase cl, tipoRegistro t, DtFechaHora reg,  Cuponera cupi) throws NoExisteCuponeraException, ClaseException {
-		boolean noEstaInsc = true;
-		for (compraClase res: compraClases) {
-			if (res.getNombreClase() == cl.getNombre()) {
-				noEstaInsc = false;
-			}
-		} 
-		if (noEstaInsc) {
-			if(t.equals(tipoRegistro.general)) {
-				compraClase nuevoRecibo = new compraClase(reg, tipoRegistro.general, actDep.getCosto(), cl, this, null);
-				compraClases.add(nuevoRecibo);
-				cl.addRecibo(nuevoRecibo);	
-			} else {
-				int iteradorMagico=0;
-				for (compraCuponera y: compraCuponeras) {
-					Cuponera cupActual = y.getCuponera();
-					if (cupActual.tieneActividadDeportiva(actDep)) {
-						int cantidadClases = 0;
-						for (compraClase x: compraClases) {
-							if ((x.getCuponera() == cupActual) && (x.tieneActividadDeportiva(actDep))) {
-								cantidadClases++;
-							}
-						}
-						if (cantidadClases < cupActual.cantidadClases(actDep)) {
-							compraClase nuevoRecibo = new compraClase(reg,tipoRegistro.cuponera,actDep.getCosto(),cl,this,cupActual);
-							compraClases.add(nuevoRecibo);
-							cl.addRecibo(nuevoRecibo);
-						}
-					}
-				}
-				throw new NoExisteCuponeraException("Este Usuario no presenta Cuponeras validas para esta Clase.");
-			}
-		} else {
-			throw new ClaseException("Este Usuario ya esta inscripto a esta Clase.");
-		}
-	}*/
-	
-	
-	public void inscribirSocio(ActividadDeportiva actDep,   Clase clase,   tipoRegistro tipoCuponera,   DtFechaHora reg,  Cuponera cupi) throws NoExisteCuponeraException,   
+ void inscribirSocio(ActividadDeportiva actDep,   Clase clase,   tipoRegistro tipoCuponera,   DtFechaHora reg,  Cuponera cupi) throws NoExisteCuponeraException,   
 	ClaseException {
 		boolean noEstaInsc = true;
 		for (compraClase res: compraClases) {

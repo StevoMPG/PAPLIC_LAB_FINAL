@@ -5,6 +5,7 @@ import datatypes.DtClase;
 import datatypes.DtActividadDeportiva;
 import datatypes.DtFechaHora;
 import excepciones.ClaseException;
+import excepciones.InstitucionException;
 import logica.persistencia.DataPersistencia;
 import datatypes.DtActividadDeportivaExtra;
 
@@ -77,17 +78,21 @@ public class ActividadDeportiva {
 	}
 	
 	
-	public int addClase(DtClase clase,  Profesor profe) {
+	public int addClase(DtClase clase,  Profesor profe, String nombreInsti) throws InstitucionException {
+		Institucion inst = getHI().findInstitucion(nombreInsti);
 		if (clases.containsKey(clase.getNombre()))
 			return 1;
 		Clase aula = new Clase(clase,  profe,  this);
 		clases.put(clase.getNombre(),  aula);
 		profe.addClase(aula);
-		DataPersistencia.getInstance().persistirClase(getClases().get(clase.getNombre()));
+		DataPersistencia.getInstance().persistirClase(getClases().get(clase.getNombre()), inst);
 		log.info("ActDep "+nombre+" event: "+" new clase "+clase.getNombre());
 		return 0;
 	}
 	
+	private static manejadorInstitucion getHI() {
+		return  manejadorInstitucion.getInstance();
+	}
 
 	public DtActividadDeportiva getDt(){
 		DtActividadDeportiva x = new DtActividadDeportiva(nombre, descripcion, duracionMinutos, costo, fechaRegistro);

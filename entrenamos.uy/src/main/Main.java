@@ -46,7 +46,7 @@ public class Main {
 	    		try {
 	    			// Nukeamos la persistencia.
 	    			DataPersistencia.getInstance().nuketownDetonator();
-	    			cargaDeCasos();
+	    			//cargaDeCasos();
 	    		} catch(Exception e) {
 	    			System.out.println("UPS! Ha habido un problema al cargar los casos de prueba. ");
 	    			e.printStackTrace();
