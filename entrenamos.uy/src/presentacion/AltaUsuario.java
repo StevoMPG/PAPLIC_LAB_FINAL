@@ -6,6 +6,7 @@ import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 
 import java.awt.GridBagLayout;
@@ -36,16 +37,20 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 
+import javax.imageio.ImageIO;
 import javax.swing.Box;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
+import java.nio.file.Files;
 
 import javax.swing.event.PopupMenuListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -94,13 +99,15 @@ public class AltaUsuario extends JInternalFrame {
 	// Seleccion de Fecha de Inicio:
 	private JComboBox<String> boxIDia; // Depende de mes;
 	private JComboBox<String> boxIMes;
-	private Component verticalStrut;
-	private JButton btnNewButton;
-	private JButton btnNewButton_1;
+
 	
-	private ImageIcon image;
-	private Icon icon;
-	private JLabel lblFoto;
+	// IMAGEN
+	private JLabel lblImagen;
+	private JLabel lblFotoDePerfil;
+	private JTextField txtRutaImagen;
+	private JButton btnFileChooser;
+	private byte[] imagenCodificada;
+
 	
 	
 	
@@ -119,80 +126,21 @@ public class AltaUsuario extends JInternalFrame {
 		 */
 		int columns = 8;
 		int rows = 9;
-		int iframeWidth = 450;
-		int iframeHeight = 625;
+		int iframeWidth = 550;
+		int iframeHeight = 700;
 		int gridWidth = iframeWidth/columns;
 		int gridHeight = iframeHeight/rows;
 		int x = gridWidth+gridHeight;
-		setBounds(100, 25, 440, 710); // w,h
+		setBounds(100,  25,  iframeWidth,  iframeHeight); // w, h
 		
 		setTitle("Alta de usuario");
-		getContentPane().setLayout(new FormLayout(new ColumnSpec[] {
-				ColumnSpec.decode("1px"),
-				ColumnSpec.decode("16px"),
-				ColumnSpec.decode("30px"),
-				FormSpecs.LABEL_COMPONENT_GAP_COLSPEC,
-				ColumnSpec.decode("149px"),
-				FormSpecs.LABEL_COMPONENT_GAP_COLSPEC,
-				ColumnSpec.decode("55px"),
-				FormSpecs.LABEL_COMPONENT_GAP_COLSPEC,
-				ColumnSpec.decode("73px"),
-				FormSpecs.LABEL_COMPONENT_GAP_COLSPEC,
-				ColumnSpec.decode("72px"),},
-			new RowSpec[] {
-				RowSpec.decode("1px"),
-				RowSpec.decode("24px"),
-				RowSpec.decode("20px"),
-				FormSpecs.UNRELATED_GAP_ROWSPEC,
-				RowSpec.decode("14px"),
-				FormSpecs.LINE_GAP_ROWSPEC,
-				RowSpec.decode("20px"),
-				FormSpecs.UNRELATED_GAP_ROWSPEC,
-				RowSpec.decode("14px"),
-				FormSpecs.LINE_GAP_ROWSPEC,
-				RowSpec.decode("20px"),
-				FormSpecs.UNRELATED_GAP_ROWSPEC,
-				RowSpec.decode("14px"),
-				FormSpecs.LINE_GAP_ROWSPEC,
-				RowSpec.decode("20px"),
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				RowSpec.decode("17px"),
-				FormSpecs.LINE_GAP_ROWSPEC,
-				RowSpec.decode("22px"),
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				RowSpec.decode("14px"),
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				RowSpec.decode("20px"),
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				RowSpec.decode("14px"),
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				RowSpec.decode("48px"),
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				RowSpec.decode("14px"),
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				RowSpec.decode("48px"),
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				RowSpec.decode("14px"),
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				RowSpec.decode("20px"),
-				RowSpec.decode("35px"),
-				RowSpec.decode("23px"),
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,}));
 		
-		verticalStrut = Box.createVerticalStrut(20);
-		getContentPane().add(verticalStrut, "1, 1, center, center");
-		
-		labelTipoDeUsuario = new JLabel("Tipo de usuario");
-		getContentPane().add(labelTipoDeUsuario, "9, 3, right, center");
+		GridBagLayout gridBagLayout = new GridBagLayout();
+		gridBagLayout.columnWidths = new int[] {25,  60,  60,  60,  60,  0,  0,  0};
+		gridBagLayout.rowHeights = new int[]{5,  0,  0,  25,  25,  25,  25,  25,  25,  25,  25,  25,  25,  25,  25,  75,  25,  75,  25,  25,  25,  0,  25};
+		gridBagLayout.columnWeights = new double[]{0.0,  1.0,  0.0,  0.0,  1.0,  0.0,  0.0,  0.0};
+		gridBagLayout.rowWeights = new double[]{0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  1.0,  0.0,  1.0,  0.0,  0.0,  0.0,  0.0,  0.0};
+		getContentPane().setLayout(gridBagLayout);
 		
 		comboBoxTipoDeUsuario = new JComboBox<String>();
 		comboBoxTipoDeUsuario.addItemListener(new ItemListener() {
@@ -207,7 +155,7 @@ public class AltaUsuario extends JInternalFrame {
 				textAreaDescripcion.setEnabled(esProfesor);
 				textFieldWebsite.setEnabled(esProfesor);
 				comboBoxInstitucion.setEnabled(esProfesor);
-				if(esProfesor) {
+				if (esProfesor) {
 					textAreaBiografia.setText("");
 					textAreaDescripcion.setText("");
 					textFieldWebsite.setText("");
@@ -216,59 +164,132 @@ public class AltaUsuario extends JInternalFrame {
 	
 			}
 		});
-		comboBoxTipoDeUsuario.setModel(new DefaultComboBoxModel<>(new String[] {"-", "Socio", "Profesor"}));
-		getContentPane().add(comboBoxTipoDeUsuario, "11, 3, fill, bottom");
+		labelTipoDeUsuario = new JLabel("Tipo de usuario");
+		GridBagConstraints gbc_labelTipoDeUsuario = new GridBagConstraints();
+		gbc_labelTipoDeUsuario.insets = new Insets(0,  0,  5,  5);
+		gbc_labelTipoDeUsuario.anchor = GridBagConstraints.EAST;
+		gbc_labelTipoDeUsuario.gridx = 5;
+		gbc_labelTipoDeUsuario.gridy = 1;
+		getContentPane().add(labelTipoDeUsuario,  gbc_labelTipoDeUsuario);
+		comboBoxTipoDeUsuario.setModel(new DefaultComboBoxModel<>(new String[] {"-",  "Socio",  "Profesor"}));
+		GridBagConstraints gbc_comboBoxTipoDeUsuario = new GridBagConstraints();
+		gbc_comboBoxTipoDeUsuario.anchor = GridBagConstraints.SOUTH;
+		gbc_comboBoxTipoDeUsuario.insets = new Insets(0,  0,  5,  5);
+		gbc_comboBoxTipoDeUsuario.fill = GridBagConstraints.HORIZONTAL;
+		gbc_comboBoxTipoDeUsuario.gridx = 6;
+		gbc_comboBoxTipoDeUsuario.gridy = 1;
+		getContentPane().add(comboBoxTipoDeUsuario,  gbc_comboBoxTipoDeUsuario);
 		
 		JLabel labelNickname = new JLabel("Nickname");
-		getContentPane().add(labelNickname, "3, 5, 3, 1, fill, bottom");
+		GridBagConstraints gbc_labelNickname = new GridBagConstraints();
+		gbc_labelNickname.gridwidth = 2;
+		gbc_labelNickname.anchor = GridBagConstraints.SOUTH;
+		gbc_labelNickname.fill = GridBagConstraints.HORIZONTAL;
+		gbc_labelNickname.insets = new Insets(0,  0,  5,  5);
+		gbc_labelNickname.gridx = 1;
+		gbc_labelNickname.gridy = 2;
+		getContentPane().add(labelNickname,  gbc_labelNickname);
+		
 		
 		textFieldNickname = new JTextField();
-		getContentPane().add(textFieldNickname, "3, 7, 9, 1, fill, fill");
+		GridBagConstraints gbc_textFieldNickname = new GridBagConstraints();
+		gbc_textFieldNickname.gridwidth = 6;
+		gbc_textFieldNickname.fill = GridBagConstraints.BOTH;
+		gbc_textFieldNickname.insets = new Insets(0,  0,  5,  5);
+		gbc_textFieldNickname.gridx = 1;
+		gbc_textFieldNickname.gridy = 3;
+		getContentPane().add(textFieldNickname,  gbc_textFieldNickname);
 		textFieldNickname.setColumns(10);
 		
 		JLabel labelNombre = new JLabel("Nombre");
-		getContentPane().add(labelNombre, "3, 9, 3, 1, fill, bottom");
+		GridBagConstraints gbc_labelNombre = new GridBagConstraints();
+		gbc_labelNombre.gridwidth = 2;
+		gbc_labelNombre.anchor = GridBagConstraints.SOUTH;
+		gbc_labelNombre.fill = GridBagConstraints.HORIZONTAL;
+		gbc_labelNombre.insets = new Insets(0,  0,  5,  5);
+		gbc_labelNombre.gridx = 1;
+		gbc_labelNombre.gridy = 4;
+		getContentPane().add(labelNombre,  gbc_labelNombre);
 		
 		JLabel labelApellido = new JLabel("Apellido");
-		getContentPane().add(labelApellido, "7, 9, center, bottom");
+		GridBagConstraints gbc_labelApellido = new GridBagConstraints();
+		gbc_labelApellido.gridwidth = 2;
+		gbc_labelApellido.anchor = GridBagConstraints.SOUTHWEST;
+		gbc_labelApellido.insets = new Insets(0,  0,  5,  5);
+		gbc_labelApellido.gridx = 4;
+		gbc_labelApellido.gridy = 4;
+		getContentPane().add(labelApellido,  gbc_labelApellido);
 		
 		textFieldNombre = new JTextField();
-		getContentPane().add(textFieldNombre, "3, 11, 3, 1, fill, fill");
+		GridBagConstraints gbc_textFieldNombre = new GridBagConstraints();
+		gbc_textFieldNombre.gridwidth = 3;
+		gbc_textFieldNombre.fill = GridBagConstraints.BOTH;
+		gbc_textFieldNombre.insets = new Insets(0,  0,  5,  5);
+		gbc_textFieldNombre.gridx = 1;
+		gbc_textFieldNombre.gridy = 5;
+		getContentPane().add(textFieldNombre,  gbc_textFieldNombre);
 		textFieldNombre.setColumns(10);
 		
 		textFieldApellido = new JTextField();
-		getContentPane().add(textFieldApellido, "7, 11, 5, 1, fill, fill");
+		GridBagConstraints gbc_textFieldApellido = new GridBagConstraints();
+		gbc_textFieldApellido.gridwidth = 3;
+		gbc_textFieldApellido.fill = GridBagConstraints.BOTH;
+		gbc_textFieldApellido.insets = new Insets(0,  0,  5,  5);
+		gbc_textFieldApellido.gridx = 4;
+		gbc_textFieldApellido.gridy = 5;
+		getContentPane().add(textFieldApellido,  gbc_textFieldApellido);
 		textFieldApellido.setColumns(10);
 		
 		JLabel labelEmail = new JLabel("Correo electronico");
-		getContentPane().add(labelEmail, "3, 13, 3, 1, left, bottom");
-		
-		textFieldEmail = new JTextField();
-		getContentPane().add(textFieldEmail, "3, 15, 9, 1, fill, fill");
-		textFieldEmail.setColumns(10);
+		GridBagConstraints gbc_labelEmail = new GridBagConstraints();
+		gbc_labelEmail.gridwidth = 2;
+		gbc_labelEmail.anchor = GridBagConstraints.SOUTHWEST;
+		gbc_labelEmail.insets = new Insets(0,  0,  5,  5);
+		gbc_labelEmail.gridx = 1;
+		gbc_labelEmail.gridy = 6;
+		getContentPane().add(labelEmail,  gbc_labelEmail);
         
         
         // Arrays auxiliares para Fecha y Hora:
-        String[] meses = new String[] { "-", "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto",
-        		"Setiembre", "Octubre", "Noviembre", "Diciembre" };
+        String[] meses = new String[] { "-",  "Enero",  "Febrero",  "Marzo",  "Abril",  "Mayo",  "Junio",  "Julio",  "Agosto", 
+        		"Setiembre",  "Octubre",  "Noviembre",  "Diciembre" };
         
         // JComboBox:
         DefaultComboBoxModel<String> comboModelDia = new DefaultComboBoxModel<>();
         comboModelDia.addElement("-");
-        for(int i = 1; i < 32; i++) {
+        for (int i = 1; i < 32; i++) {
         	comboModelDia.addElement( String.valueOf(i) );
         }
         
         DefaultComboBoxModel<String> comboModelMes = new DefaultComboBoxModel<>(meses);
-		JLabel labelFechaNacimiento = new JLabel("Fecha de nacimiento");
-		getContentPane().add(labelFechaNacimiento, "3, 17, 3, 1, left, bottom");
 		
-		
-		labelAclaracionFecha = new JLabel("(dd/mm/aaaa)");
-		getContentPane().add(labelAclaracionFecha, "11, 17, center, center");
-		
-		boxIDia = new JComboBox<>( comboModelDia );
-		getContentPane().add(boxIDia, "3, 19, fill, center");
+		textFieldEmail = new JTextField();
+		GridBagConstraints gbc_textFieldEmail = new GridBagConstraints();
+		gbc_textFieldEmail.gridwidth = 6;
+		gbc_textFieldEmail.fill = GridBagConstraints.BOTH;
+		gbc_textFieldEmail.insets = new Insets(0,  0,  5,  5);
+		gbc_textFieldEmail.gridx = 1;
+		gbc_textFieldEmail.gridy = 7;
+		getContentPane().add(textFieldEmail,  gbc_textFieldEmail);
+		textFieldEmail.setColumns(10);
+
+		JLabel labelFechaNacimiento = new JLabel("Fecha de nacimiento (dd/mm/aaaa)");
+		GridBagConstraints gbc_labelFechaNacimiento = new GridBagConstraints();
+		gbc_labelFechaNacimiento.gridwidth = 4;
+		gbc_labelFechaNacimiento.anchor = GridBagConstraints.SOUTHWEST;
+		gbc_labelFechaNacimiento.insets = new Insets(0,  0,  5,  5);
+		gbc_labelFechaNacimiento.gridx = 1;
+		gbc_labelFechaNacimiento.gridy = 10;
+		getContentPane().add(labelFechaNacimiento,  gbc_labelFechaNacimiento);
+        
+        boxIDia = new JComboBox<>( comboModelDia );
+        
+        GridBagConstraints gbc_boxIDia = new GridBagConstraints();
+        gbc_boxIDia.insets = new Insets(0,  0,  5,  5);
+        gbc_boxIDia.fill = GridBagConstraints.HORIZONTAL;
+        gbc_boxIDia.gridx = 1;
+        gbc_boxIDia.gridy = 11;
+        getContentPane().add(boxIDia,  gbc_boxIDia);
         boxIMes = new JComboBox<>(comboModelMes);
         boxIMes.addItemListener(new ItemListener() {
         	public void itemStateChanged(ItemEvent e) {
@@ -285,7 +306,13 @@ public class AltaUsuario extends JInternalFrame {
         		}
         	}
         });
-        getContentPane().add(boxIMes, "5, 19, fill, center");
+        GridBagConstraints gbc_boxIMes = new GridBagConstraints();
+        gbc_boxIMes.gridwidth = 2;
+        gbc_boxIMes.insets = new Insets(0,  0,  5,  5);
+        gbc_boxIMes.fill = GridBagConstraints.HORIZONTAL;
+        gbc_boxIMes.gridx = 2;
+        gbc_boxIMes.gridy = 11;
+        getContentPane().add(boxIMes,  gbc_boxIMes);
 		
         inicioAnio = new JTextField();
         inicioAnio.setText("yyyy");
@@ -295,13 +322,22 @@ public class AltaUsuario extends JInternalFrame {
         		inicioAnio.setText("");
         	}
         });
-        getContentPane().add(inicioAnio, "7, 19, fill, fill");
+        GridBagConstraints gbc_inicioAnio = new GridBagConstraints();
+        gbc_inicioAnio.gridwidth = 1;
+        gbc_inicioAnio.fill = GridBagConstraints.BOTH;
+        gbc_inicioAnio.insets = new Insets(0,  0,  5,  5);
+        gbc_inicioAnio.gridx = 4;
+        gbc_inicioAnio.gridy = 11;
+        getContentPane().add(inicioAnio,  gbc_inicioAnio);
 		
 		labelInstitucion = new JLabel("Nombre de Institucion");
-		getContentPane().add(labelInstitucion, "3, 21, 3, 1, left, center");
-		
-		labelAclaracionProfesor1 = new JLabel("(Solo profesor)");
-		getContentPane().add(labelAclaracionProfesor1, "11, 21, center, center");
+		GridBagConstraints gbc_labelInstitucion = new GridBagConstraints();
+		gbc_labelInstitucion.anchor = GridBagConstraints.WEST;
+		gbc_labelInstitucion.gridwidth = 3;
+		gbc_labelInstitucion.insets = new Insets(0,  0,  5,  5);
+		gbc_labelInstitucion.gridx = 1;
+		gbc_labelInstitucion.gridy = 12;
+		getContentPane().add(labelInstitucion,  gbc_labelInstitucion);
 		
 		comboBoxInstitucion = new JComboBox<String>();
 		comboBoxInstitucion.addPopupMenuListener(new PopupMenuListener() {
@@ -312,7 +348,7 @@ public class AltaUsuario extends JInternalFrame {
 			public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
 				comboBoxInstitucion.removeAllItems();
 				comboBoxInstitucion.addItem("-");
-				for(String ins:controlUsr.obtenerInstituciones())
+				for (String ins:controlUsr.obtenerInstituciones())
 					comboBoxInstitucion.addItem(ins);
 			}
 		});
@@ -322,101 +358,113 @@ public class AltaUsuario extends JInternalFrame {
 				
 			}
 		});
+		
+		labelAclaracionProfesor1 = new JLabel("(Solo profesor)");
+		GridBagConstraints gbc_labelAclaracionProfesor1 = new GridBagConstraints();
+		gbc_labelAclaracionProfesor1.insets = new Insets(0,  0,  5,  5);
+		gbc_labelAclaracionProfesor1.gridx = 6;
+		gbc_labelAclaracionProfesor1.gridy = 12;
+		getContentPane().add(labelAclaracionProfesor1,  gbc_labelAclaracionProfesor1);
 		comboBoxInstitucion.setModel(new DefaultComboBoxModel<String>(new String[] {"-"}));
 		comboBoxInstitucion.setEnabled(false);
-		getContentPane().add(comboBoxInstitucion, "3, 23, 9, 1, fill, center");
+		
+		GridBagConstraints gbc_comboBoxInstitucion = new GridBagConstraints();
+		gbc_comboBoxInstitucion.gridwidth = 6;
+		gbc_comboBoxInstitucion.insets = new Insets(0,  0,  5,  5);
+		gbc_comboBoxInstitucion.fill = GridBagConstraints.HORIZONTAL;
+		gbc_comboBoxInstitucion.gridx = 1;
+		gbc_comboBoxInstitucion.gridy = 13;
+		getContentPane().add(comboBoxInstitucion,  gbc_comboBoxInstitucion);
 		
 		labelDescripcion = new JLabel("Descripcion");
-		getContentPane().add(labelDescripcion, "3, 25, 3, 1, left, center");
+		GridBagConstraints gbc_labelDescripcion = new GridBagConstraints();
+		gbc_labelDescripcion.gridwidth = 2;
+		gbc_labelDescripcion.anchor = GridBagConstraints.WEST;
+		gbc_labelDescripcion.insets = new Insets(0,  0,  5,  5);
+		gbc_labelDescripcion.gridx = 1;
+		gbc_labelDescripcion.gridy = 14;
+		getContentPane().add(labelDescripcion,  gbc_labelDescripcion);
 		
 		labelAclaracionProfesor2 = new JLabel("(Solo profesor)");
-		getContentPane().add(labelAclaracionProfesor2, "11, 25, center, center");
+		GridBagConstraints gbc_labelAclaracionProfesor2 = new GridBagConstraints();
+		gbc_labelAclaracionProfesor2.insets = new Insets(0,  0,  5,  5);
+		gbc_labelAclaracionProfesor2.gridx = 6;
+		gbc_labelAclaracionProfesor2.gridy = 14;
+		getContentPane().add(labelAclaracionProfesor2,  gbc_labelAclaracionProfesor2);
 		
 		scrollPane = new JScrollPane();
-		getContentPane().add(scrollPane, "3, 27, 9, 1, fill, fill");
+		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
+		gbc_scrollPane.gridwidth = 6;
+		gbc_scrollPane.insets = new Insets(0,  0,  5,  5);
+		gbc_scrollPane.fill = GridBagConstraints.BOTH;
+		gbc_scrollPane.gridx = 1;
+		gbc_scrollPane.gridy = 15;
+		getContentPane().add(scrollPane,  gbc_scrollPane);
 		
 		textAreaDescripcion = new JTextArea();
-		textAreaDescripcion.setEnabled(false);
 		scrollPane.setViewportView(textAreaDescripcion);
+		textAreaDescripcion.setEnabled(false);
 		textAreaDescripcion.setLineWrap(true);
 		textAreaDescripcion.setWrapStyleWord(true);
 		
 		labelBiografia = new JLabel("Biografia (opcional)");
-		getContentPane().add(labelBiografia, "3, 29, 3, 1, left, center");
+		GridBagConstraints gbc_labelBiografia = new GridBagConstraints();
+		gbc_labelBiografia.gridwidth = 2;
+		gbc_labelBiografia.anchor = GridBagConstraints.WEST;
+		gbc_labelBiografia.insets = new Insets(0,  0,  5,  5);
+		gbc_labelBiografia.gridx = 1;
+		gbc_labelBiografia.gridy = 16;
+		getContentPane().add(labelBiografia,  gbc_labelBiografia);
 		
 		labelAclaracionProfesor3 = new JLabel("(Solo profesor)");
-		getContentPane().add(labelAclaracionProfesor3, "11, 29, center, center");
+		GridBagConstraints gbc_labelAclaracionProfesor3 = new GridBagConstraints();
+		gbc_labelAclaracionProfesor3.insets = new Insets(0,  0,  5,  5);
+		gbc_labelAclaracionProfesor3.gridx = 6;
+		gbc_labelAclaracionProfesor3.gridy = 16;
+		getContentPane().add(labelAclaracionProfesor3,  gbc_labelAclaracionProfesor3);
 		
 		scrollPane_1 = new JScrollPane();
-		getContentPane().add(scrollPane_1, "3, 31, 9, 1, fill, fill");
+		GridBagConstraints gbc_scrollPane_1 = new GridBagConstraints();
+		gbc_scrollPane_1.gridwidth = 6;
+		gbc_scrollPane_1.insets = new Insets(0,  0,  5,  5);
+		gbc_scrollPane_1.fill = GridBagConstraints.BOTH;
+		gbc_scrollPane_1.gridx = 1;
+		gbc_scrollPane_1.gridy = 17;
+		getContentPane().add(scrollPane_1,  gbc_scrollPane_1);
 		
 		textAreaBiografia = new JTextArea();
-		textAreaBiografia.setEnabled(false);
 		scrollPane_1.setViewportView(textAreaBiografia);
+		textAreaBiografia.setEnabled(false);
 		textAreaBiografia.setLineWrap(true);
 		textAreaBiografia.setWrapStyleWord(true);
 		
 		labelWebsite = new JLabel("Website (opcional)");
-		getContentPane().add(labelWebsite, "3, 33, 3, 1, left, center");
+		GridBagConstraints gbc_labelWebsite = new GridBagConstraints();
+		gbc_labelWebsite.gridwidth = 2;
+		gbc_labelWebsite.anchor = GridBagConstraints.WEST;
+		gbc_labelWebsite.insets = new Insets(0,  0,  5,  5);
+		gbc_labelWebsite.gridx = 1;
+		gbc_labelWebsite.gridy = 18;
+		getContentPane().add(labelWebsite,  gbc_labelWebsite);
 		
 		labelAclaracionProfesor4 = new JLabel("(Solo profesor)");
-		getContentPane().add(labelAclaracionProfesor4, "11, 33, center, center");
+		GridBagConstraints gbc_labelAclaracionProfesor4 = new GridBagConstraints();
+		gbc_labelAclaracionProfesor4.insets = new Insets(0,  0,  5,  5);
+		gbc_labelAclaracionProfesor4.gridx = 6;
+		gbc_labelAclaracionProfesor4.gridy = 18;
+		getContentPane().add(labelAclaracionProfesor4,  gbc_labelAclaracionProfesor4);
 		
 		textFieldWebsite = new JTextField();
 		textFieldWebsite.setBackground(Color.WHITE);
 		textFieldWebsite.setEnabled(false);
-		getContentPane().add(textFieldWebsite, "3, 35, 9, 1, fill, center");
+		GridBagConstraints gbc_textFieldWebsite = new GridBagConstraints();
+		gbc_textFieldWebsite.gridwidth = 6;
+		gbc_textFieldWebsite.insets = new Insets(0,  0,  5,  5);
+		gbc_textFieldWebsite.fill = GridBagConstraints.HORIZONTAL;
+		gbc_textFieldWebsite.gridx = 1;
+		gbc_textFieldWebsite.gridy = 19;
+		getContentPane().add(textFieldWebsite,  gbc_textFieldWebsite);
 		textFieldWebsite.setColumns(10);
-		
-		JButton btnAceptar = new JButton("Aceptar");
-		btnAceptar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if(tomarDatos()==0)
-					clear();
-					setVisible(false);
-			}
-		});
-		
-		btnNewButton_1 = new JButton("Add Photo");
-		btnNewButton_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				final JLabel img = new JLabel();
-				img.setPreferredSize(new Dimension(900,900));
-				img.setHorizontalAlignment(JLabel.CENTER);
-				final JFileChooser v = new JFileChooser();
-				v.setAccessory(img);
-				v.addPropertyChangeListener(new PropertyChangeListener() {
-					
-					@Override
-					public void propertyChange(PropertyChangeEvent evt) {
-						try {
-							if(evt.getPropertyName().equals(JFileChooser.SELECTED_FILE_CHANGED_PROPERTY)) {
-								img.setText("");
-								img.setIcon(new ImageIcon(v.getSelectedFile().getPath()));
-							}
-						}catch(Exception ex) {
-							img.setText("");
-							img.setIcon(new ImageIcon());
-						}
-					}
-				});
-				
-				int Abrir = v.showOpenDialog(btnAceptar);
-				v.setDialogTitle("Imagenes");
-				if(Abrir==JFileChooser.APPROVE_OPTION) {
-					String url = v.getSelectedFile().getPath();
-					lblFoto.setIcon(new ImageIcon(new ImageIcon(url).getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH)));	
-				}
-				
-			}
-		});
-		getContentPane().add(btnNewButton_1, "9, 36, 2, 1, center, center");
-		
-		lblFoto = new JLabel("");
-		lblFoto.setBackground(Color.GRAY);
-		getContentPane().add(lblFoto, "5, 37, 1, 11, center, center");
-		getContentPane().add(btnAceptar, "9, 37, center, top");
 		
 		JButton btnCancelar = new JButton("Limpiar");
 		btnCancelar.addActionListener(new ActionListener() {
@@ -425,8 +473,69 @@ public class AltaUsuario extends JInternalFrame {
 				clear();
 			}
 		});
-		getContentPane().add(btnCancelar, "11, 37, center, top");
 		
+		JButton btnAceptar = new JButton("Aceptar");
+		btnAceptar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (tomarDatos()==0)
+					clear();
+			}
+		});
+		GridBagConstraints gbc_btnAceptar = new GridBagConstraints();
+		gbc_btnAceptar.anchor = GridBagConstraints.NORTH;
+		gbc_btnAceptar.insets = new Insets(0,  0,  5,  5);
+		gbc_btnAceptar.gridx = 5;
+		gbc_btnAceptar.gridy = 21;
+		getContentPane().add(btnAceptar,  gbc_btnAceptar);
+		GridBagConstraints gbc_btnCancelar = new GridBagConstraints();
+		gbc_btnCancelar.insets = new Insets(0,  0,  5,  5);
+		gbc_btnCancelar.anchor = GridBagConstraints.NORTH;
+		gbc_btnCancelar.gridx = 6;
+		gbc_btnCancelar.gridy = 21;
+		getContentPane().add(btnCancelar,  gbc_btnCancelar);
+		
+
+		lblImagen = new JLabel("[No hay imagen seleccionada]");
+		lblImagen.setHorizontalAlignment(SwingConstants.CENTER);
+		GridBagConstraints gbc_lblImagen = new GridBagConstraints();
+		gbc_lblImagen.fill = GridBagConstraints.BOTH;
+		gbc_lblImagen.insets = new Insets(0, 0, 5, 5);
+		gbc_lblImagen.gridwidth = 5;
+		gbc_lblImagen.gridx = 1;
+		gbc_lblImagen.gridy = 21;
+		getContentPane().add(lblImagen, gbc_lblImagen);
+
+		lblFotoDePerfil = new JLabel("Foto de perfil");
+		GridBagConstraints gbc_lblFotoDePerfil = new GridBagConstraints();
+		gbc_lblFotoDePerfil.anchor = GridBagConstraints.EAST;
+		gbc_lblFotoDePerfil.insets = new Insets(0, 0, 5, 5);
+		gbc_lblFotoDePerfil.gridx = 1;
+		gbc_lblFotoDePerfil.gridy = 25;
+		getContentPane().add(lblFotoDePerfil, gbc_lblFotoDePerfil);
+
+		txtRutaImagen = new JTextField();
+		txtRutaImagen.setEditable(false);
+		GridBagConstraints gbc_txtRutaImagen = new GridBagConstraints();
+		gbc_txtRutaImagen.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txtRutaImagen.insets = new Insets(0, 0, 5, 5);
+		gbc_txtRutaImagen.gridwidth = 4;
+		gbc_txtRutaImagen.gridx = 1;
+		gbc_txtRutaImagen.gridy = 27;
+		getContentPane().add(txtRutaImagen, gbc_txtRutaImagen);
+		txtRutaImagen.setColumns(10);
+
+		btnFileChooser = new JButton("Elegir");
+		btnFileChooser.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				elegirImagen();
+			}
+		});
+		GridBagConstraints gbc_btnFileChooser = new GridBagConstraints();
+		gbc_btnFileChooser.fill = GridBagConstraints.HORIZONTAL;
+		gbc_btnFileChooser.insets = new Insets(0, 0, 5, 5);
+		gbc_btnFileChooser.gridx = 6;
+		gbc_btnFileChooser.gridy = 27;
+		getContentPane().add(btnFileChooser, gbc_btnFileChooser);
 
 	}
 	
@@ -518,6 +627,7 @@ public class AltaUsuario extends JInternalFrame {
         String anioU = inicioAnio.getText().trim();
         String institutoU = this.comboBoxInstitucion.getSelectedItem().toString().trim();
         String descripcionU = this.textAreaDescripcion.getText().trim();
+        this.pack();
 
         // Celdas vacias
         if (tipoU == "-" || nicknameU.isEmpty() || nombreU.isEmpty() || apellidoU.isEmpty() || emailU.isEmpty() || diaU < 1 || mesU < 1 || anioU.isEmpty() || ((tipoU == "Profesor") && (institutoU == "-" || descripcionU.isEmpty()))) {
@@ -536,6 +646,46 @@ public class AltaUsuario extends JInternalFrame {
         return true;
 	}
 	
+	private void elegirImagen() {
+
+		JFileChooser jfc = new JFileChooser();
+		jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+		FileNameExtensionFilter filtro = new FileNameExtensionFilter("jpg", "jpeg", "png", "tiff", "gif");
+		jfc.addChoosableFileFilter(filtro);
+
+		// Si usuario selecciono algo, leer archivo y coso
+		if (jfc.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+
+			File archivo = jfc.getSelectedFile();
+			txtRutaImagen.setText(archivo.getAbsolutePath());
+
+			try {
+				byte[] bytes = Files.readAllBytes(archivo.toPath());
+
+				// Recordar imagen codificada
+				this.imagenCodificada = bytes;
+
+				// Mostrar version reescalada imagen seleccionada al usuario
+				// Se toma el file y se lo intenta tratar como imagen
+				BufferedImage bfi = ImageIO.read(archivo);
+				float aspectRatio = bfi.getWidth() / bfi.getHeight();
+				Image imagenChiquita = bfi.getScaledInstance((int) (64 * aspectRatio), 64, Image.SCALE_DEFAULT);
+				lblImagen.setIcon(new ImageIcon(imagenChiquita));
+				lblImagen.setText(null);
+
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+				this.imagenCodificada = null;
+				lblImagen.setIcon(null);
+				lblImagen.setText("[Imagen seleccionada]");
+			} catch (IOException e) {
+				e.printStackTrace();
+				this.imagenCodificada = null;
+				lblImagen.setIcon(null);
+				lblImagen.setText("[Imagen seleccionada]");
+			}
+		}
+	}
 	
 }
 
