@@ -66,8 +66,7 @@ public class Institucion {
     	log.info("Institucion "+nombre+" event: "+" new prof "+profe.getNickname());
     }
     
-    
-    
+   
     
     public int addActividadDeportiva(DtActividadDeportiva datosAD, Institucion ins) {
         ActividadDeportiva actDep = new ActividadDeportiva(datosAD);

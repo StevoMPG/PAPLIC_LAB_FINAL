@@ -105,14 +105,5 @@ public class Clase {
 	}
 
 	
-	/*  public int addActividadDeportiva(DtActividadDeportiva datosAD) {
-	ActividadDeportiva actDep = new ActividadDeportiva(datosAD);
-	if (actsDeps.containsKey(datosAD.getNombre()))
-		return 1;
-	actsDeps.put(datosAD.getNombre(),   actDep);
-	DataPersistencia.getInstance().persistirActividad(getActsDeps().get(datosAD.getNombre()));
-	log.info("Institucion "+nombre+" event: "+" new actDep "+actDep.getNombre());
-	return 0;
-	}*/
 	
 }
