@@ -10,8 +10,8 @@ public class DtProfesorExtra extends DtUsuarioExtra{
 	private Map<String,Set<String>> x;
 	private String nombreInstitucion,  descripcion,  biografia,  link;
 	
-	public DtProfesorExtra (String nickname, String nombre, String apellido, String email, DtFechaHora fechaNacimiento, String nombreInstitucion, String descripcion, String biografia, String link, Map<String,Set<String>> actxClase, byte[] bs) {
-		super(nickname, nombre, apellido, email, link, fechaNacimiento, bs); 
+	public DtProfesorExtra (String nickname, String nombre, String apellido, String email, DtFechaHora fechaNacimiento, String nombreInstitucion, String descripcion, String biografia, String link, Map<String,Set<String>> actxClase, byte[] imagen) {
+		super(nickname, nombre, apellido, email, link, fechaNacimiento, imagen); 
 		x = actxClase;
 		this.nombreInstitucion = nombreInstitucion;
 		this.descripcion = descripcion;

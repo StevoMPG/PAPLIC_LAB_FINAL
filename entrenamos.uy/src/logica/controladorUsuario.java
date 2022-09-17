@@ -11,6 +11,7 @@ import datatypes.DtSocioExtra;
 import excepciones.CuponeraNoExisteException;
 import excepciones.InstitucionException;
 import excepciones.UsuarioNoExisteException;
+import logica.persistencia.DataPersistencia;
 
 public class controladorUsuario implements IcontroladorUsuario {
 	
@@ -78,8 +79,10 @@ public class controladorUsuario implements IcontroladorUsuario {
 				((Profesor) user).editarDatos(((DtProfesorExtra) datoUser).downgrade());
 			else
 				((Profesor) user).editarDatos((DtProfesor) datoUser);
+			DataPersistencia.getInstance().persistirProfesorMod((Profesor) user);
 		} else {
 			user.editarDatos(datoUser);
+			DataPersistencia.getInstance().persistirSocioMod(user);
 		}
 	}
 	

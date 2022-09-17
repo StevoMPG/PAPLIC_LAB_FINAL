@@ -2,6 +2,7 @@ package logica.persistencia;
 
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -10,14 +11,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import javax.persistence.*;  
-
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.PersistenceUnit;
-import javax.persistence.Query;
-import javax.persistence.TypedQuery;
+import javax.persistence.*;
 
 import datatypes.DtActividadDeportiva;
 import logica.ActividadDeportiva;
@@ -121,7 +115,48 @@ public class DataPersistencia {
 			em.close();
 		}
 	}
+	
+	public void persistirSocioMod(Usuario user) {
+		EntityManager em = emFabrica.createEntityManager();
+
+		try {
+
+				Query s = em.createNativeQuery("UPDATE `SOCIOS` "
+		                + "SET "
+		                + "`NOMBRE` = ? "
+		                + "WHERE `NICKNAME` = ?; ");
+				
+				Query q = em.createNativeQuery("UPDATE `SOCIOS` "
+		                + "SET "
+		                + "`APELLIDO` = ? "
+		                + "WHERE `NICKNAME` = ?; ");
+				
+				Query w = em.createNativeQuery("UPDATE `SOCIOS` "
+		                + "SET "
+		                + "`FECHA_NACIMIENTO` = ? "
+		                + "WHERE `NICKNAME` = ?; ");
+	
+				s.setParameter(1, user.getNombre());
+				q.setParameter(1, user.getApellido());
+				w.setParameter(1, user.getFecha().toCalendar()); 
+				s.setParameter(2, user.getNickname());
+				q.setParameter(2, user.getNickname());
+				w.setParameter(2, user.getNickname());
+			//	s.setImagen(user.getImagen());
+				em.getTransaction().begin();
+				s.executeUpdate();
+				q.executeUpdate();
+				w.executeUpdate();
+				em.getTransaction().commit();
 		
+		} catch (Exception e) {
+			e.printStackTrace();
+			em.getTransaction().rollback();
+		} finally {
+			em.close();
+		}
+	}
+
 		public void persistirProfesor(Profesor p) {
 			EntityManager em = emFabrica.createEntityManager();
 			try {
@@ -149,6 +184,72 @@ public class DataPersistencia {
 			}
 	}
 		
+		
+		public void persistirProfesorMod(Profesor user) {
+			EntityManager em = emFabrica.createEntityManager();
+
+			try {
+
+				Query s = em.createNativeQuery("UPDATE `PROFESORES` "
+		                + "SET "
+		                + "`NOMBRE` = ? "
+		                + "WHERE `NICKNAME` = ?; ");
+				
+				Query q = em.createNativeQuery("UPDATE `PROFESORES` "
+		                + "SET "
+		                + "`APELLIDO` = ? "
+		                + "WHERE `NICKNAME` = ?; ");
+				
+				Query w = em.createNativeQuery("UPDATE `PROFESORES` "
+		                + "SET "
+		                + "`FECHA_NACIMIENTO` = ? "
+		                + "WHERE `NICKNAME` = ?; ");
+				
+				Query e = em.createNativeQuery("UPDATE `PROFESORES` "
+		                + "SET "
+		                + "`DESCRIPCION` = ? "
+		                + "WHERE `NICKNAME` = ?; ");
+				
+				Query r = em.createNativeQuery("UPDATE `PROFESORES` "
+		                + "SET "
+		                + "`BIOGRAFIA` = ? "
+		                + "WHERE `NICKNAME` = ?; ");
+				
+				Query t = em.createNativeQuery("UPDATE `PROFESORES` "
+		                + "SET "
+		                + "`WEB` = ? "
+		                + "WHERE `NICKNAME` = ?; ");
+
+	
+				s.setParameter(1, user.getNombre());
+				q.setParameter(1, user.getApellido());
+				w.setParameter(1, user.getFecha().toCalendar()); 
+				e.setParameter(1, user.getDescripcion());
+				r.setParameter(1, user.getBiografia());
+				t.setParameter(1, user.getWebsite());
+				s.setParameter(2, user.getNickname());
+				q.setParameter(2, user.getNickname());
+				w.setParameter(2, user.getNickname());
+				e.setParameter(2, user.getNickname());
+				r.setParameter(2, user.getNickname());
+				t.setParameter(2, user.getNickname());
+			//	s.setImagen(user.getImagen());
+				em.getTransaction().begin();
+				s.executeUpdate();
+				q.executeUpdate();
+				w.executeUpdate();
+				e.executeUpdate();
+				r.executeUpdate();
+				t.executeUpdate();
+				em.getTransaction().commit();
+			
+			} catch (Exception e) {
+				e.printStackTrace();
+				em.getTransaction().rollback();
+			} finally {
+				em.close();
+			}
+		}
 		public void persistirInstitucion(Institucion i) {
 			EntityManager em = emFabrica.createEntityManager();
 			try {
