@@ -1,10 +1,14 @@
 package presentacion;
 
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.awt.Color;
 
 import javax.swing.JFrame;
@@ -24,8 +28,10 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeSelectionModel;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JTree;
 import javax.swing.JTextArea;
 
@@ -73,6 +79,9 @@ public class ConsultaActividadDeportiva extends JInternalFrame {
 	private JLabel lblNewLabel;
 	private ConsultaDictadoClase refClase;
 	private ConsultaCuponeras refCup;
+	
+	
+	private JLabel lblNewLabel_2;
 	
 	public ConsultaActividadDeportiva(IcontroladorActividadDeportiva IADC) {
 		
@@ -479,6 +488,17 @@ public class ConsultaActividadDeportiva extends JInternalFrame {
 		gbc_lblEnd.gridy = 5;
 		getContentPane().add(lblEnd, gbc_lblEnd);
 
+		
+		lblNewLabel_2 = new JLabel("");
+		GridBagConstraints gbc_lblNewLabel_3 = new GridBagConstraints();
+		gbc_lblNewLabel_3.anchor = GridBagConstraints.EAST;
+		gbc_lblNewLabel_3.gridwidth = 3;
+		gbc_lblNewLabel_3.gridheight = 3;
+		gbc_lblNewLabel_3.insets = new Insets(0, 0, 5, 5);
+		gbc_lblNewLabel_3.gridx = 5;
+		gbc_lblNewLabel_3.gridy = 0;
+		getContentPane().add(lblNewLabel_2, gbc_lblNewLabel_3);
+		
 	}
 	
 	private void loadData() {
@@ -492,6 +512,8 @@ public class ConsultaActividadDeportiva extends JInternalFrame {
 			textFieldDia.setText(Integer.toString(fecha.getDia()));
 			textFieldMes.setText(Integer.toString(fecha.getMes()));
 			textFieldAnio.setText(Integer.toString(fecha.getAnio()));
+			
+			CargarImagen();
 			
 			tree.setModel(new DefaultTreeModel(
 					new DefaultMutableTreeNode("lol") {
@@ -544,6 +566,7 @@ public class ConsultaActividadDeportiva extends JInternalFrame {
 		textFieldDia.setText("");
 		textFieldMes.setText("");
 		textFieldAnio.setText("");
+		lblNewLabel_2.setIcon(null);
 	}
 	
 	public void refEntry(String actDep) {
@@ -588,6 +611,26 @@ public class ConsultaActividadDeportiva extends JInternalFrame {
 			JOptionPane.showMessageDialog(this, e.getMessage(), 
 					"Alta actividad deportiva", JOptionPane.ERROR_MESSAGE);
 		}
+	}
+	
+	public void CargarImagen() {
+		
+		String actividad = comboBoxActDep.getItemAt(comboBoxActDep.getSelectedIndex());
+		String archivo = "C:\\Users\\User\\Desktop\\Github\\2022prog-app\\entrenamos.uy\\src\\img\\Actividades\\"+actividad+".png";
+		
+		if (false == new File(archivo).exists()) {
+			lblNewLabel_2.setIcon(null);
+			return;
+		}
+			try {
+				BufferedImage bfi = ImageIO.read(new File (archivo));
+				Image imagenChiquita = bfi.getScaledInstance((int) (100), 100, Image.SCALE_DEFAULT);
+				lblNewLabel_2.setIcon(new ImageIcon(imagenChiquita));
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+		}
+		
 	}
 }
 

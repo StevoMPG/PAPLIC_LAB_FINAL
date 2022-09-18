@@ -32,6 +32,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.util.HashSet;
 import java.util.Map.Entry;
@@ -177,23 +178,8 @@ public class ConsultaUsuario extends JInternalFrame {
 					///lblNewLabel_2.setIcon(new ImageIcon(getClass().getResource("/users/"+nickUsuario+".jpg")));
 					///lblNewLabel_2.setIcon(new ImageIcon(getClass().getResource("C:/Users/rippe/Desktop/foto/"+nickUsuario+".png")));
 
-
-					String archivo = "C:\\Users\\User\\Desktop\\Github\\2022prog-app\\entrenamos.uy\\src\\img\\Usuarios\\"+nickUsuario+".png";
 					
-					try {
-						BufferedImage bfi = ImageIO.read(new File (archivo));
-						float aspectRatio = bfi.getWidth() / bfi.getHeight();
-						Image imagenChiquita = bfi.getScaledInstance((int) (100), 100, Image.SCALE_DEFAULT);
-						lblNewLabel_2.setIcon(new ImageIcon(imagenChiquita));
-					} catch (IOException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-					
-					
-					//Image imagenChiquita = bfi.getScaledInstance((int) (100 * aspectRatio), 100, Image.SCALE_DEFAULT);
-					//lblImagen.setIcon(new ImageIcon(imagenChiquita));
-
+					CargarImagen();
 					
 					
 					//El usuario es profesor
@@ -638,6 +624,7 @@ public class ConsultaUsuario extends JInternalFrame {
 	    	textAreaDescripcion.setText("");
 	    	textAreaBiografia.setText("");
 	    	labelWebsite_1.setText("Clases");
+	    	lblNewLabel_2.setIcon(null);
 			tree.setModel(new DefaultTreeModel(
 					new DefaultMutableTreeNode("root") {
 						{
@@ -662,4 +649,24 @@ public class ConsultaUsuario extends JInternalFrame {
 		refCAD = consActDep;
 	}
 
+	
+	
+	public void CargarImagen() {
+		
+		String nickUsuario = comboBoxUsuario.getItemAt(comboBoxUsuario.getSelectedIndex());
+		String archivo = "C:\\Users\\User\\Desktop\\Github\\2022prog-app\\entrenamos.uy\\src\\img\\Usuarios\\"+nickUsuario+".png";
+
+		if (false == new File(archivo).exists()) {
+			lblNewLabel_2.setIcon(null);
+			return;
+		}
+			try {
+				BufferedImage bfi = ImageIO.read(new File (archivo));
+				Image imagenChiquita = bfi.getScaledInstance((int) (100), 100, Image.SCALE_DEFAULT);
+				lblNewLabel_2.setIcon(new ImageIcon(imagenChiquita));
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+		}
+	}
 }

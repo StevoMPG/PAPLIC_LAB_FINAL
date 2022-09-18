@@ -24,7 +24,7 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.ActionEvent;
 import javax.swing.DefaultComboBoxModel;
-
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
@@ -547,6 +547,8 @@ public class AltaUsuario extends JInternalFrame {
     	textAreaBiografia.setText("");
     	textFieldWebsite.setText("");
     	comboBoxInstitucion.setSelectedIndex(0);
+    	txtRutaImagen.setText("");
+    	lblImagen.setIcon(null);
     }
 	
 	
@@ -693,24 +695,23 @@ public class AltaUsuario extends JInternalFrame {
 	private void guardarImagen() {
 		
 		String nicknameU = this.textFieldNickname.getText().trim();
-		ImageIcon im = (ImageIcon)lblImagen.getIcon();
-        BufferedImage img = new BufferedImage(im.getIconWidth(), im.getIconHeight(), BufferedImage.SCALE_REPLICATE);
 		
-        String format = "PNG"; // "PNG" for example
+		try {
+		Icon icon = lblImagen.getIcon();
+		BufferedImage image = new BufferedImage(icon.getIconHeight(), icon.getIconWidth(), BufferedImage.TYPE_INT_ARGB);
+        String format = "png"; // "PNG" for example
         String location = "C:\\Users\\User\\Desktop\\Github\\2022prog-app\\entrenamos.uy\\src\\img\\Usuarios\\"+nicknameU+"."+format; 
-        Graphics2D g2d = img.createGraphics();
-        lblImagen.printAll(g2d);
-        g2d.dispose();
+        Graphics2D graphics = image.createGraphics();
+        icon.paintIcon(lblImagen, graphics, 0, 0);
+        graphics.dispose();
 
-        try {
-        	ImageIO.write(img, format, new File(location));
+        if (image != null)
+        	ImageIO.write(image, format, new File(location));
         } catch (IOException e) {
         	// TODO Auto-generated catch block
         	e.printStackTrace();
         }
-		
 	}
-	
 	
 }
 

@@ -3,6 +3,7 @@ package presentacion;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
 import javax.swing.JPanel;
@@ -10,11 +11,15 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.JFrame;
 import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 import java.awt.GridBagConstraints;
@@ -25,8 +30,15 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.awt.Color;
+import java.awt.Graphics2D;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.SystemColor;
 
 import java.util.Collection;
@@ -71,6 +83,16 @@ public class AltaActividadDeportiva extends JInternalFrame{
 	private JScrollPane scrollPane;
 	private JTextArea textFieldDescripcion;
 	private JTextField altaAnio;
+	
+	
+	// IMAGEN
+	private JLabel lblImagen;
+	private JLabel lblFotoDePerfil;
+	private JTextField txtRutaImagen;
+	private JButton btnFileChooser;
+	@SuppressWarnings("unused")
+	private byte[] imagenCodificada;
+
 	
 	public AltaActividadDeportiva(IcontroladorActividadDeportiva IADC) {
 		
@@ -163,6 +185,7 @@ public class AltaActividadDeportiva extends JInternalFrame{
 		panelDatosActDep.setToolTipText("");
 		panelDatosActDep.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Datos actividad deportiva: ", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		GridBagConstraints gbc_panelDatosActDep = new GridBagConstraints();
+		gbc_panelDatosActDep.gridwidth = 5;
 		gbc_panelDatosActDep.gridheight = 2;
 		gbc_panelDatosActDep.insets = new Insets(0, 0, 5, 5);
 		gbc_panelDatosActDep.fill = GridBagConstraints.BOTH;
@@ -402,15 +425,54 @@ public class AltaActividadDeportiva extends JInternalFrame{
                 clear();
             }
         }); 
+		
+		
+		
+		lblImagen = new JLabel("");
+		lblImagen.setHorizontalAlignment(SwingConstants.CENTER);
+		GridBagConstraints gbc_lblImagen = new GridBagConstraints();
+		gbc_lblImagen.fill = GridBagConstraints.BOTH;
+		gbc_lblImagen.insets = new Insets(0, 0, 5, 5);
+		gbc_lblImagen.gridwidth = 5;
+		gbc_lblImagen.gridx = 0;
+		gbc_lblImagen.gridy = 5;
+		getContentPane().add(lblImagen, gbc_lblImagen);
+
+
+		txtRutaImagen = new JTextField();
+		txtRutaImagen.setEditable(false);
+		GridBagConstraints gbc_txtRutaImagen = new GridBagConstraints();
+		gbc_txtRutaImagen.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txtRutaImagen.insets = new Insets(0, 0, 5, 5);
+		gbc_txtRutaImagen.gridwidth = 4;
+		gbc_txtRutaImagen.gridx = 1;
+		gbc_txtRutaImagen.gridy = 7;
+		getContentPane().add(txtRutaImagen, gbc_txtRutaImagen);
+		txtRutaImagen.setColumns(10);
+
+		btnFileChooser = new JButton("Elegir");
+		btnFileChooser.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				elegirImagen();
+				guardarImagen();
+			}
+		});
+		GridBagConstraints gbc_btnFileChooser = new GridBagConstraints();
+		gbc_btnFileChooser.fill = GridBagConstraints.HORIZONTAL;
+		gbc_btnFileChooser.insets = new Insets(0, 0, 5, 5);
+		gbc_btnFileChooser.gridx = 6;
+		gbc_btnFileChooser.gridy = 7;
+		getContentPane().add(btnFileChooser, gbc_btnFileChooser);
 
 	}
+	
 	
 
 	private boolean checkFormulario() {
 		String nombreInsti = ((String) comboBoxInstitucion.getSelectedItem()).trim();
 		String nombre = textFieldNombre.getText().trim();
         String descripcion = textFieldDescripcion.getText().trim();
-    	    	
+        this.pack();  	
         if (nombreInsti.trim().isEmpty() || nombre.trim().isEmpty()|| descripcion.trim().isEmpty()
         		|| textFieldDuracion.getText().trim().isEmpty() || textFieldCosto.getText().trim().isEmpty() || altaAnio.getText().matches("yyyy")
         		    || comboBoxMes.getSelectedItem().equals("-") || comboBoxDia.getSelectedItem().equals("-")) {
@@ -470,5 +532,75 @@ public class AltaActividadDeportiva extends JInternalFrame{
 		comboBoxDia.setSelectedIndex(0);
 		comboBoxMes.setSelectedIndex(0);
 		altaAnio.setText("yyyy");
+		lblImagen.setIcon(null);
+	}
+	
+	private void elegirImagen() {
+
+		JFileChooser jfc = new JFileChooser();
+		
+		///jfc.setAccessory(lblImagen);
+		jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+		FileNameExtensionFilter filtro = new FileNameExtensionFilter("jpg", "jpeg", "png", "tiff", "gif");
+		jfc.addChoosableFileFilter(filtro);
+		
+		//int Abrir = jfc.showOpenDialog(btnAceptar);
+		jfc.setDialogTitle("Imagenes");
+
+		// Si usuario selecciono algo, leer archivo y coso
+		if (jfc.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+
+			File archivo = jfc.getSelectedFile();
+			txtRutaImagen.setText(archivo.getAbsolutePath());
+
+			try {
+				byte[] bytes = Files.readAllBytes(archivo.toPath());
+
+				// Recordar imagen codificada
+				this.imagenCodificada = bytes;
+
+				// Mostrar version reescalada imagen seleccionada al usuario
+				// Se toma el file y se lo intenta tratar como imagen
+				//BufferedImage bfi = ImageIO.read(archivo);
+				//float aspectRatio = bfi.getWidth() / bfi.getHeight();
+				//Image imagenChiquita = bfi.getScaledInstance((int) (100 * aspectRatio), 100, Image.SCALE_DEFAULT);
+				//lblImagen.setIcon(new ImageIcon(imagenChiquita));
+				//lblImagen.setText(null);
+				String url = jfc.getSelectedFile().getPath();
+				lblImagen.setIcon(new ImageIcon(new ImageIcon(url).getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH)));
+
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+				this.imagenCodificada = null;
+				lblImagen.setIcon(null);
+				lblImagen.setText("[Imagen seleccionada]");
+			} catch (IOException e) {
+				e.printStackTrace();
+				this.imagenCodificada = null;
+				lblImagen.setIcon(null);
+				lblImagen.setText("[Imagen seleccionada]");
+			}
+		}
+	}
+	
+	private void guardarImagen() {
+		
+		String nombre = textFieldNombre.getText().trim();
+
+		try {
+		Icon icon = lblImagen.getIcon();
+		BufferedImage image = new BufferedImage(icon.getIconHeight(), icon.getIconWidth(), BufferedImage.TYPE_INT_ARGB);
+        String format = "png"; // "PNG" for example
+        String location = "C:\\Users\\User\\Desktop\\Github\\2022prog-app\\entrenamos.uy\\src\\img\\Actividades\\"+nombre+"."+format; 
+        Graphics2D graphics = image.createGraphics();
+        icon.paintIcon(lblImagen, graphics, 0, 0);
+        graphics.dispose();
+
+        if (image != null)
+        	ImageIO.write(image, format, new File(location));
+        } catch (IOException e) {
+        	// TODO Auto-generated catch block
+        	e.printStackTrace();
+        }
 	}
 }
