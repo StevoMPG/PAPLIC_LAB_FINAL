@@ -34,7 +34,7 @@ import java.util.Set;
 import java.awt.event.ItemEvent;
 import javax.swing.JFrame;
 import java.awt.Color;
-
+import java.awt.Graphics2D;
 
 import javax.imageio.ImageIO;
 import java.awt.event.MouseAdapter;
@@ -485,7 +485,7 @@ public class AltaUsuario extends JInternalFrame {
 		getContentPane().add(btnCancelar,  gbc_btnCancelar);
 		
 
-		lblImagen = new JLabel("[No hay imagen seleccionada]");
+		lblImagen = new JLabel("");
 		lblImagen.setHorizontalAlignment(SwingConstants.CENTER);
 		GridBagConstraints gbc_lblImagen = new GridBagConstraints();
 		gbc_lblImagen.fill = GridBagConstraints.BOTH;
@@ -518,6 +518,7 @@ public class AltaUsuario extends JInternalFrame {
 		btnFileChooser.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				elegirImagen();
+				guardarImagen();
 			}
 		});
 		GridBagConstraints gbc_btnFileChooser = new GridBagConstraints();
@@ -581,6 +582,11 @@ public class AltaUsuario extends JInternalFrame {
 	        biografiaU = this.textAreaBiografia.getText().trim();
 	        websiteU = this.textFieldWebsite.getText().trim();
 	        
+	        
+	        
+	   
+	        
+	        
 			/*
 			 * Crea el tipo de dato segun el tipo de usuario seleccionado
 			 */
@@ -639,9 +645,14 @@ public class AltaUsuario extends JInternalFrame {
 	private void elegirImagen() {
 
 		JFileChooser jfc = new JFileChooser();
+		
+		///jfc.setAccessory(lblImagen);
 		jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
 		FileNameExtensionFilter filtro = new FileNameExtensionFilter("jpg", "jpeg", "png", "tiff", "gif");
 		jfc.addChoosableFileFilter(filtro);
+		
+		//int Abrir = jfc.showOpenDialog(btnAceptar);
+		jfc.setDialogTitle("Imagenes");
 
 		// Si usuario selecciono algo, leer archivo y coso
 		if (jfc.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
@@ -657,11 +668,13 @@ public class AltaUsuario extends JInternalFrame {
 
 				// Mostrar version reescalada imagen seleccionada al usuario
 				// Se toma el file y se lo intenta tratar como imagen
-				BufferedImage bfi = ImageIO.read(archivo);
-				float aspectRatio = bfi.getWidth() / bfi.getHeight();
-				Image imagenChiquita = bfi.getScaledInstance((int) (64 * aspectRatio), 64, Image.SCALE_DEFAULT);
-				lblImagen.setIcon(new ImageIcon(imagenChiquita));
-				lblImagen.setText(null);
+				//BufferedImage bfi = ImageIO.read(archivo);
+				//float aspectRatio = bfi.getWidth() / bfi.getHeight();
+				//Image imagenChiquita = bfi.getScaledInstance((int) (100 * aspectRatio), 100, Image.SCALE_DEFAULT);
+				//lblImagen.setIcon(new ImageIcon(imagenChiquita));
+				//lblImagen.setText(null);
+				String url = jfc.getSelectedFile().getPath();
+				lblImagen.setIcon(new ImageIcon(new ImageIcon(url).getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH)));
 
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
@@ -676,6 +689,28 @@ public class AltaUsuario extends JInternalFrame {
 			}
 		}
 	}
+	
+	private void guardarImagen() {
+		
+		String nicknameU = this.textFieldNickname.getText().trim();
+		ImageIcon im = (ImageIcon)lblImagen.getIcon();
+        BufferedImage img = new BufferedImage(im.getIconWidth(), im.getIconHeight(), BufferedImage.SCALE_REPLICATE);
+		
+        String format = "PNG"; // "PNG" for example
+        String location = "C:\\Users\\User\\Desktop\\Github\\2022prog-app\\entrenamos.uy\\src\\img\\Usuarios\\"+nicknameU+"."+format; 
+        Graphics2D g2d = img.createGraphics();
+        lblImagen.printAll(g2d);
+        g2d.dispose();
+
+        try {
+        	ImageIO.write(img, format, new File(location));
+        } catch (IOException e) {
+        	// TODO Auto-generated catch block
+        	e.printStackTrace();
+        }
+		
+	}
+	
 	
 }
 

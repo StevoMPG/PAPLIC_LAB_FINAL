@@ -8,14 +8,17 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.JComboBox;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 
 import logica.IcontroladorUsuario; 
 
@@ -25,6 +28,11 @@ import javax.swing.JScrollPane;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.HashSet;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -82,7 +90,7 @@ public class ConsultaUsuario extends JInternalFrame {
 	private JScrollPane scrollPaneTree;
 	private JTree tree;
 	private JLabel labelWebsite_1;
-
+	private JLabel lblNewLabel_2;
 	
 	ConsultaDictadoClase refCDC;
 	ConsultaActividadDeportiva refCAD;
@@ -166,7 +174,28 @@ public class ConsultaUsuario extends JInternalFrame {
 					textFieldDia.setText(String.valueOf(fechaNacimiento.getDia()));
 					textFieldMes.setText(String.valueOf(fechaNacimiento.getMes()));
 					textFieldAnio.setText(String.valueOf(fechaNacimiento.getAnio()));
+					///lblNewLabel_2.setIcon(new ImageIcon(getClass().getResource("/users/"+nickUsuario+".jpg")));
+					///lblNewLabel_2.setIcon(new ImageIcon(getClass().getResource("C:/Users/rippe/Desktop/foto/"+nickUsuario+".png")));
 
+
+					String archivo = "C:\\Users\\User\\Desktop\\Github\\2022prog-app\\entrenamos.uy\\src\\img\\Usuarios\\"+nickUsuario+".png";
+					
+					try {
+						BufferedImage bfi = ImageIO.read(new File (archivo));
+						float aspectRatio = bfi.getWidth() / bfi.getHeight();
+						Image imagenChiquita = bfi.getScaledInstance((int) (100), 100, Image.SCALE_DEFAULT);
+						lblNewLabel_2.setIcon(new ImageIcon(imagenChiquita));
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					
+					
+					//Image imagenChiquita = bfi.getScaledInstance((int) (100 * aspectRatio), 100, Image.SCALE_DEFAULT);
+					//lblImagen.setIcon(new ImageIcon(imagenChiquita));
+
+					
+					
 					//El usuario es profesor
 					if(datosUsuarioActual instanceof DtProfesorExtra) {
 						tipoUsuario = "Profesor";
@@ -307,7 +336,7 @@ public class ConsultaUsuario extends JInternalFrame {
 		gbc_labelApellido.gridwidth = 2;
 		gbc_labelApellido.anchor = GridBagConstraints.SOUTHWEST;
 		gbc_labelApellido.insets = new Insets(0, 0, 5, 5);
-		gbc_labelApellido.gridx = 4;
+		gbc_labelApellido.gridx = 3;
 		gbc_labelApellido.gridy = 2;
 		getContentPane().add(labelApellido, gbc_labelApellido);
 		
@@ -315,7 +344,7 @@ public class ConsultaUsuario extends JInternalFrame {
 		textFieldNombre.setDisabledTextColor(Color.BLACK);
 		textFieldNombre.setEnabled(false);
 		GridBagConstraints gbc_textFieldNombre = new GridBagConstraints();
-		gbc_textFieldNombre.gridwidth = 3;
+		gbc_textFieldNombre.gridwidth = 2;
 		gbc_textFieldNombre.fill = GridBagConstraints.BOTH;
 		gbc_textFieldNombre.insets = new Insets(0, 0, 5, 5);
 		gbc_textFieldNombre.gridx = 1;
@@ -327,10 +356,10 @@ public class ConsultaUsuario extends JInternalFrame {
 		textFieldApellido.setDisabledTextColor(Color.BLACK);
 		textFieldApellido.setEnabled(false);
 		GridBagConstraints gbc_textFieldApellido = new GridBagConstraints();
-		gbc_textFieldApellido.gridwidth = 3;
+		gbc_textFieldApellido.gridwidth = 2;
 		gbc_textFieldApellido.fill = GridBagConstraints.BOTH;
 		gbc_textFieldApellido.insets = new Insets(0, 0, 5, 5);
-		gbc_textFieldApellido.gridx = 4;
+		gbc_textFieldApellido.gridx = 3;
 		gbc_textFieldApellido.gridy = 3;
 		getContentPane().add(textFieldApellido, gbc_textFieldApellido);
 		textFieldApellido.setColumns(10);
@@ -349,7 +378,7 @@ public class ConsultaUsuario extends JInternalFrame {
 		textFieldEmail.setDisabledTextColor(Color.BLACK);
 		textFieldEmail.setEnabled(false);
 		GridBagConstraints gbc_textFieldEmail = new GridBagConstraints();
-		gbc_textFieldEmail.gridwidth = 6;
+		gbc_textFieldEmail.gridwidth = 4;
 		gbc_textFieldEmail.fill = GridBagConstraints.BOTH;
 		gbc_textFieldEmail.insets = new Insets(0, 0, 5, 5);
 		gbc_textFieldEmail.gridx = 1;
@@ -526,6 +555,16 @@ public class ConsultaUsuario extends JInternalFrame {
 		gbc_scrollPane.gridx = 1;
 		gbc_scrollPane.gridy = 18;
 		getContentPane().add(scrollPaneTree, gbc_scrollPaneTree);
+		
+		lblNewLabel_2 = new JLabel("");
+		GridBagConstraints gbc_lblNewLabel_3 = new GridBagConstraints();
+		gbc_lblNewLabel_3.anchor = GridBagConstraints.EAST;
+		gbc_lblNewLabel_3.gridwidth = 3;
+		gbc_lblNewLabel_3.gridheight = 3;
+		gbc_lblNewLabel_3.insets = new Insets(0, 0, 5, 5);
+		gbc_lblNewLabel_3.gridx = 5;
+		gbc_lblNewLabel_3.gridy = 2;
+		getContentPane().add(lblNewLabel_2, gbc_lblNewLabel_3);
 		
 		
 		
