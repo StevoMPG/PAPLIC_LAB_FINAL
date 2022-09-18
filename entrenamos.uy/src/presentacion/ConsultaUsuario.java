@@ -654,7 +654,7 @@ public class ConsultaUsuario extends JInternalFrame {
 	public void CargarImagen() {
 		
 		String nickUsuario = comboBoxUsuario.getItemAt(comboBoxUsuario.getSelectedIndex());
-		String archivo = "C:\\Users\\User\\Desktop\\Github\\2022prog-app\\entrenamos.uy\\src\\img\\Usuarios\\"+nickUsuario+".png";
+		String archivo = "/home/tecnologo/Escritorio/2022prog-app-main/entrenamos.uy/src/img/Usuarios/"+nickUsuario+".png";
 
 		if (false == new File(archivo).exists()) {
 			lblNewLabel_2.setIcon(null);

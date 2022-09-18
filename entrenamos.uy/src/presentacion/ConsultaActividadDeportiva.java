@@ -616,7 +616,7 @@ public class ConsultaActividadDeportiva extends JInternalFrame {
 	public void CargarImagen() {
 		
 		String actividad = comboBoxActDep.getItemAt(comboBoxActDep.getSelectedIndex());
-		String archivo = "C:\\Users\\User\\Desktop\\Github\\2022prog-app\\entrenamos.uy\\src\\img\\Actividades\\"+actividad+".png";
+		String archivo = "/home/tecnologo/Escritorio/2022prog-app-main/entrenamos.uy/src/img/Actividades/"+actividad+".png";
 		
 		if (false == new File(archivo).exists()) {
 			lblNewLabel_2.setIcon(null);

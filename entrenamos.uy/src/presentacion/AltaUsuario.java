@@ -700,7 +700,7 @@ public class AltaUsuario extends JInternalFrame {
 		Icon icon = lblImagen.getIcon();
 		BufferedImage image = new BufferedImage(icon.getIconHeight(), icon.getIconWidth(), BufferedImage.TYPE_INT_ARGB);
         String format = "png"; // "PNG" for example
-        String location = "C:\\Users\\User\\Desktop\\Github\\2022prog-app\\entrenamos.uy\\src\\img\\Usuarios\\"+nicknameU+"."+format; 
+        String location = "/home/tecnologo/Escritorio/2022prog-app-main/entrenamos.uy/src/img/Usuarios/"+nicknameU+"."+format; 
         Graphics2D graphics = image.createGraphics();
         icon.paintIcon(lblImagen, graphics, 0, 0);
         graphics.dispose();
