@@ -1,7 +1,5 @@
 package datatypes;
 
-import java.util.Set;
-
 public class DtUsuarioExtra extends DtUsuario{
 	
 	public DtUsuarioExtra(String nickname,  String nombre,  String apellido,  String email,  String contrasenia,  DtFechaHora fechaNacimiento,  byte[] imagen) {

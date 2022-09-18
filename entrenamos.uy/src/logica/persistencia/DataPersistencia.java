@@ -1,26 +1,14 @@
 package logica.persistencia;
 
-import java.sql.PreparedStatement;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
-
 import javax.persistence.*;
 
-import datatypes.DtActividadDeportiva;
+
 import logica.ActividadDeportiva;
 import logica.Clase;
 import logica.ClasesCuponera;
 import logica.Cuponera;
 import logica.Institucion;
 import logica.Profesor;
-import logica.Socio;
 import logica.Usuario;
 import logica.compraClase;
 import logica.persistencia.Datatypes.TipoUsuario;

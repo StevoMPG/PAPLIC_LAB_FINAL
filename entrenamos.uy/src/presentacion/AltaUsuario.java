@@ -7,13 +7,13 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import javax.swing.UIManager;
+
 
 import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
-import java.awt.Label;
+
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -24,7 +24,7 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.ActionEvent;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.Icon;
+
 import javax.swing.ImageIcon;
 import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
@@ -34,22 +34,15 @@ import java.util.Set;
 import java.awt.event.ItemEvent;
 import javax.swing.JFrame;
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
+
 
 import javax.imageio.ImageIO;
-import javax.swing.Box;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.channels.FileChannel;
 import java.nio.file.Files;
 
 import javax.swing.event.PopupMenuListener;
@@ -62,10 +55,6 @@ import excepciones.InstitucionException;
 import datatypes.DtSocio;
 import datatypes.DtProfesor;
 import datatypes.DtFechaHora;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.layout.FormSpecs;
-import com.jgoodies.forms.layout.RowSpec;
 
 
 @SuppressWarnings("serial")
@@ -93,7 +82,6 @@ public class AltaUsuario extends JInternalFrame {
 	private JScrollPane scrollPane;
 	private JTextArea textAreaDescripcion;
 	private JScrollPane scrollPane_1;
-	private JLabel labelAclaracionFecha;
 	private JTextField inicioAnio;
 	
 	// Seleccion de Fecha de Inicio:
@@ -106,6 +94,7 @@ public class AltaUsuario extends JInternalFrame {
 	private JLabel lblFotoDePerfil;
 	private JTextField txtRutaImagen;
 	private JButton btnFileChooser;
+	@SuppressWarnings("unused")
 	private byte[] imagenCodificada;
 
 	
@@ -130,6 +119,7 @@ public class AltaUsuario extends JInternalFrame {
 		int iframeHeight = 700;
 		int gridWidth = iframeWidth/columns;
 		int gridHeight = iframeHeight/rows;
+		@SuppressWarnings("unused")
 		int x = gridWidth+gridHeight;
 		setBounds(100,  25,  iframeWidth,  iframeHeight); // w, h
 		

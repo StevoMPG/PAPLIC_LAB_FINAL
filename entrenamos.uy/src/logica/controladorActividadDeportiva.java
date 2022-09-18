@@ -2,19 +2,14 @@ package logica;
 
 
 import java.util.HashSet;
-import java.util.Map.Entry;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 
 import java.util.Set;
 
 import excepciones.ActividadDeportivaException;
 import excepciones.ClaseException;
 import excepciones.InstitucionException;
-import excepciones.UsuarioNoExisteException;
-import logica.persistencia.DataPersistencia;
+
 import datatypes.DtActividadDeportiva;
 import datatypes.DtActividadDeportivaExtra;
 import datatypes.DtClaseExtra;

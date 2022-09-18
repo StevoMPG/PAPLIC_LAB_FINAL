@@ -1,7 +1,7 @@
 package presentacion;
 
 
-import java.awt.EventQueue;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
@@ -20,13 +20,6 @@ import main.Main;
 import logica.IcontroladorActividadDeportiva;
 import logica.IcontroladorClase;
 import logica.IcontroladorCuponera;
-
-import datatypes.DtActividadDeportiva;
-import datatypes.DtClase;
-import datatypes.DtFechaHora;
-import datatypes.DtProfesor;
-import datatypes.DtSocio;
-import datatypes.tipoRegistro;
 
 
 import excepciones.NoExisteCuponeraException;
@@ -213,14 +206,14 @@ public class Principal {
         	}
         });
         
-		JMenuItem itemPueba = new JMenuItem("Cargar Datos Prueba");
+	/*	JMenuItem itemPueba = new JMenuItem("Cargar Datos Prueba");
 		menuSistema.add(itemPueba);
 		itemPueba.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cargarDatosPrueba();
 			}
 		});
-        
+        */
         // Salgo de la aplicación
         JMenuItem itemSalir = new JMenuItem("Salir");
         menuSistema.add(itemSalir);
@@ -472,7 +465,7 @@ public class Principal {
 	}
 	
 	
-	private void cargarDatosPrueba() {
+/*	private void cargarDatosPrueba() {
 		try {
 			if(IADC.obtenerInstituciones().size()>0) {
 	        	JOptionPane.showMessageDialog(desktopPane, "Los datos de prueba solo pueden cargarse con el sistema vacío.",  "Info",  JOptionPane.ERROR_MESSAGE);
@@ -512,6 +505,6 @@ public class Principal {
 			JOptionPane.showMessageDialog(desktopPane,  "Ha ocurrido un error excepcional durante la carga de casos de prueba: " +
 	    			e.getMessage(),  "Info",  JOptionPane.ERROR_MESSAGE);
 		}
-    }
+    }*/
 }
 

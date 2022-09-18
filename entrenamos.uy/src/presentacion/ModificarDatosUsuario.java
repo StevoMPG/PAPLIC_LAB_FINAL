@@ -19,7 +19,6 @@ import java.awt.event.ActionEvent;
 import javax.swing.DefaultComboBoxModel;
 
 import logica.IcontroladorUsuario;
-import logica.controladorUsuario;
 import datatypes.DtUsuario;
 import datatypes.DtSocio;
 import datatypes.DtFechaHora;
