@@ -15,8 +15,8 @@ import logica.persistencia.Datatypes.TipoUsuario;
 import logica.persistencia.Entidades.*;
 
 public class DataPersistencia {
-	@PersistenceUnit(name="ActividadDB")
-	private EntityManagerFactory emFabrica = Persistence.createEntityManagerFactory("ActividadDB");
+	@PersistenceUnit(name="actividaddb")
+	private EntityManagerFactory emFabrica = Persistence.createEntityManagerFactory("actividaddb");
 
 	private static DataPersistencia instancia = null;
 	
