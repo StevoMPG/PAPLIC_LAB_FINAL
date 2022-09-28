@@ -15,11 +15,12 @@ import java.util.Set;
 import java.util.Map.Entry;
 
 import datatypes.DtActividadDeportiva;
+import datatypes.DtCategoria;
 import datatypes.DtClase;
 import datatypes.DtFechaHora;
 import datatypes.DtProfesor;
 import datatypes.DtSocio;
-
+import datatypes.tipoEstado;
 import datatypes.tipoRegistro;
 import logica.Fabrica;
 import logica.IcontroladorUsuario;
@@ -93,101 +94,119 @@ public class Main {
 				// ALTA USUARIOS
 	    
 				// SOCIOS
-
 				// Emi71 #EL
-				IUC.ingresarDatosUsuario(new DtSocio("Emi71", "Emiliano", "Lucas", "emi71@gmail.com",  new DtFechaHora(1971, 12, 31, 0, 0, 0),  "Emi71.jpg".getBytes()));
+				IUC.ingresarDatosUsuario(new DtSocio("Emi71", "Emiliano", "Lucas", "emi71@gmail.com",  "asdfg456",  new DtFechaHora(1971, 12, 31, 0, 0, 0),  "Emi71.webp".getBytes()));
 				// caro #CO
-				IUC.ingresarDatosUsuario(new DtSocio("caro", "Carolina", "Omega", "caro@gmail.com",  new DtFechaHora(1983, 11, 15, 0, 0, 0),  "caro.jpg".getBytes()));
+				IUC.ingresarDatosUsuario(new DtSocio("caro", "Carolina", "Omega", "caro@gmail.com",  "123rtgfdv",  new DtFechaHora(1983, 11, 15, 0, 0, 0),  "caro.webp".getBytes()));
 				// euge #EW
-				IUC.ingresarDatosUsuario(new DtSocio("euge", "Eugenia", "Williams", "e.will@gmail.com",  new DtFechaHora(1990, 4, 15, 0, 0, 0),  "euge.jpg".getBytes()));
+				IUC.ingresarDatosUsuario(new DtSocio("euge", "Eugenia", "Williams", "e.will@gmail.com",  "poiuy086",  new DtFechaHora(1990, 4, 15, 0, 0, 0),  "euge.jpg".getBytes()));
 				// guille #GH
-				IUC.ingresarDatosUsuario(new DtSocio("guille", "Guillermo", "Hector", "ghector@gmail.com",  new DtFechaHora(1959, 5, 15, 0, 0, 0),  "guille.jpg".getBytes()));
+				IUC.ingresarDatosUsuario(new DtSocio("guille", "Guillermo", "Hector", "ghector@gmail.com",  "GTO468",  new DtFechaHora(1959, 5, 15, 0, 0, 0),  "guille.jpg".getBytes()));
 				// sergiop #SP
-				IUC.ingresarDatosUsuario(new DtSocio("sergiop", "Sergio", "Perez", "sergi@gmail.com.uy",  new DtFechaHora(1950, 1, 28, 0, 0, 0),  "sergiop.jpg".getBytes()));
+				IUC.ingresarDatosUsuario(new DtSocio("sergiop", "Sergio", "Perez", "sergi@gmail.com.uy",  "HGF135",  new DtFechaHora(1950, 1, 28, 0, 0, 0),  "sergiop.jpg".getBytes()));
 				// andy #AR
-				IUC.ingresarDatosUsuario(new DtSocio("andy", "Andrés", "Roman", "chino@gmail.org.uy",  new DtFechaHora(1976, 3, 17, 0, 0, 0),  "andy.jpg".getBytes()));
+				IUC.ingresarDatosUsuario(new DtSocio("andy", "Andrés", "Roman", "chino@gmail.org.uy",  "lkj65D",  new DtFechaHora(1976, 3, 17, 0, 0, 0),  "andy.jpg".getBytes()));
 				// tonyp #AP
-				IUC.ingresarDatosUsuario(new DtSocio("tonyp", "Antonio", "Paz", "eltony@gmail.org.uy",  new DtFechaHora(1955, 2, 14, 0, 0, 0),  "tonyp.jpg".getBytes()));
+				IUC.ingresarDatosUsuario(new DtSocio("tonyp", "Antonio", "Paz", "eltony@gmail.org.uy",  "jhvf395",  new DtFechaHora(1955, 2, 14, 0, 0, 0),  "tonyp.jpg".getBytes()));
 				// m1k4 #ML
-				IUC.ingresarDatosUsuario(new DtSocio("m1k4", "Micaela", "Lopez", "mika@gmail.com.ar",  new DtFechaHora(1987, 2, 23, 0, 0, 0),  "m1k4.jpg".getBytes()));
+				IUC.ingresarDatosUsuario(new DtSocio("m1k4", "Micaela", "Lopez", "mika@gmail.com.ar",  "ijngr024",  new DtFechaHora(1987, 2, 23, 0, 0, 0),  "m1k4.webp".getBytes()));
 				// charly #CB
-				IUC.ingresarDatosUsuario(new DtSocio("charly", "Carlos", "Boston", "charly@gmail.com.uy",  new DtFechaHora(1937, 5, 8, 0, 0, 0),  "charly.jpg".getBytes()));	
-
+				IUC.ingresarDatosUsuario(new DtSocio("charly", "Carlos", "Boston", "charly@gmail.com.uy",  "987mnbgh",  new DtFechaHora(1937, 5, 8, 0, 0, 0),  "charly.jpg".getBytes()));	
 				
 				// PROFESORES
 				String desc;
 				String bio;
 				// viktor #VP
 				desc = "Victor es un apasionado de los músculos. Sus clases son organizadas en función de distintos "
-									+ "aparatos y pesas con el objetivo de desarrollar músculos.";
+						+ "aparatos y pesas con el objetivo de desarrollar músculos.";
 				bio = "Victor nació en Moscow en 1977. En el año 2005 emigró a Uruguay luego de quedar "
-									+ "encantado con el país en un viaje turístico.";
-				IUC.ingresarDatosUsuario(new DtProfesor("viktor", "Victor", "Perez", "vperez@fuerza.com",   new DtFechaHora(1977, 1, 1, 0, 0, 0), 
-									"Fuerza Bruta",  desc,  bio , "www.vikgym.com", "viktor.jpg".getBytes()));
+						+ "encantado con el país en un viaje turístico.";
+				IUC.ingresarDatosUsuario(new DtProfesor("viktor", "Victor", "Perez", "vperez@fuerza.com",  "lkj34df",  new DtFechaHora(1977, 1, 1, 0, 0, 0), 
+						"Fuerza Bruta",  desc,  bio , "www.vikgym.com",  "viktor.jpg".getBytes()));
 				// denis #DM
 				desc = "A Denis le interesan los deportes con pelota,  principalmente el voleibol y el handball.";
 				bio = "Denis fue un jugador de voleibol profesional.";
-				IUC.ingresarDatosUsuario(new DtProfesor("denis", "Denis", "Miguel", "den80@fuerza.com",  new DtFechaHora(1980, 6, 14, 0, 0, 0), 
-									"Telón",  desc,  bio , "www.depecho.com",  "denis.jpg".getBytes()));
+				IUC.ingresarDatosUsuario(new DtProfesor("denis", "Denis", "Miguel", "den80@fuerza.com",  "poke579",  new DtFechaHora(1980, 6, 14, 0, 0, 0), 
+						"Telón",  desc,  bio , "www.depecho.com",  "denis.jpg".getBytes()));
 				// clazar #CL
 				desc = "Carlos es un profesor muy divertido cuyas clases de aeróbica están cargadas de energía.";
 				bio = "El interés por la actividad física llevo a Carlos a dejar su trabajo en un estudio "
-									+ "contable y abrir su propio gimnasio.";
-				IUC.ingresarDatosUsuario(new DtProfesor("clazar", "Carlos", "Lazaro", "claz4r0@hotmail.com",  new DtFechaHora(1953, 6, 22, 0, 0, 0), 
-									"Instituto Natural",  desc,  bio , "www.enforma.com", "clazar.jpg".getBytes()));
+						+ "contable y abrir su propio gimnasio.";
+				IUC.ingresarDatosUsuario(new DtProfesor("clazar", "Carlos", "Lazaro", "claz4r0@hotmail.com",  "mkji648",  new DtFechaHora(1953, 6, 22, 0, 0, 0), 
+						"Instituto Natural",  desc,  bio , "www.enforma.com",  "clazar.jpg".getBytes()));
 				// TheBoss #BS
 				desc = "Bruno es un ex-boxeardor que busca entrenar a futuros campeones.";
 				bio = "Bruno,  mejor conocido como Bruce en el ring,  compitió como boxeador entre los años 60s y 70s.";
-				IUC.ingresarDatosUsuario(new DtProfesor("TheBoss", "Bruno", "Sosa", "bruceTheBoss@gmail.com",  new DtFechaHora(1949, 9, 23, 0, 0, 0), 
-									"Fuerza Bruta",  desc,  bio , "www.bruce.net", "TheBoss.jpg".getBytes()));
+				IUC.ingresarDatosUsuario(new DtProfesor("TheBoss", "Bruno", "Sosa", "bruceTheBoss@gmail.com",  "fcku0123",  new DtFechaHora(1949, 9, 23, 0, 0, 0), 
+						"Fuerza Bruta",  desc,  bio , "www.bruce.net",  "TheBoss.jpg".getBytes()));
 				// Nelson #TN
 				desc = "Profesor de natación. Especializado en braza y mariposa.";
 				bio = "";
-				IUC.ingresarDatosUsuario(new DtProfesor("Nelson", "Luis", "Nelson", "nelson@hotmail.com",  new DtFechaHora(1998, 1, 1, 0, 0, 0), 
-									"Telón",  desc,  bio , "www.nelson.uy", "Nelson.jpg".getBytes()));
+				IUC.ingresarDatosUsuario(new DtProfesor("Nelson", "Luis", "Nelson", "nelson@hotmail.com",  "vbmn4r",  new DtFechaHora(1998, 1, 1, 0, 0, 0), 
+						"Telón",  desc,  bio , "www.nelson.uy",  "Nelson.jpg".getBytes()));
 				// lale #LL
 				desc = "Luego de una exitosa carrera como jugadora de futbol profesional. Laura dedica sus clases a "
-									+ "enseñar tácticas de futbol.";
+						+ "enseñar tácticas de futbol.";
 				bio = "Jugadora profesional de futbol desde 2010 a 2020.";
-				IUC.ingresarDatosUsuario(new DtProfesor("lale", "Laura", "Leyes", "la_le@outlook.com",  new DtFechaHora(1987, 2, 14, 0, 0, 0), 
-									"Telón",  desc,  bio , "www.laley.com",  "lale.jpg".getBytes()));
+				IUC.ingresarDatosUsuario(new DtProfesor("lale", "Laura", "Leyes", "la_le@outlook.com",  "ncnl123",  new DtFechaHora(1987, 2, 14, 0, 0, 0), 
+						"Telón",  desc,  bio , "www.laley.com",  "lale.jpg".getBytes()));
 				// prisc #PI
 				desc = "Laura tiene un gran interés por los deportes olímpicos.";
 				bio = "";
-				IUC.ingresarDatosUsuario(new DtProfesor("prisc", "Priscila", "Pappo", "pripa@gmail.com",  new DtFechaHora(1981, 8, 13, 0, 0, 0), 
-									"Olympic",  desc,  bio , "www.pi314.net", null));
+				IUC.ingresarDatosUsuario(new DtProfesor("prisc", "Priscila", "Pappo", "pripa@gmail.com",  "mny101",  new DtFechaHora(1981, 8, 13, 0, 0, 0), 
+						"Olympic",  desc,  bio , "www.pi314.net",  null));
 				// dagost #DY
 				desc = "Profesora dedicada y exigente. No acepta un " + '"' + "no puedo" + '"' + " como respuesta.";
 				bio = "";
-				IUC.ingresarDatosUsuario(new DtProfesor("dagost", "Daiana", "Agostini", "d_1940_ago@gmail.com",  new DtFechaHora(1940, 3, 5, 0, 0, 0), 
-									"Olympic",  desc,  bio , "www.dygym.com", "dagost.jpg".getBytes()));
+				IUC.ingresarDatosUsuario(new DtProfesor("dagost", "Daiana", "Agostini", "d_1940_ago@gmail.com",  "1o1vbm",  new DtFechaHora(1940, 3, 5, 0, 0, 0), 
+						"Olympic",  desc,  bio , "www.dygym.com",  "dagost.webp".getBytes()));
 				// aldo #AL
 				desc = "Dada su gran estatura Aldo siempre jugó al basquetbol,  hoy se dedica a enseñarlo.";
 				bio = "";
-				IUC.ingresarDatosUsuario(new DtProfesor("aldo", "Aldo", "Vivaldi", "aldo@outlook.com",  new DtFechaHora(1952, 7, 17, 0, 0, 0), 
-									"Telón",  desc,  bio , "www.sportsaldo.net", "aldo.jpg".getBytes()));
-
+				IUC.ingresarDatosUsuario(new DtProfesor("aldo", "Aldo", "Vivaldi", "aldo@outlook.com",  "ultraton01",  new DtFechaHora(1952, 7, 17, 0, 0, 0), 
+						"Telón",  desc,  bio , "www.sportsaldo.net",  "aldo.jpg".getBytes()));
+					
 				
+				//CATEGORIAS
+				IADC.ingresarCatergoria(new DtCategoria("Al aire libre"));
+				IADC.ingresarCatergoria(new DtCategoria("Deportes"));
+				IADC.ingresarCatergoria(new DtCategoria("Fitness"));
+				IADC.ingresarCatergoria(new DtCategoria("Gimnasia"));
+				
+				//CATEGOIRAS DE LAS ACTDEP
+				Set<String> A1cat = new HashSet<>(); A1cat.add("Fitness");
+				Set<String> A2cat = new HashSet<>(); A2cat.add("Gimnasia"); A2cat.add("Deportes");
+				Set<String> A3cat = new HashSet<>(); A3cat.add("Al aire libre");
+				Set<String> A4cat = new HashSet<>(); A4cat.add("Deportes");
+				Set<String> A5cat = new HashSet<>(); A5cat.add("Deportes");
+				Set<String> A6cat = new HashSet<>(); A6cat.add("Deportes");
+				Set<String> A7cat = new HashSet<>(); A7cat.add("Fitness");
+				Set<String> A8cat = new HashSet<>(); A8cat.add("Gimnasia");
+				Set<String> A9cat = new HashSet<>(); A9cat.add("Deportes"); A9cat.add("Al aire libre");
+				Set<String> A10cat = new HashSet<>();A10cat.add("Gimnasia");
+				
+				
+
 				// ALTA ACTIVIDAD DEPORTIVA
 		        // Aparatos y pesas #A1
 				IADC.ingresarDatosActividadDep("Fuerza Bruta",  new DtActividadDeportiva("Aparatos y pesas", 
-						"Clases de aparatos,  pesas y calistenia.",  90,  550,  new DtFechaHora(2021, 3, 31, 0, 0, 0)));
+						"Clases de aparatos,  pesas y calistenia.",  90,  550,  new DtFechaHora(2021, 3, 31, 0, 0, 0),  A1cat,  tipoEstado.aceptada,  "viktor", "Aparatos y pesas.jpeg"));
 				// Voleibol #A2
 				IADC.ingresarDatosActividadDep("Telón",  new DtActividadDeportiva("Voleibol", 
-						"Voleibol en todas sus formas.",  120,  750,  new DtFechaHora(2021, 4, 20, 0, 0, 0)));
+						"Voleibol en todas sus formas.",  120,  750,  new DtFechaHora(2021, 4, 20, 0, 0, 0),  A2cat,  tipoEstado.aceptada,  "denis", "Voleibol.jpeg"));
 				// Aeróbica #A3
 				IADC.ingresarDatosActividadDep("Instituto Natural",  new DtActividadDeportiva("Aeróbica", 
-						"Para cuidar el aparato cardiovascular.",  110,  800,  new DtFechaHora(2021, 5, 30, 0, 0, 0)));
+						"Para cuidar el aparato cardiovascular.",  110,  800,  new DtFechaHora(2021, 5, 30, 0, 0, 0),  A3cat,  tipoEstado.aceptada,  "clazar", "Aeróbica.jpg"));
 				// Kickboxing #A4
 				IADC.ingresarDatosActividadDep("Fuerza Bruta",  new DtActividadDeportiva("Kickboxing", 
-						"En busca del nuevo campeón de boxeo.",  100,  980,  new DtFechaHora(2021, 6, 7, 0, 0, 0)));
+						"En busca del nuevo campeón de boxeo.",  100,  980,  new DtFechaHora(2021, 6, 7, 0, 0, 0),  A4cat,  tipoEstado.aceptada,  "TheBoss", "Kickboxing.jpg"));
 				// Atletismo #A5
 				IADC.ingresarDatosActividadDep("Telón",  new DtActividadDeportiva("Atletismo", 
-						"100m ,  200m,  postas y carreras con obstaculos.",  150,  500,  new DtFechaHora(2021, 7, 8, 0, 0, 0)));
+						"100m ,  200m,  postas y carreras con obstaculos.",  150,  500,  new DtFechaHora(2021, 7, 8, 0, 0, 0),  A5cat,  tipoEstado.aceptada,  "denis", "Atletismo.webp"));
 				// Basquetbol #A6
 				IADC.ingresarDatosActividadDep("Telón",  new DtActividadDeportiva("Basquetbol", 
-						"Espectáculo conmemorando los 30 años de Violeta.",  80,  450,  new DtFechaHora(2021, 7, 31, 0, 0, 0)));
-
+						"Espectáculo conmemorando los 30 años de Violeta.",  80,  450,  new DtFechaHora(2021, 7, 31, 0, 0, 0),  A6cat,  tipoEstado.aceptada,  "Nelson", "Basquetbol.jpg"));
+		    
 			
 		        // ALTA CLASE
 		        // Calistenia #C1 -

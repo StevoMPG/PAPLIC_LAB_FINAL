@@ -6,15 +6,17 @@ public class DtClasesCuponeras {
 	
 	private int cantidadClases;
 	
-	public DtClasesCuponeras(String s, int t) {
-		nombreActividad = s;
-		cantidadClases = t;
+	public DtClasesCuponeras(String nombreAct,  int cantClase) {
+		nombreActividad = nombreAct;
+		cantidadClases = cantClase;
 	}
+	
 	public String getNombreActividad() {
 		return nombreActividad;
 	}
+	
 	public int getCantidadClases() {
 		return cantidadClases;
 	}
-
+	
 }

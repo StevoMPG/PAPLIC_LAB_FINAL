@@ -104,6 +104,11 @@ public class Clase {
 		DataPersistencia.getInstance().persistirRegistroClase(recibo);
 	}
 
+	public void suicidar() {
+		for(compraClase rc: listaReciboClase)
+			rc.suicidar();
+		
+	}
 	
 	
 }

@@ -24,8 +24,8 @@ public class Socios extends Usuarios {
     
     @Override
 	public DtUsuarioExtra toDtUsuarioExt() {
-		DtSocioExtra res = new DtSocioExtra(nickname, nombre, apellido, email, new DtFechaHora(fechaNacimiento), 
-				new HashMap<String, Set<String>>(), null);
+		DtSocioExtra res = new DtSocioExtra(nickname, nombre, apellido, email, null, new DtFechaHora(fechaNacimiento), 
+				new HashMap<String, Set<String>>(), null, null, null, null, null);
 		return res;
 	}
 }

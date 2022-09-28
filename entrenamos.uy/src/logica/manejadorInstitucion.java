@@ -59,7 +59,6 @@ public class manejadorInstitucion {
 	}
 	
 
-
 	public boolean existeInstitucion(String nombre) {
 		return instituciones.containsKey(nombre);
 	}

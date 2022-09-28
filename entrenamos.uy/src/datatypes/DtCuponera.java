@@ -8,8 +8,9 @@ public class DtCuponera {
 	private float descuento,costo;
 	private DtFechaHora fechaInicio,fechaFin,fechaAlta;
 	private List<DtClasesCuponeras> contenido;
+	private List<String> categorias;
 	
-	public DtCuponera(String nom, String descr, float desc, float cc, DtFechaHora fi, DtFechaHora ff, DtFechaHora fa, List<DtClasesCuponeras> v){
+	public DtCuponera(String nom, String descr, float desc, float cc, DtFechaHora fi, DtFechaHora ff, DtFechaHora fa, List<DtClasesCuponeras> v,  List<String> cat){
 		this.nombre = nom;
 		this.descripcion = descr;
 		this.descuento = desc;
@@ -18,6 +19,7 @@ public class DtCuponera {
 		this.fechaAlta = fa;
 		this.costo = cc;
 		this.contenido = v;
+		categorias=cat;
 	}
 	
 	public String getNombre() {
@@ -50,6 +52,10 @@ public class DtCuponera {
 	
 	public float getCosto() {
 		return costo;
+	}
+	
+	public List<String> getCategorias() {
+		return categorias;
 	}
 
 	public String toString() {

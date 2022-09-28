@@ -5,6 +5,7 @@ package presentacion;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
@@ -23,6 +24,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.ActionEvent;
+
+import javax.swing.Box;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -34,6 +37,7 @@ import java.util.Set;
 import java.awt.event.ItemEvent;
 import javax.swing.JFrame;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Graphics2D;
 
 import javax.imageio.ImageIO;
@@ -83,11 +87,15 @@ public class AltaUsuario extends JInternalFrame {
 	private JTextArea textAreaDescripcion;
 	private JScrollPane scrollPane_1;
 	private JTextField inicioAnio;
-	
 	// Seleccion de Fecha de Inicio:
 	private JComboBox<String> boxIDia; // Depende de mes;
 	private JComboBox<String> boxIMes;
-
+	private Component verticalStrut;
+	private JLabel labelContrasenia1;
+	private JLabel lblReescribirContrasea;
+	private JPasswordField passwordField1;
+	private JPasswordField passwordField2;
+	
 	
 	// IMAGEN
 	private JLabel lblImagen;
@@ -180,6 +188,12 @@ public class AltaUsuario extends JInternalFrame {
 		gbc_labelNickname.gridy = 2;
 		getContentPane().add(labelNickname,  gbc_labelNickname);
 		
+		verticalStrut = Box.createVerticalStrut(20);
+		GridBagConstraints gbc_verticalStrut = new GridBagConstraints();
+		gbc_verticalStrut.insets = new Insets(0,  0,  5,  5);
+		gbc_verticalStrut.gridx = 4+x-x;
+		gbc_verticalStrut.gridy = 2;
+		getContentPane().add(verticalStrut,  gbc_verticalStrut);
 		
 		textFieldNickname = new JTextField();
 		GridBagConstraints gbc_textFieldNickname = new GridBagConstraints();
@@ -262,6 +276,42 @@ public class AltaUsuario extends JInternalFrame {
 		gbc_textFieldEmail.gridy = 7;
 		getContentPane().add(textFieldEmail,  gbc_textFieldEmail);
 		textFieldEmail.setColumns(10);
+		
+		labelContrasenia1 = new JLabel("Contraseña");
+		GridBagConstraints gbc_labelContrasenia1 = new GridBagConstraints();
+		gbc_labelContrasenia1.gridwidth = 2;
+		gbc_labelContrasenia1.anchor = GridBagConstraints.WEST;
+		gbc_labelContrasenia1.insets = new Insets(0,  0,  5,  5);
+		gbc_labelContrasenia1.gridx = 1;
+		gbc_labelContrasenia1.gridy = 8;
+		getContentPane().add(labelContrasenia1,  gbc_labelContrasenia1);
+		
+		lblReescribirContrasea = new JLabel("Reescribir contraseña");
+		GridBagConstraints gbc_lblReescribirContrasea = new GridBagConstraints();
+		gbc_lblReescribirContrasea.anchor = GridBagConstraints.WEST;
+		gbc_lblReescribirContrasea.gridwidth = 2;
+		gbc_lblReescribirContrasea.insets = new Insets(0,  0,  5,  5);
+		gbc_lblReescribirContrasea.gridx = 4;
+		gbc_lblReescribirContrasea.gridy = 8;
+		getContentPane().add(lblReescribirContrasea,  gbc_lblReescribirContrasea);
+		
+		passwordField1 = new JPasswordField();
+		GridBagConstraints gbc_passwordField1 = new GridBagConstraints();
+		gbc_passwordField1.gridwidth = 3;
+		gbc_passwordField1.insets = new Insets(0,  0,  5,  5);
+		gbc_passwordField1.fill = GridBagConstraints.HORIZONTAL;
+		gbc_passwordField1.gridx = 1;
+		gbc_passwordField1.gridy = 9;
+		getContentPane().add(passwordField1,  gbc_passwordField1);
+		
+		passwordField2 = new JPasswordField();
+		GridBagConstraints gbc_passwordField2 = new GridBagConstraints();
+		gbc_passwordField2.gridwidth = 3;
+		gbc_passwordField2.insets = new Insets(0,  0,  5,  5);
+		gbc_passwordField2.fill = GridBagConstraints.HORIZONTAL;
+		gbc_passwordField2.gridx = 4;
+		gbc_passwordField2.gridy = 9;
+		getContentPane().add(passwordField2,  gbc_passwordField2);
 
 		JLabel labelFechaNacimiento = new JLabel("Fecha de nacimiento (dd/mm/aaaa)");
 		GridBagConstraints gbc_labelFechaNacimiento = new GridBagConstraints();
@@ -534,6 +584,8 @@ public class AltaUsuario extends JInternalFrame {
 	
 	 //Se encarga de limpiar datos ingresados por el usuario
 	 
+
+	
 	public void clear() {
 		comboBoxTipoDeUsuario.setSelectedIndex(0);
         textFieldNombre.setText("");
@@ -542,6 +594,8 @@ public class AltaUsuario extends JInternalFrame {
         textFieldEmail.setText("");
     	boxIDia.setSelectedIndex(0);
     	inicioAnio.setText("");
+    	passwordField1.setText("");
+    	passwordField2.setText("");
     	boxIMes.setSelectedIndex(0);
     	textAreaDescripcion.setText("");
     	textAreaBiografia.setText("");
@@ -568,9 +622,8 @@ public class AltaUsuario extends JInternalFrame {
 	        String biografiaU;
 	        String websiteU;
 	        
-	        if(!checkFormulario()) {
+	        if (!checkFormulario())
 	        	return 1;
-	        }
 			tipoU = this.comboBoxTipoDeUsuario.getSelectedItem().toString().trim();
 			nicknameU = this.textFieldNickname.getText().trim();
 			nombreU = this.textFieldNombre.getText().trim();
@@ -583,33 +636,29 @@ public class AltaUsuario extends JInternalFrame {
 	        descripcionU = this.textAreaDescripcion.getText().trim();
 	        biografiaU = this.textAreaBiografia.getText().trim();
 	        websiteU = this.textFieldWebsite.getText().trim();
-	        
-	        
-	        
-	   
-	        
+	        String contrasenia = new String(passwordField1.getPassword());
 	        
 			/*
 			 * Crea el tipo de dato segun el tipo de usuario seleccionado
 			 */
 			DtUsuario datosUser;
-			if(tipoU == "Profesor") {
-				datosUser = new DtProfesor(nicknameU,nombreU,apellidoU,emailU, new DtFechaHora(anioU,mesU,diaU,0,0,0),institutoU, descripcionU,biografiaU,websiteU, null);
-			}else { //Se asume que si no es profesor es socio
-				datosUser = new DtSocio(nicknameU,nombreU,apellidoU,emailU, new DtFechaHora(anioU,mesU,diaU,0,0,0), null);
-			}
-			if(controlUsr.ingresarDatosUsuario(datosUser) != 0) {
-				JOptionPane.showMessageDialog(this, "Ya existe un usuario con los datos ingresados.", this.getTitle(), JOptionPane.ERROR_MESSAGE);
+			if (tipoU == "Profesor")
+				datosUser = new DtProfesor(nicknameU, nombreU, apellidoU, emailU,  contrasenia,  new DtFechaHora(anioU, mesU, diaU, 0, 0, 0), institutoU,  descripcionU, biografiaU, websiteU, null);
+			else //Se asume que si no es profesor es socio
+				datosUser = new DtSocio(nicknameU, nombreU, apellidoU, emailU,  contrasenia,  new DtFechaHora(anioU, mesU, diaU, 0, 0, 0), null);
+			if (controlUsr.ingresarDatosUsuario(datosUser) != 0) {
+				JOptionPane.showMessageDialog(this,  "Ya existe un usuario con los datos ingresados.",  this.getTitle(),  JOptionPane.ERROR_MESSAGE);
 				return 1;
 			} else {
-				JOptionPane.showMessageDialog(this, "El usuario ha sido registrado de forma exitosa.", this.getTitle(), JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(this,  "El usuario ha sido registrado de forma exitosa.",  this.getTitle(),  JOptionPane.INFORMATION_MESSAGE);
 				return 0;
 			}
 		} catch (InstitucionException e) {
-	        JOptionPane.showMessageDialog(this, e.getMessage(), getTitle(), JOptionPane.ERROR_MESSAGE);
+	        JOptionPane.showMessageDialog(this,  e.getMessage(),  getTitle(),  JOptionPane.ERROR_MESSAGE);
 	        return 0;
 		}
 	}
+	
 	
 	
 	 // Valida los datos ingresados por el usuario
@@ -625,22 +674,33 @@ public class AltaUsuario extends JInternalFrame {
         String anioU = inicioAnio.getText().trim();
         String institutoU = this.comboBoxInstitucion.getSelectedItem().toString().trim();
         String descripcionU = this.textAreaDescripcion.getText().trim();
-        this.pack();
+        String contrasenia1 = new String(passwordField1.getPassword());
+        String contrasenia2 = new String(passwordField1.getPassword());
 
-        // Celdas vacias
+        //Celdas vacias
         if (tipoU == "-" || nicknameU.isEmpty() || nombreU.isEmpty() || apellidoU.isEmpty() || emailU.isEmpty() || diaU < 1 || mesU < 1 || anioU.isEmpty() || ((tipoU == "Profesor") && (institutoU == "-" || descripcionU.isEmpty()))) {
-            JOptionPane.showMessageDialog(this, "Exisisten campos obligatorios vacios/sin seleccionar.", this.getTitle(), JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this,  "Exisisten campos obligatorios vacios/sin seleccionar.",  this.getTitle(),  JOptionPane.ERROR_MESSAGE);
             return false;
         }
         
-      // Funcion de stackOverFlow Numeros no son numeros
+      //Numeros no son numeros
         try {
             Integer.parseInt(anioU);
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "La fecha de ingresada no es valida", this.getTitle(), JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this,  "La fecha de ingresada no es valida",  this.getTitle(),  JOptionPane.ERROR_MESSAGE);
             return false;
         }
         
+        //Contraseñas no coinciden
+        if (!contrasenia1.equals(contrasenia2)) {
+        	JOptionPane.showMessageDialog(this,  "Las contraseñas ingresadas son distintas",  this.getTitle(),  JOptionPane.ERROR_MESSAGE);
+        	return false;
+        }
+        //Contraseña no segura
+        if (contrasenia1.equals("")) {
+        	JOptionPane.showMessageDialog(this,  "La contraseña debe ser mas larga.",  this.getTitle(),  JOptionPane.ERROR_MESSAGE);
+        	return false;
+        }
         return true;
 	}
 	

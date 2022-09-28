@@ -649,6 +649,25 @@ public class ConsultaUsuario extends JInternalFrame {
 		refCAD = consActDep;
 	}
 
+    public void refEntry(String usu) {
+		DefaultComboBoxModel<String> modeloUsuarios = new DefaultComboBoxModel<>();
+		comboBoxUsuario.removeAllItems();
+		modeloUsuarios.addElement("-");
+		
+		
+		usuarios = controlUsr.obtenerUsuario();
+		for (String us:usuarios) {
+			modeloUsuarios.addElement(us);
+		}
+		comboBoxUsuario.setModel(modeloUsuarios);
+		comboBoxUsuario.getModel().setSelectedItem(usu);
+		if (this.isVisible()) 
+			this.toFront();
+		else {
+			this.setVisible(true);
+		}
+    }
+
 	
 	
 	public void CargarImagen() {

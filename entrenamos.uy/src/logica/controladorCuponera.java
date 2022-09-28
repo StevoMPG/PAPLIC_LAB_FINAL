@@ -35,6 +35,8 @@ public class controladorCuponera implements IcontroladorCuponera {
 		return getHC().addCuponera(nombre, descripcion, inicio, fin, descuento, alta);
 	}
 	
+
+	
 	public Set<String> getNombreCuponeras(){
 		return getHC().getNombreCuponeras();
 	}

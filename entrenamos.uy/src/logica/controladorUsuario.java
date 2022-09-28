@@ -115,6 +115,43 @@ public class controladorUsuario implements IcontroladorUsuario {
 		}
 		throw new UsuarioNoExisteException(userEmail);
 	}
+	
+	
+	public boolean verificarIdentidadEmail(String email,  String pass) {
+		if (getHU().existeCorreo(email)) {
+			try {
+				return getHU().findUsuarioByEmail(email).getContrasenia() == pass;
+			} catch (UsuarioNoExisteException e) {
+				e.printStackTrace();
+			}
+		}
+		return false;	
+	}
+	
+	public boolean verificarIdentidadNickname(String nick,  String pass) {
+		if (getHU().existeNick(nick)) {
+			try {
+				return getHU().findUsuario(nick).getContrasenia() == pass;
+			} catch (UsuarioNoExisteException e) {
+				e.printStackTrace();
+			}
+		}
+		return false;
+	}
+	
+	public void seguir(String seguidor,  String seguido) throws UsuarioNoExisteException {
+		manejadorUsuario handlerUsuario = manejadorUsuario.getInstance();
+		Usuario seguidorU = handlerUsuario.findUsuario(seguidor);
+		Usuario seguidoU = handlerUsuario.findUsuario(seguido);
+		seguidorU.agregarSeguido(seguidoU);
+		seguidoU.agregarSeguidor(seguidorU);
+	}
+	
+	public void dejarDeSeguir(String user1,  String user2) throws UsuarioNoExisteException {
+		getHU().findUsuario(user1).removerSeguido(getHU().findUsuario(user2));
+		getHU().findUsuario(user2).removerSeguidor(getHU().findUsuario(user1));
+	}
+	
 }
 
 

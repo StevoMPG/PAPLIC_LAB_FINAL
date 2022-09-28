@@ -11,6 +11,8 @@ import excepciones.NoExisteCuponeraException;
 import excepciones.UsuarioNoExisteException;
 
 import datatypes.DtFechaHora;
+import datatypes.DtcompraClase;
+import datatypes.tipoEstado;
 import datatypes.DtClase;
 import datatypes.DtClaseExtra;
 import datatypes.tipoRegistro;
@@ -64,7 +66,7 @@ public class controladorClase implements IcontroladorClase {
 		for (String x: getHI().obtenerInstituciones()) {
 			for (String y: getHI().findInstitucion(x).obtenerNombresActDep()) {
 				if (getHI().findInstitucion(x).findActividad(y).getNombreClases().contains(datos.getNombre())) {
-			throw new ClaseException("Ya existe una clase con ese nombre en el sistema.");
+					throw new ClaseException("Ya existe una clase con ese nombre en el sistema.");
 				}
 			}
 		}
@@ -176,5 +178,44 @@ public class controladorClase implements IcontroladorClase {
 		return cupsDisp;
 	}
 
+	
+	public Set<String> obtenerActividadesAprobadas(String ins) throws InstitucionException{
+		Set<String> res = new HashSet<>();
+		for (String x : getHI().findInstitucion(ins).obtenerNombresActDep()) {
+			try {
+				if (getHI().findInstitucion(ins).getActDep(x).getEstado().equals(tipoEstado.aceptada)) {
+					res.add(x);
+				}
+			} catch (InstitucionException  ignore) {
+				;
+			}
+			  catch (ActividadDeportivaException ignore) {
+				  ;
+			  }
+		}
+		return res;
+	}
+	
+	public Set<DtcompraClase> bringTheRegistersPls(String nombreClase) throws ClaseException {
+		Set<DtcompraClase> recibos = new HashSet<>();
+		for (String x: getHI().obtenerInstituciones()) {
+			try {
+				for (String y: getHI().findInstitucion(x).obtenerNombresActDep()) {
+					try {
+						Clase laClase = getHI().findInstitucion(x).findActividad(y).findClase(nombreClase);
+						for (compraClase reciboQueRecibe: laClase.getRecibo()) {
+							recibos.add(reciboQueRecibe.getDt());
+						}
+						return recibos;
+					} catch(ClaseException ignore) {
+						;
+					}
+				}
+			} catch(InstitucionException ignore) {
+				;
+			}
+		}
+		throw new ClaseException("La clase " + nombreClase + " no existe en el Sistema.");
+	}
 
 }

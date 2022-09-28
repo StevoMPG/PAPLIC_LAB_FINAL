@@ -118,7 +118,7 @@ public class ActividadesDeportivas implements Serializable {
     public DtActividadDeportivaExtra toDtActividadDeportivaExt() {
     	Set<String> nombreClases = new HashSet<>();
     	DtActividadDeportivaExtra res = new DtActividadDeportivaExtra(nombre, descripcion, duracion, costo,
-    			new DtFechaHora(fechaAlta), new HashSet<>(), nombreClases);
+    			new DtFechaHora(fechaAlta), new HashSet<>(), nombreClases, null, null, null);
     	return res;
     }
 }

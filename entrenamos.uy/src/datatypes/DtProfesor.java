@@ -2,14 +2,19 @@ package datatypes;
 
 public class DtProfesor extends DtUsuario{
 
-	private String nombreInstitucion, descripcion, biografia, link;
-	
-	public DtProfesor(String nickname, String nombre, String apellido, String email, DtFechaHora fechaNacimiento, String nombreInstitucion, String descripcion, String biografia, String link, byte[] imagen) {
-		super(nickname, nombre, apellido, email, fechaNacimiento, imagen);
+	private String nombreInstitucion,  descripcion,  biografia,  link;
+
+	public DtProfesor(String nickname,  String nombre,  String apellido,  String email,  String contrasenia,  DtFechaHora fechaNacimiento,  String nombreInstitucion,  String descripcion,  String biografia,  String link,  byte[] imagen) {
+		super(nickname,  nombre,  apellido,  email,  contrasenia,  fechaNacimiento,  imagen);
 		this.nombreInstitucion = nombreInstitucion;
 		this.descripcion = descripcion;
 		this.biografia = biografia;
 		this.link = link;
+	}
+	
+	public DtProfesor(String nickname,  String nombre,  String apellido,  String email,  String contrasenia,  DtFechaHora fechaNacimiento,  String nombreInstitucion,  String descripcion,  String biografia,  String link,  byte[] imagen, float valoracion) {
+		this(nickname,  nombre,  apellido,  email,  contrasenia,  fechaNacimiento, nombreInstitucion, descripcion, biografia, link, imagen);
+	
 	}
 	
 
@@ -28,4 +33,5 @@ public class DtProfesor extends DtUsuario{
 	public String getLink() {
 		return this.link;
 	}
+
 }

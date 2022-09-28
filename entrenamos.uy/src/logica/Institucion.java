@@ -67,9 +67,8 @@ public class Institucion {
     }
     
    
-    
-    public int addActividadDeportiva(DtActividadDeportiva datosAD, Institucion ins) {
-        ActividadDeportiva actDep = new ActividadDeportiva(datosAD);
+    public int addActividadDeportiva(DtActividadDeportiva datosAD,   Map<String,   Categoria> cat,   Profesor creador, Institucion ins) {
+        ActividadDeportiva actDep = new ActividadDeportiva(datosAD,  cat,  creador);
         if (actsDeps.containsKey(datosAD.getNombre()))
         	return 1;
 		actsDeps.put(datosAD.getNombre(),   actDep);
@@ -77,6 +76,7 @@ public class Institucion {
     	log.info("Institucion "+nombre+" event: "+" new actDep "+actDep.getNombre());
 		return 0;
     }
+    
 
 
     public Boolean existeActDep(String nombreActDep) {
@@ -120,4 +120,10 @@ public class Institucion {
 	public DtInstitucion obtenerDatos() {
 		return new DtInstitucion(nombre,   getDescripcion(),   getURL());
 	}
+	
+	
+	/*public void finalizarAct(String actDep) {
+		actsDeps.get(actDep).suicidar();
+		actsDeps.remove(actDep);
+	}*/
 }

@@ -45,7 +45,7 @@ public class Principal {
 	
 	// Declaracion de los JInternalFrames
 	
-    private AltaUsuario altaUsuario;
+	private AltaUsuario altaUsuario;
 	private AltaActividadDeportiva altaActDep;
 	private AltaDictadoClase altaClase;
 	private AltaInstitucionDeportiva altaIns;
@@ -57,7 +57,8 @@ public class Principal {
 	private ConsultaUsuario consultaUsu;
 	private ModificarDatosUsuario modificarUsu;
 	private AgregarActividadDeportivaCuponera aggCup;
-
+	private AceptarRechazarActividadDeportiva acceptActDep;
+	private AltaCategoria altaCat;
 
 
 	/**
@@ -161,9 +162,22 @@ public class Principal {
 				aggCup.setVisible(false);
 				desktopPane.add(aggCup);
 				
-				consActDep.setRef(consultaClass,consultaCup);
+				//Aceptar rechazar actividad deportiva
+				acceptActDep = new AceptarRechazarActividadDeportiva(IADC);
+				acceptActDep.setBounds(437,  290,  500,  400);
+				acceptActDep.setVisible(false);
+				desktopPane.add(acceptActDep);
+				
+
+				//Alta Categoria
+				altaCat = new AltaCategoria(IADC);
+				altaCat.setVisible(false);
+				desktopPane.add(altaCat);
+				
+				//Se relacionan los Frames de consultas
+				consActDep.setRef(consultaClass, consultaCup, consultaUsu);
 				consultaCup.setRef(consActDep);
-				consultaUsu.setRef(consultaClass,consActDep);
+				consultaUsu.setRef(consultaClass, consActDep);
 	}
 
 	/**
@@ -352,6 +366,22 @@ public class Principal {
 			}
 		});
 		
+		JMenu subMenuCategoria = new JMenu("Categoria");
+		menuRegistro.add(subMenuCategoria);
+
+		JMenuItem itemCrearCategoria = new JMenuItem("Crear Categoria");
+		subMenuCategoria.add(itemCrearCategoria);
+		itemCrearCategoria.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (altaCat.isVisible()) 
+					altaCat.toFront();
+				else {
+					altaCat.clear();
+					altaCat.setVisible(true);
+				}
+			}
+		});
+		
 		//////////////Fin de menu Registrar ///////////////////////////
         
         
@@ -434,6 +464,19 @@ public class Principal {
 				else {
 					modificarUsu.clear();
 					modificarUsu.setVisible(true);
+				}
+			}
+		});
+		
+		JMenuItem itemAcceptRejectActD = new JMenuItem("Aceptar/Rechazar Actividad Deportiva");
+		menuModificaciones.add(itemAcceptRejectActD);
+		itemAcceptRejectActD.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (acceptActDep.isVisible()) 
+					acceptActDep.toFront();
+				else {
+					acceptActDep.clear();
+					acceptActDep.setVisible(true);
 				}
 			}
 		});

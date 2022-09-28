@@ -71,4 +71,8 @@ public class compraClase {
 		return new DtcompraClase(aClase.getNombre(), aSocio.getNickname(), cuponera, fechaInscripcion,
 				tipo, costo);
 	}
+	
+	public void suicidar() {
+		aSocio.remClase(this);
+	}
 }

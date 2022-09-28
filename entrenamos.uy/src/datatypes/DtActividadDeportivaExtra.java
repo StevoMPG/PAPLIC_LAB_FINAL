@@ -7,20 +7,20 @@ public class DtActividadDeportivaExtra extends DtActividadDeportiva{
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
-	private Set<String> cl;
+
+	private Set<String> clases;
 	private Set<String> cup;
+
 	
-	public DtActividadDeportivaExtra(String nombre, String desc, int durmin, float costo, DtFechaHora fechaReg, Set<String> clases, Set<String> cuponeras){
-		super(nombre,desc,durmin,costo,fechaReg);
-		cl = clases;
+	public DtActividadDeportivaExtra (String nombre,   String desc,   int durmin,   float costo,   DtFechaHora fechaReg,   Set<String> cat,   Set<String> clases,   Set<String> cuponeras,   tipoEstado state, String creador ){
+		super(nombre,desc,durmin,costo,fechaReg,  cat,   state, creador);
+		this.clases = clases;
 		cup = cuponeras;
 	}
 	
 	public Set<String> getClases(){
-		return cl;
+		return clases;
 	}
-	
 	public Set<String> getCuponeras(){
 		return cup;
 	}

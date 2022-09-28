@@ -4,12 +4,14 @@ import datatypes.DtClaseExtra;
 import datatypes.DtClase;
 import datatypes.DtActividadDeportiva;
 import datatypes.DtFechaHora;
+import datatypes.tipoEstado;
 import excepciones.ClaseException;
 import excepciones.InstitucionException;
 import logica.persistencia.DataPersistencia;
 import datatypes.DtActividadDeportivaExtra;
 
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
@@ -22,29 +24,29 @@ import java.util.logging.Logger;
 public class ActividadDeportiva {
 	
 
+	private Map<String,  Clase> clases;  // Nombre de clase y clase
+	private Map<String,  ClasesCuponera> clCuponera;
+	private Map<String,  Categoria> cats;
 	private String nombre;
-
 	private String descripcion;
-
 	private int duracionMinutos;
-
 	private float costo;
-
 	private DtFechaHora fechaRegistro;
-	
-	Institucion ins;
-	
-	private Map <String, ClasesCuponera> clCuponera;
-	private Map <String, Clase> clases;  // Nombre de clase y clase
-	
 	private Logger log;
-
-	public ActividadDeportiva(DtActividadDeportiva datosActDep) {
+	private tipoEstado estado;
+	private String imgName;
+	private Profesor creador;
+	
+	public ActividadDeportiva(DtActividadDeportiva datosActDep,  Map<String,  Categoria> cat,  Profesor profe) {
 		nombre=datosActDep.getNombre();
 		descripcion=datosActDep.getDescripcion();
 		duracionMinutos=datosActDep.getDuracionMinutos();
 		costo=datosActDep.getCosto();
 		fechaRegistro = new DtFechaHora(datosActDep.getFechaRegistro());
+		cats = cat;
+		creador = profe;
+		imgName = datosActDep.getImgName();
+		estado = datosActDep.getEstado(); 
 		crearHandler();
 	}
 	private void crearHandler() {
@@ -86,7 +88,9 @@ public class ActividadDeportiva {
 		return  manejadorInstitucion.getInstance();
 	}
 
-	public DtActividadDeportiva getDt(){
+/*	NO SE USA MAS DE MOMENTO!
+ * 
+ * public DtActividadDeportiva getDt(){
 		DtActividadDeportiva x = new DtActividadDeportiva(nombre, descripcion, duracionMinutos, costo, fechaRegistro);
 		return x;
 	}
@@ -95,16 +99,20 @@ public class ActividadDeportiva {
 		return clases.get(c).getDt();
 	}
 	
-	public Set<String> getNombreClases(){
-		return clases.keySet();		
-	}
-	
 	public Set<DtClase> getDatosClases() {
 		Set<DtClase> resultado = new HashSet<>();
 		for(Map.Entry<String, Clase> x: clases.entrySet())
 			resultado.add(x.getValue().getDt());
 		return resultado;
 	}
+	
+	*/
+	
+	public Set<String> getNombreClases(){
+		return clases.keySet();		
+	}
+	
+
 	
 
 	public Clase findClase(String clase) throws ClaseException {
@@ -134,14 +142,14 @@ public class ActividadDeportiva {
 				return true;
         return false;
 	}
+	
 	public DtActividadDeportivaExtra getDtExt() {
 		Set<String> nombresClases = new HashSet<>(clases.keySet());
 		Set<String> nombresClasesCuponeras = new HashSet<>(clCuponera.keySet());
 		DtActividadDeportivaExtra actDep = new DtActividadDeportivaExtra(getNombre(),  getDescripcion(),  getDuracionMinutos(),  
-				getCosto(),  getFechaRegistro(),  nombresClases,  nombresClasesCuponeras);
+				getCosto(),  getFechaRegistro() ,  cats.keySet(),  nombresClases,  nombresClasesCuponeras,  estado,  creador.getNickname());
 		return actDep;
 	}
-
 	public Map<String, Clase> getClases(){
 		return clases;
 	}
@@ -150,8 +158,44 @@ public class ActividadDeportiva {
 		return clCuponera;
 	}
 	
-	public Institucion getINS() {
+	/*public Institucion getINS() {
 		return ins;
+	}
+	*/
+	public tipoEstado getEstado() {
+		return estado;
+	}
+	
+	public boolean setEstado(tipoEstado nuevoEstado) {
+		if (estado==tipoEstado.ingresada && (nuevoEstado==tipoEstado.aceptada || nuevoEstado==tipoEstado.rechazada)) {
+			estado = nuevoEstado;
+			return true;
+		}
+		else if (estado==tipoEstado.aceptada && nuevoEstado==tipoEstado.finalizada) {
+			estado = nuevoEstado;
+			return true;
+		}
+		else 
+			return false;
+	}
+	
+	public Set<Categoria> getCategorias() {
+		Set<Categoria> res = new HashSet<>();
+		res.addAll(cats.values());
+		return res;
+	}
+	
+	public void suicidar() {
+		// TODO Auto-generated method stub
+		creador.remActDep(this);
+		for(Entry<String, Clase> x: clases.entrySet())
+			x.getValue().suicidar();
+		for(Entry<String, ClasesCuponera> x : clCuponera.entrySet())
+			x.getValue().estafar();
+	}
+	
+	public Profesor getCreador() {
+		return creador;
 	}
 
 }

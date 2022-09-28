@@ -97,4 +97,17 @@ public class DtFechaHora {
 	public Calendar toCalendar() {
 		return new GregorianCalendar(getAnio(),getMes()-1,getDia(),getHoras(),getMinutos(),getSegundos());
 	}
+	
+	public String toWebFecha() {
+		String sanio = String.valueOf(anio);
+		String sdia= String.valueOf(dia),  smes=String.valueOf(mes);
+		while (sanio.length()<4)
+			sanio="0"+sanio;
+		if (dia<10)
+			sdia="0"+sdia;
+		if (mes<10)
+			smes="0"+mes;
+		return sanio + "-" + smes + "-" + sdia;
+	}
+	
 }

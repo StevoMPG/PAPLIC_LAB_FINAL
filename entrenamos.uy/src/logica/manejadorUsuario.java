@@ -5,7 +5,12 @@ import java.util.logging.ConsoleHandler;
 import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import datatypes.DtFechaHora;
+import datatypes.DtProfesor;
+
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.HashSet;
 import java.util.HashMap;
 import java.util.Collection;
@@ -21,10 +26,21 @@ public class manejadorUsuario {
 	private Logger log;
 	private Map<String, Usuario> usuarios;
 	private Set<String> correos;
+	private Set<String> nicksProhibidos;
+	
+	private Profesor adminProf;
 	
 	private manejadorUsuario() {
 		usuarios = new HashMap<>();
 		correos = new HashSet<>();
+		nicksProhibidos = new HashSet<>();
+		nicksProhibidos.add("admin");
+		nicksProhibidos.add("Admin");
+		nicksProhibidos.add("Administrador");
+		nicksProhibidos.add("administrador");
+		
+		adminProf = new Profesor(new DtProfesor("Administrador",  "Administrador",  "Administrador", "Administrador", "Administrador", new DtFechaHora(), null, "Administrador", "Administrador", "Administrador",  "Administrador.png".getBytes(), 5));
+		
 		log = Logger.getLogger(manejadorInstitucion.class.getName());
 		log.setLevel(Level.INFO);
 		Handler handler = new ConsoleHandler();
@@ -57,11 +73,22 @@ public class manejadorUsuario {
 	
 	
 	public Usuario findUsuario(String userNick) throws UsuarioNoExisteException {
+		if (userNick != null && userNick.equals("Administrador"))
+			//Devuelve al administrador(profesor)
+			return adminProf;
 		Usuario res = usuarios.get(userNick);
 		if (res == null) {
+			log.info("WARNING: Tried to get non existent user "+userNick);
 			throw new UsuarioNoExisteException("Usuario no registrado en el sistema.");
 		}
 		return res;
+	}
+	
+	public Usuario findUsuarioByEmail(String email) throws UsuarioNoExisteException {
+		for (Entry<String,  Usuario> x: usuarios.entrySet())
+			if (x.getValue().getCorreo()==email)
+				return x.getValue();
+		throw new UsuarioNoExisteException("Usuario no registrado en el sistema.");
 	}
 	
 	public boolean existeNick(String userNick) {

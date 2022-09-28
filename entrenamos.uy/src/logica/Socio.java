@@ -2,6 +2,7 @@ package logica;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.LinkedList;
 import java.util.HashMap;
@@ -10,7 +11,7 @@ import java.util.HashSet;
 
 import datatypes.DtSocio;
 import datatypes.DtSocioExtra;
-
+import datatypes.tipoEstado;
 import excepciones.NoExisteCuponeraException;
 import excepciones.ClaseException;
 import datatypes.DtFechaHora;
@@ -24,7 +25,7 @@ public class Socio extends Usuario {
 	
 	
 	public Socio(DtSocio datos) {
-		super(datos.getNickname(), datos.getNombre(), datos.getApellido(), datos.getEmail(), datos.getFechaNacimiento(), datos.getImagen());
+		super(datos.getNickname(),   datos.getNombre(),   datos.getApellido(),   datos.getEmail(),   datos.getContrasenia(),   datos.getFechaNacimiento(),   datos.getImagen());
 		compraCuponeras = new LinkedList<>();
 		compraClases = new LinkedList<>();
 	}
@@ -42,26 +43,66 @@ public class Socio extends Usuario {
 	}
 	
 	public DtSocio getDt() {
-		DtSocio datos = new DtSocio(this.getNickname(), this.getNombre(), this.getApellido(), this.getCorreo(), this.getFecha(), this.getImagen());
+		DtSocio datos = new DtSocio(this.getNickname(),   this.getNombre(),   this.getApellido(),   this.getCorreo(),   this.getContrasenia(),   this.getFecha(),   this.getImagen());
 		return datos;
 	}
 	
-    public DtSocioExtra getDtExt() {
-    	Map<String,Set<String>> x = new HashMap<>();
-    	for(compraClase rc: compraClases) {
-    		String z = rc.getClase().getAD().getNombre();
-    		if(!x.containsKey(z)) {
-    			Set<String> y = new HashSet<>();
-    			x.put(z,y);
-    			for(compraClase rc2: compraClases) {
-    				if(rc2.getClase().getAD().getNombre().equals(z))
-    					y.add(rc2.getClase().getNombre());
+	public DtSocioExtra getDtExt() {
+    	Map<String,  Set<String>> clasesDeActividadesAceptadas = new HashMap<>();
+    	for (compraClase compraClase: compraClases) {
+    		String nombreAD = compraClase.getClase().getAD().getNombre();
+    		if (!clasesDeActividadesAceptadas.containsKey(nombreAD)) {
+    			Set<String> nombreClases = new HashSet<>();
+    			clasesDeActividadesAceptadas.put(nombreAD,  nombreClases);
+    			for (compraClase rc2: compraClases) {
+    				if (rc2.getClase().getAD().getNombre().equals(nombreAD) && rc2.getClase().getAD().getEstado().equals(tipoEstado.aceptada))
+    					nombreClases.add(rc2.getClase().getNombre());
     			}
     		}
     	}
-    	DtSocioExtra datosExt = new DtSocioExtra(this.getNickname(), this.getNombre(), this.getApellido(), this.getCorreo(), this.getFecha(), x, this.getImagen());
+    	Map<String,  Set<String>> clasesDeActividadesAceptadasLimpiarSetsVacios = new HashMap<>();
+    	for(Entry<String, Set<String>> x : clasesDeActividadesAceptadas.entrySet()) {
+    		if(x.getValue().size()>0)
+    			clasesDeActividadesAceptadasLimpiarSetsVacios.put(x.getKey(), x.getValue());
+    	}
+    	clasesDeActividadesAceptadas = clasesDeActividadesAceptadasLimpiarSetsVacios;
+    	
+    	Map<String,  Set<String>> clasesDeActividadesFinalizadas =new HashMap<>();// DataPersistencia.getInstance().obtenerActividadxClasesSocio(getNickname());
+    	/* Viejo codigo de cuando las actividades finalizadas estaban en memoria (F)
+    	for (compraClase compraClase: compraClases) {  
+    		String nombreAD = compraClase.getClase().getAD().getNombre();
+    		if (!clasesDeActividadesFinalizadas.containsKey(nombreAD)) {
+    			Set<String> nombreClases = new HashSet<>();
+    			clasesDeActividadesFinalizadas.put(nombreAD,  nombreClases);
+    			for (compraClase rc2: compraClases) {
+    				if (rc2.getClase().getAD().getNombre().equals(nombreAD) && rc2.getClase().getAD().getEstado().equals(TEstado.finalizada))
+    					nombreClases.add(rc2.getClase().getNombre());
+    			}
+    		}
+    	}
+    	*/
+    	Map<String,  Set<String>> clasesDeActividadesFinalizadasLimpiarSetsVacios = new HashMap<>();
+    	for(Entry<String, Set<String>> x : clasesDeActividadesFinalizadas.entrySet()) {
+    		if(x.getValue().size()>0)
+    			clasesDeActividadesFinalizadasLimpiarSetsVacios.put(x.getKey(), x.getValue());
+    	}
+    	clasesDeActividadesFinalizadas = clasesDeActividadesFinalizadasLimpiarSetsVacios;
+    	
+    	Set<String> cupis = new HashSet<>();
+    	for (compraCuponera recibo : compraCuponeras) {
+    		cupis.add(recibo.getCuponera().getNombre());
+    	}
+    	
+    	DtSocioExtra datosExt = new DtSocioExtra(this.getNickname(),   this.getNombre(),   this.getApellido(),   this.getCorreo(),
+    			this.getContrasenia(),   this.getFecha(),   clasesDeActividadesAceptadas,   this.getImagen(),  this.getSeguidos().keySet(),
+    			this.getSeguidores().keySet(), cupis,clasesDeActividadesFinalizadas);
     	return datosExt;
     }
+	
+	
+	
+	
+	
 	
 	public List<compraCuponera> getReciboCuponera() {
 		return compraCuponeras;
