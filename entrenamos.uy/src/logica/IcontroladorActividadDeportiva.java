@@ -46,6 +46,8 @@ public Set<String> obtenerInstituciones();
 	public void ingresarCatergoria(DtCategoria datos) throws CategoriaException;
 
 	public Set<String> obtenerCategorias();
+	
+	public DtActividadDeportivaExtra buscarActDep(String nombreActDep) throws ActividadDeportivaException;
 
 }
 

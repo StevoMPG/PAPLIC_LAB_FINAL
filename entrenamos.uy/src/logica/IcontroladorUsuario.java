@@ -4,6 +4,7 @@ import java.util.Set;
 
 import datatypes.DtFechaHora;
 import datatypes.DtUsuario;
+import datatypes.DtUsuarioExtra;
 import excepciones.CuponeraNoExisteException;
 import excepciones.InstitucionException;
 import excepciones.UsuarioNoExisteException;
@@ -14,7 +15,7 @@ public interface IcontroladorUsuario {
 	public Set<String> obtenerUsuario();
 	
 	public int ingresarDatosUsuario(DtUsuario datoUsuario) throws InstitucionException;
-	public DtUsuario seleccionarUsuario (String usuarioNickname) throws UsuarioNoExisteException;
+	public DtUsuarioExtra seleccionarUsuario (String usuarioNickname) throws UsuarioNoExisteException;
 	public void editarDatosBasicos(String userNick, DtUsuario datoUser) throws UsuarioNoExisteException;
 	public void comprarCuponera(String cuponera,  String socio,  DtFechaHora fechaCompra) throws UsuarioNoExisteException,  CuponeraNoExisteException;
 	

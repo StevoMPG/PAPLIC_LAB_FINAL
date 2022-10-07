@@ -218,4 +218,23 @@ public class controladorClase implements IcontroladorClase {
 		throw new ClaseException("La clase " + nombreClase + " no existe en el Sistema.");
 	}
 
+	
+	public DtClaseExtra buscarClase(String nombreClase) throws ClaseException {
+		DtClaseExtra datosClase = null;
+		for (String x: getHI().obtenerInstituciones()) {
+			try {
+				for (String y: getHI().findInstitucion(x).obtenerNombresActDep()) {
+					try {
+						datosClase = getHI().findInstitucion(x).findActividad(y).findClase(nombreClase).getDt();
+						return datosClase;
+					} catch(ClaseException ignore) {
+						;
+					}
+				}
+			} catch(InstitucionException ignore) {
+				;
+			}
+		}
+		throw new ClaseException("La clase " + nombreClase + " no existe en el Sistema.");
+	}
 }

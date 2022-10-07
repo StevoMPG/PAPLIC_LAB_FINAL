@@ -52,4 +52,6 @@ public interface IcontroladorClase {
 			throws UsuarioNoExisteException,  InstitucionException,  ActividadDeportivaException;
 	
 	public Set<DtcompraClase> bringTheRegistersPls(String nombreClase) throws ClaseException;
+	
+	public DtClaseExtra buscarClase(String nombreClase) throws ClaseException;
 }

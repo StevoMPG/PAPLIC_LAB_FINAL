@@ -20,5 +20,6 @@
 	<classpathentry kind="lib" path="lib/jgoodies-forms-1.8.0.jar"/>
 	<classpathentry kind="lib" path="lib/jgoodies-forms-1.8.0-sources.jar"/>
 	<classpathentry kind="lib" path="lib/mysql-connector-java-8.0.29.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

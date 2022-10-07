@@ -197,6 +197,17 @@ public class controladorActividadDeportiva  implements IcontroladorActividadDepo
 		return handlerCategoria.getNombreCategorias();
 	}
 
-	
+	public DtActividadDeportivaExtra buscarActDep(String nombreActDep) throws ActividadDeportivaException {
+		DtActividadDeportivaExtra datosActDep = null;
+		for (String ins : getHI().obtenerInstituciones()) {
+			try {
+				datosActDep = getHI().findInstitucion(ins).getActDep(nombreActDep).getDtExt();
+				return datosActDep;
+			} catch(ActividadDeportivaException | InstitucionException ignore) {
+				;
+			}
+		}
+		throw new ActividadDeportivaException("La actividad deportiva " + nombreActDep + " no existe en el Sistema.");
+	}
 
 }

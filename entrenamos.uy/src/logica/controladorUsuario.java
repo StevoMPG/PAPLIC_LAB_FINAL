@@ -58,7 +58,7 @@ public class controladorUsuario implements IcontroladorUsuario {
 		}
 	}
 	
-	public DtUsuario seleccionarUsuario (String usuarioNickname) throws UsuarioNoExisteException {
+	public DtUsuarioExtra seleccionarUsuario (String usuarioNickname) throws UsuarioNoExisteException {
 		
 		manejadorUsuario ou = manejadorUsuario.getInstance();
 		Usuario user = ou.findUsuario(usuarioNickname);
