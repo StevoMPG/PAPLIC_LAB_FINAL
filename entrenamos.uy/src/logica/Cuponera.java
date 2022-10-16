@@ -82,7 +82,7 @@ public class Cuponera {
 		categorias.addAll(act.getCategorias());
 		act.addClasesCup(claCup);
 		costo = costo + (1 - descuento/100)*act.getCosto()*num;
-		DataPersistencia.getInstance().persistirActividadesCuponeras(claCup);
+		//DataPersistencia.getInstance().persistirActividadesCuponeras(claCup);
 	}
 
 	

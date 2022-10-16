@@ -4,24 +4,39 @@ import java.util.List;
 
 public class DtCuponera {
 
-	private String nombre,descripcion;
-	private float descuento,costo;
-	private DtFechaHora fechaInicio,fechaFin,fechaAlta;
+	private String nombre,  descripcion;
+	private float descuento,  costo;
+	private DtFechaHora fechaInicio,  fechaFin,  fechaAlta;
 	private List<DtClasesCuponeras> contenido;
 	private List<String> categorias;
-	
-	public DtCuponera(String nom, String descr, float desc, float cc, DtFechaHora fi, DtFechaHora ff, DtFechaHora fa, List<DtClasesCuponeras> v,  List<String> cat){
-		this.nombre = nom;
-		this.descripcion = descr;
-		this.descuento = desc;
-		this.fechaInicio = fi;
-		this.fechaFin = ff;
-		this.fechaAlta = fa;
-		this.costo = cc;
-		this.contenido = v;
+	private String img;
+	public DtCuponera(String nom,  String descr,  float desc,  float precio,  DtFechaHora diaDeComienzo,  DtFechaHora horaDelRelojEnLaQueFinaliza,  DtFechaHora fechaBaja,  List<DtClasesCuponeras> content,  List<String> cat){
+		nombre = nom;
+		descripcion = descr;
+		descuento = desc;
+		fechaInicio = diaDeComienzo;
+		fechaFin = horaDelRelojEnLaQueFinaliza;
+		fechaAlta = fechaBaja;
+		costo = precio;
+		contenido = content;
 		categorias=cat;
+		img = null;
 	}
-	
+	public DtCuponera(String nom,  String descr,  float desc,  float precio,  DtFechaHora fechaIni,  DtFechaHora fechaFini,  DtFechaHora fechaAltaini,  List<DtClasesCuponeras> content,  List<String> cat,  String imagen){
+		nombre = nom;
+		descripcion = descr;
+		descuento = desc;
+		fechaInicio = fechaIni;
+		fechaFin = fechaFini;
+		fechaAlta = fechaAltaini;
+		costo = precio;
+		contenido = content;
+		categorias=cat;
+		img = imagen;
+	}
+	public String getImgName() {
+		return img;
+	}
 	public String getNombre() {
 		return this.nombre;
 	}
@@ -49,13 +64,12 @@ public class DtCuponera {
 	public List<DtClasesCuponeras> getContenido() {
 		return this.contenido;
 	}
+	public List<String> getCategorias() {
+		return categorias;
+	}
 	
 	public float getCosto() {
 		return costo;
-	}
-	
-	public List<String> getCategorias() {
-		return categorias;
 	}
 
 	public String toString() {

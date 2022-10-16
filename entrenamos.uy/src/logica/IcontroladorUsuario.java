@@ -16,6 +16,7 @@ public interface IcontroladorUsuario {
 	
 	public int ingresarDatosUsuario(DtUsuario datoUsuario) throws InstitucionException;
 	public DtUsuarioExtra seleccionarUsuario (String usuarioNickname) throws UsuarioNoExisteException;
+	public DtUsuarioExtra seleccionarUsuarioEmail(String userEmail) throws UsuarioNoExisteException;
 	public void editarDatosBasicos(String userNick, DtUsuario datoUser) throws UsuarioNoExisteException;
 	public void comprarCuponera(String cuponera,  String socio,  DtFechaHora fechaCompra) throws UsuarioNoExisteException,  CuponeraNoExisteException;
 	

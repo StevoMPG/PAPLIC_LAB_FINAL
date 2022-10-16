@@ -79,7 +79,7 @@ public class ActividadDeportiva {
 		Clase aula = new Clase(clase,  profe,  this);
 		clases.put(clase.getNombre(),  aula);
 		profe.addClase(aula);
-		DataPersistencia.getInstance().persistirClase(getClases().get(clase.getNombre()), inst);
+		//DataPersistencia.getInstance().persistirClase(getClases().get(clase.getNombre()), inst);
 		log.info("ActDep "+nombre+" event: "+" new clase "+clase.getNombre());
 		return 0;
 	}

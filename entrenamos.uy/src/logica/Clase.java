@@ -101,7 +101,7 @@ public class Clase {
 	
 	public void addRecibo(compraClase recibo) {
 		listaReciboClase.add(recibo);
-		DataPersistencia.getInstance().persistirRegistroClase(recibo);
+		//DataPersistencia.getInstance().persistirRegistroClase(recibo);
 	}
 
 	public void suicidar() {

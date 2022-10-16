@@ -50,7 +50,7 @@ public class manejadorCuponera {
 			throw new CuponeraRepetidaException("La cuponera ingresada ya existe en el sistema.");
 		Cuponera nuevaCuponera = new Cuponera(nombreCuponera, descripcion, descuento, ini, fin, fechaAlta);
 		cuponeras.put( nombreCuponera, nuevaCuponera );
-		DataPersistencia.getInstance().persistirCuponeras(nuevaCuponera);
+		//DataPersistencia.getInstance().persistirCuponeras(nuevaCuponera);
 		log.info("New Cuponera "+nuevaCuponera.getNombre()+" registered, total: "+cuponeras.size());
 		return 0;
 	}

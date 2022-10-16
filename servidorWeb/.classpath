@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src/main/java"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
+	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/annotations-api.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/catalina.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/catalina-ant.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/catalina-ha.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/catalina-ssi.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/catalina-storeconfig.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/catalina-tribes.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/commons-io-2.11.0.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/ecj-4.20.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/el-api.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/itextpdf-5.4.0.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/jasper.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/jasper-el.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/jaspic-api.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/jaxws-api-2.2.8.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/jsp-api.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/jsr181-api-1.0-MR1.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/org.yaml.snakeyaml_1.27.0.v20201111-1638.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/servlet-api.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/tomcat-api.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/tomcat-coyote.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/tomcat-dbcp.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/tomcat-jdbc.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/tomcat-jni.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/tomcat-util.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/tomcat-util-scan.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/tomcat-websocket.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/uap-java-1.5.3.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/websocket-api.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/bootstrap.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/commons-daemon.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/tomcat-i18n-cs.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/tomcat-i18n-de.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/tomcat-i18n-es.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/tomcat-i18n-fr.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/tomcat-i18n-ja.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/tomcat-i18n-ko.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/tomcat-i18n-pt-BR.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/tomcat-i18n-ru.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/tomcat-i18n-zh-CN.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/tomcat-juli.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/commons-logging-1.2.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/commons-logging-1.2-javadoc.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/org.eclipse.jst.server.tomcat.runtimeTarget/Apache Tomcat v9.0">
+		<attributes>
+			<attribute name="owner.project.facets" value="jst.web"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/servidorCentral.jar"/>
+	<classpathentry kind="output" path="build/classes"/>
+</classpath>

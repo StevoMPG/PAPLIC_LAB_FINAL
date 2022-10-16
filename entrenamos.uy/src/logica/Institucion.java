@@ -62,7 +62,7 @@ public class Institucion {
     
     public void addProfesor(Profesor profe) {
     	profesores.add(profe);
-    	DataPersistencia.getInstance().persistirProfesor(profe);
+    	//DataPersistencia.getInstance().persistirProfesor(profe);
     	log.info("Institucion "+nombre+" event: "+" new prof "+profe.getNickname());
     }
     
@@ -72,7 +72,7 @@ public class Institucion {
         if (actsDeps.containsKey(datosAD.getNombre()))
         	return 1;
 		actsDeps.put(datosAD.getNombre(),   actDep);
-		DataPersistencia.getInstance().persistirActividad(getActsDeps().get(datosAD.getNombre()), ins);
+		//DataPersistencia.getInstance().persistirActividad(getActsDeps().get(datosAD.getNombre()), ins);
     	log.info("Institucion "+nombre+" event: "+" new actDep "+actDep.getNombre());
 		return 0;
     }

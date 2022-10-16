@@ -79,10 +79,10 @@ public class controladorUsuario implements IcontroladorUsuario {
 				((Profesor) user).editarDatos(((DtProfesorExtra) datoUser).downgrade());
 			else
 				((Profesor) user).editarDatos((DtProfesor) datoUser);
-			DataPersistencia.getInstance().persistirProfesorMod((Profesor) user);
+			//DataPersistencia.getInstance().persistirProfesorMod((Profesor) user);
 		} else {
 			user.editarDatos(datoUser);
-			DataPersistencia.getInstance().persistirSocioMod(user);
+		//	DataPersistencia.getInstance().persistirSocioMod(user);
 		}
 	}
 	

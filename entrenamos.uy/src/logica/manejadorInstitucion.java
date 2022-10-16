@@ -51,7 +51,7 @@ public class manejadorInstitucion {
 	public int addInstitucion(Institucion ins) {
 		if (!existeInstitucion(ins.getNombre())) {
 			instituciones.put(ins.getNombre(), ins);
-			DataPersistencia.getInstance().persistirInstitucion(ins);
+			//DataPersistencia.getInstance().persistirInstitucion(ins);
 			log.info("Institucion "+ins.getNombre()+"registered, total: "+instituciones.size());
 			return 0;
 		}
