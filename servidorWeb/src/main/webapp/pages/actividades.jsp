@@ -119,14 +119,13 @@
 	                </button>
 	            <%} %>
             </div>
-            <div class="col-sm-3 ps-1 ps-sm-2">
+            <div class="col-sm-3 ps-1 ps-sm-2" style="color: gray;">
                 <div class="extraInfoDiv row">
                     <h5>Clases</h5>
 					<ul id="listaActividades" class=" py-3">
 						<%for (Object dtClase : datosClases) { %>
-							<li class="container border card-body elementoLista" > 
-                            	<img alt="imagenClases"  src="<%=request.getContextPath()%>/api/content?c=cla&id=<%=((DtClaseExtra)dtClase).getNombre()%>" class="vertical-align-middle imagenSeleccionable">
-                            	<a href="<%=request.getContextPath()%>/clases?clase=<%=((DtClaseExtra)dtClase).getNombre()%>" class="clase color-blue"><%=((DtClaseExtra)dtClase).getNombre()%></a>
+							<li> 
+                            	<a href="<%=request.getContextPath()%>/clases?clase=<%=((DtClaseExtra)dtClase).getNombre()%>" class="nav-link" style="color: white;"><%=((DtClaseExtra)dtClase).getNombre()%></a>
                         	</li> 
 						<% } %>              
 					</ul>
@@ -135,9 +134,8 @@
                     <h5>Cuponeras</h5>
 					<ul id="listaActividades" class=" py-3">
 						<%for (Object datosCup : datosCuponeras) { %>
-							<li class="container border card-body elementoLista"> 
-                            	<img alt="imagenCuponera"  src="<%=request.getContextPath()%>/api/content?c=cup&id=<%=((DtCuponera)datosCup).getNombre()%>" class="vertical-align-middle imagenSeleccionable">
-                            	<a href="<%=request.getContextPath()%>/cuponeras?cuponera=<%=((DtCuponera)datosCup).getNombre()%>" class="clase color-blue"><%=((DtCuponera)datosCup).getNombre()%></a>
+							<li>
+                            	<a href="<%=request.getContextPath()%>/cuponeras?cuponera=<%=((DtCuponera)datosCup).getNombre()%>" class="nav-link" style="color: white;"><%=((DtCuponera)datosCup).getNombre()%></a>
                         	</li>
                         <% } %>                
 					</ul>
@@ -147,8 +145,8 @@
 					<ul id="listaActividades" class=" py-3">
 						<%Set<String> categorias = datosActDep.getCategorias();%>
 						<%for (String cat : categorias) { %>
-							<li class="container border card-body elementoLista"> 
-                            	<a href="<%=request.getContextPath()%>/search?actividades=yes&cuponeras=yes&fltrC1=<%=cat%>" class="clase color-blue"><%=cat%></a>
+							<li> 
+                            	<a href="<%=request.getContextPath()%>/search?actividades=yes&cuponeras=yes&fltrC1=<%=cat%>" class="nav-link" style="color: white;"><%=cat%></a>
                         	</li>
                         <% } %>               
 					</ul>
