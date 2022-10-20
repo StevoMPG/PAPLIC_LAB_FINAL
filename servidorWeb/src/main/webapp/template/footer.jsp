@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
-    <footer class="footer">
-      <div class="footer-row row">
+    <footer class="footer" style="background-color: rgb(44, 44, 44);">
+      <div class="footer-row row"  style="text-align: center;">
         Grupo 2 - Todos los derechos reservados.
       </div>
     </footer>

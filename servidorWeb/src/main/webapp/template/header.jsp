@@ -5,35 +5,31 @@
 <%@ page import="java.util.Set"%>
 <%! @SuppressWarnings("unchecked") %>
 
-<nav id="header" class="col-12 navbar navbar-expand-lg navbar-light bg-light">
+<nav id="header" class="col-12 navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
-        <a class="navbar-brand fs-2 me-5 mb-2 mt-2 text-primary" href="<%=request.getContextPath()%>/home">
-            <img src="<%=request.getContextPath()%>/assets/images/misc/iconoEntrenamos-uy.png" alt="EUimg" width="40" height="30" class="d-inline-block align-text-top img-fluid me-2 ms-2 mb-3">
-            Entrenamos.uy
-        </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <a class="navbar-brand fs-2 me-5 mb-2 mt-2 text-secondary" href="<%=request.getContextPath()%>/home">
+<img src="<%=request.getContextPath()%>/assets/images/misc/entrenamos.png" width="40" height="30" class="d-inline-block align-text-top img-fluid me-2 ms-2 mb-3">
+
+Entrenamos.uy</a>
+<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <form class="d-flex me-5 pe-5 container-fluid" action="<%=request.getContextPath()%>/search?actividades=yes&cuponeras=yes" method="POST">
             <input class="form-control me-2" type="search" id="campoTexto" name="campoTexto" placeholder="Actividades Deportivas,  Cuponeras" aria-label="Search">
-            <button type="submit" class="btn btn-outline-primary">Buscar</button>
+            <button type="submit" class="btn btn-outline-secondary">Buscar</button>
         </form>
         
         <% if (request.getSession().getAttribute("loggedUser")==null){ %>
-        <ul id="nav-iniReg"  class="navbar-nav me-auto mb-2 mb-lg-0 d-flex text-right">
-            <li class="nav-item">
-              <button type="button" id="btn-inicio-sesion" class="btn-ir btn btn-primary mt-3 ms-3 mb-3" data-bs-toggle="modal" data-bs-target="#inicioSesionModal">
-                Iniciar Sesion
-              </button>
-            </li>
-            <li>
-              <button type="button" id="btn-registrarse" class="btn-ir btn btn-primary mt-3 ms-3 mb-3" data-bs-toggle="modal" data-bs-target="#registroModal">
-                Registrarse
-              </button>
-            </li>
-        </ul>
         
+        <ul id="nav-iniReg"  class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                  <a class="nav-link" data-bs-toggle="modal" data-bs-target="#inicioSesionModal">Iniciar Sesión</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" data-bs-toggle="modal" data-bs-target="#registroModal">Registrarse</a>
+                </li>
+            </ul>       
 
         <% } else { 
         	DtUsuarioExtra u = (DtUsuarioExtra)request.getSession().getAttribute("loggedUser");

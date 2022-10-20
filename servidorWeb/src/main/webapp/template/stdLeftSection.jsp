@@ -24,18 +24,18 @@ if (u!=null){
 <%}%>
 
 <nav class="extraInfoDiv ins-cat-section nav flex-column">
-  <h1 class="fs-5">Instituciones</h1>
+  <h1 class="fs-5" style="color: grey">Instituciones</h1>
   <%
   Set<String> s = (Set<String>)request.getAttribute("stdInstituciones");
   for (String x: s){ %>
-  	<a class="nav-link" href="<%=request.getContextPath()%>/search?actividades=yes&cuponeras=yes&fltrI1=<%=x%>"><%=x%></a>
+  	<a class="nav-link" style="color: white;" href="<%=request.getContextPath()%>/search?actividades=yes&cuponeras=yes&fltrI1=<%=x%>"><%=x%></a>
   <%} %>
 </nav>
 <nav class="extraInfoDiv ins-cat-section nav flex-column mt-5">
-  <h1 class="fs-5">Categorías</h1>
+  <h1 class="fs-5" style="color: grey">Categorías</h1>
   <%
   Set<String> s2 = (Set<String>)request.getAttribute("stdCategorias");
   for (String x: s2){ %>
-  	<a class="nav-link" href="<%=request.getContextPath()%>/search?actividades=yes&cuponeras=yes&fltrC1=<%=x%>"><%=x%></a>
+  	<a class="nav-link" style="color: white" href="<%=request.getContextPath()%>/search?actividades=yes&cuponeras=yes&fltrC1=<%=x%>"><%=x%></a>
   <%} %>
 </nav>
