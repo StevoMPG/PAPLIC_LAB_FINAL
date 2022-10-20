@@ -10,7 +10,7 @@ body {
 }
 .ins-cat-section{
 	border-radius: 1em;
-    background-color: rgba(204 204 204 / 28%);
+    background-color: rgb(44, 44, 44);
     padding: 1em 1em 1em 1em;
 }
 #mainImgDiv{
@@ -187,4 +187,8 @@ body {
 
 #user-type {
 	font-size: 20px;
+}
+
+.container-fluid mt-4{
+	background-color: rgb(44, 44, 44);
 }

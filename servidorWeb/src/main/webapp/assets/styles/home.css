@@ -14,7 +14,8 @@ body {
 	border-radius: 1em;
     margin-bottom: 1em;
     margin-left: 1em;
-    background-color: rgba(204 204 204 / 28%);
+    margin-top: 1em;
+    background-color:rgb(44, 44, 44);
     padding: 1em 1em 1em 1em;
 }
 .btn-ir {
@@ -22,8 +23,18 @@ body {
     width: 120px;
 }
 
+.contenedor3{
+    border-radius: 25px;
+    min-height: 150px;
+    font-weight: bold;
+    padding: 20px;
+    position: relative;
+    background-size: cover;
+    background-position: center center;
+}
+
 .navbar-2 {
-    background-color: #f0f0f0;
+    background-color: rgb(44, 44, 44);
     opacity: 0.9;
 }
 
