@@ -3,7 +3,7 @@
 .img-de-lista {
   	margin-bottom: 25px !important;
   	width: 100% !important;
-  	box-shadow: 0 4px 8px 0 rgba(0,  0,  0,  0.2);
+  	box-shadow: 0 4px 8px 0 rgb (0, 0, 0);
   	transition: 0.3s;
   	border: none;
 }
@@ -20,6 +20,18 @@
 .hyperlink-img:hover {
 	color: initial;
 	text-decoration: underline;
+}
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: rgba(255, 255, 255, 0.79);
+  background-clip:	rgba(255, 255, 255, 0.79);
+  border: 1px solid rgba(0,0,0,.125);
+  border-radius: .25rem;
 }
 
 .card-text {

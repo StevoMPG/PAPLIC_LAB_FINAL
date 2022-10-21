@@ -58,18 +58,21 @@ public class controladorUsuario implements IcontroladorUsuario {
 		}
 	}
 	
-	public DtUsuarioExtra seleccionarUsuario (String usuarioNickname) throws UsuarioNoExisteException {
-		
-		manejadorUsuario ou = manejadorUsuario.getInstance();
-		Usuario user = ou.findUsuario(usuarioNickname);
+	
+	public DtUsuarioExtra seleccionarUsuario(String userNick) throws UsuarioNoExisteException {
+		manejadorUsuario handlerUsuario = manejadorUsuario .getInstance();
+		Usuario user = handlerUsuario.findUsuario(userNick);
+	
 		if (user instanceof Socio) {
-			DtSocioExtra dtExtra = ((Socio)user).getDtExt();
-			return dtExtra;
-		}else {
-			DtProfesorExtra dtExtra = ((Profesor)user).getDtExt();
-			return dtExtra;
+			DtSocioExtra dtExt = ((Socio) user).getDtExt();
+			return dtExt;
+		} else {
+			DtProfesorExtra dtExt = ((Profesor) user).getDtExt();
+			return dtExt; 
 		}
 	}
+	
+
 
 	public void editarDatosBasicos(String userNick,  DtUsuario datoUser) throws UsuarioNoExisteException {
 		manejadorUsuario handlerUsuario = manejadorUsuario.getInstance();
@@ -79,10 +82,10 @@ public class controladorUsuario implements IcontroladorUsuario {
 				((Profesor) user).editarDatos(((DtProfesorExtra) datoUser).downgrade());
 			else
 				((Profesor) user).editarDatos((DtProfesor) datoUser);
-			//DataPersistencia.getInstance().persistirProfesorMod((Profesor) user);
+			DataPersistencia.getInstance().persistirProfesorMod((Profesor) user);
 		} else {
 			user.editarDatos(datoUser);
-		//	DataPersistencia.getInstance().persistirSocioMod(user);
+			DataPersistencia.getInstance().persistirSocioMod(user);
 		}
 	}
 	
@@ -145,11 +148,13 @@ public class controladorUsuario implements IcontroladorUsuario {
 		Usuario seguidoU = handlerUsuario.findUsuario(seguido);
 		seguidorU.agregarSeguido(seguidoU);
 		seguidoU.agregarSeguidor(seguidorU);
+		DataPersistencia.getInstance().persistirSeguidores(seguidorU.getNickname(), seguidoU.getNickname());
 	}
 	
 	public void dejarDeSeguir(String user1,  String user2) throws UsuarioNoExisteException {
 		getHU().findUsuario(user1).removerSeguido(getHU().findUsuario(user2));
 		getHU().findUsuario(user2).removerSeguidor(getHU().findUsuario(user1));
+		//DataPersistencia.getInstance().persistirDESSeguidores(user1, user2);
 	}
 	
 }

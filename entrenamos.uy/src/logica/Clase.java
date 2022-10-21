@@ -18,6 +18,7 @@ public class Clase {
 	private Profesor p;
 	private ActividadDeportiva actDep;
 	private List<compraClase> listaReciboClase;
+	private byte[]imgName;
 	
 	Clase(DtClase datoClase, Profesor profe, ActividadDeportiva actDep){
 		this.actDep = actDep;
@@ -29,6 +30,7 @@ public class Clase {
 		this.fechaRegistro = datoClase.getFechaRegistro();
 		this.p = profe;
 		this.listaReciboClase = new ArrayList<compraClase>();
+		this.imgName = datoClase.getImgName();
 
 	}
 	
@@ -73,7 +75,7 @@ public class Clase {
 		}
 		
 		DtClaseExtra claseDatos = new DtClaseExtra(nombre,  p.getNickname(),  p.getCorreo(),  minSocios,  maxSocios,  URL,  this.getFechaClase(), 
-				this.getFechaRegistro(),  ListNombres,  SoloNombres);
+				this.getFechaRegistro(),  ListNombres,  SoloNombres, imgName);
 		return claseDatos;
 	}
 	
@@ -101,7 +103,7 @@ public class Clase {
 	
 	public void addRecibo(compraClase recibo) {
 		listaReciboClase.add(recibo);
-		//DataPersistencia.getInstance().persistirRegistroClase(recibo);
+		DataPersistencia.getInstance().persistirRegistroClase(recibo);
 	}
 
 	public void suicidar() {

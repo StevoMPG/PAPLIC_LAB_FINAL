@@ -24,17 +24,19 @@ public class controladorCuponera implements IcontroladorCuponera {
 		return instance;
 	}
 	
-	public int ingresarCuponera(String nombre, String descripcion, DtFechaHora inicio, DtFechaHora fin, 
-				int descuento, DtFechaHora alta) throws CuponeraRepetidaException, FechaInvalidaException {
-		if (!alta.esMenor(inicio)) {
-			throw new FechaInvalidaException("La fecha de alta debe ser anterior a la de inicio.");
-		}
-		if (!inicio.esMenor(fin)) {
-			throw new FechaInvalidaException("La fecha de inicio debe ser anterior a la de finalizacion.");
-		}
-		return getHC().addCuponera(nombre, descripcion, inicio, fin, descuento, alta);
+	public int ingresarCuponera(String nombre,  String descripcion,  DtFechaHora inicio,  DtFechaHora fin,  
+			int descuento,  DtFechaHora alta, String imagen) throws CuponeraRepetidaException,  FechaInvalidaException {
+	if (!alta.esMenor(inicio)) {
+		throw new FechaInvalidaException("La fecha de alta debe ser anterior a la de inicio.");
 	}
-	
+	if (!inicio.esMenor(fin)) {
+		throw new FechaInvalidaException("La fecha de inicio debe ser anterior a la de finalizacion.");
+	}
+	if (getHC().addCuponera(nombre,  descripcion,  inicio,  fin,  descuento,  alta) == 0) {
+		getHC().getCup(nombre).setImg(imagen);
+	}
+	return 0;
+}
 
 	
 	public Set<String> getNombreCuponeras(){

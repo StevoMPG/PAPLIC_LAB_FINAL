@@ -47,6 +47,9 @@ public abstract class Usuarios implements Serializable {
     		unique = true)
     protected String email;
     
+    @Column(name = "CONTRASENIA")
+    protected String contrasenia;
+    
     @Column(name = "NOMBRE")
     protected String nombre;
     
@@ -79,6 +82,14 @@ public abstract class Usuarios implements Serializable {
 
     public void setNickname(String nickname) {
         this.nickname = nickname;
+    }
+    
+    public String getContrasenia() {
+        return contrasenia;
+    }
+
+    public void setContrasenia(String contrasenia) {
+        this.contrasenia = contrasenia;
     }
     
     public String getEmail() {
@@ -128,6 +139,7 @@ public abstract class Usuarios implements Serializable {
     public String toString() {
     	return "Usuarios[nickname =  " + nickname +
         		", email = " + email +
+        		", contrasenia = " + contrasenia +
         		", nombre = " + nombre +
         		", apellido = " + apellido +
                 ", fechaNacimiento = " + new DtFechaHora(fechaNacimiento) +

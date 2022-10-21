@@ -55,7 +55,7 @@ public class ContentHandler extends HttpServlet {
 		}
 		else if (c.equals("cla")) {
 			try {
-			idf = IDCC.buscarClase(id).getImgName();
+			idf = new String(IDCC.buscarClase(id).getImgName());
 			}catch(ClaseException ex) {r404(request, response);return;}
 			cc = "classes";
 		}
@@ -63,7 +63,7 @@ public class ContentHandler extends HttpServlet {
 			boolean fnghfn = false;
 			for (String i: IADC.obtenerInstituciones())
 				try {
-					idf = IADC.getActDepExt(i,  id).getImgName();
+					idf = new String(IADC.getActDepExt(i,  id).getImgName());
 					fnghfn = true;
 				} catch(Exception e){}
 			if (idf==null && !fnghfn) {r404(request, response);return;}

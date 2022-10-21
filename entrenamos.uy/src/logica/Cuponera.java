@@ -12,19 +12,19 @@ import datatypes.DtClasesCuponeras;
 import datatypes.DtCuponera;
 
 public class Cuponera {
-	private String nombre,descripcion;
-	private DtFechaHora fechaInicio,fechaFin,fechaAlta;
-	private float descuento,costo;
+	
+	private String nombre,  descripcion,  img;
+	private DtFechaHora fechaInicio,  fechaFin,  fechaAlta;
+	private float descuento,  costo;
 	
 	private List<ClasesCuponera> clasesCuphead;
 	private List<compraCuponera> recibosCuponardos;
 	private Set<Categoria> categorias;
 	
-	
-	Cuponera(String nombre, String descripcion, int descuento, DtFechaHora fechaInicio, DtFechaHora fechaFin, DtFechaHora fechaAlta){
+	Cuponera(String nombre,  String descripcion,  int descuento,  DtFechaHora fechaInicio,  DtFechaHora fechaFin,  DtFechaHora fechaAlta){
 		this.nombre = nombre;
 		this.descripcion = descripcion;
-		this.descuento = (float)descuento;
+		this.descuento = (float) descuento;
 		this.fechaInicio = new DtFechaHora(fechaInicio);
 		this.fechaFin = new DtFechaHora(fechaFin);
 		this.fechaAlta = new DtFechaHora(fechaAlta);
@@ -44,18 +44,18 @@ public class Cuponera {
 	}
 	
 	public DtFechaHora getFechaInicio() {
-		DtFechaHora d = new DtFechaHora(fechaInicio);
-		return d;
+		DtFechaHora fecha = new DtFechaHora(fechaInicio);
+		return fecha;
 	}
 	
 	public DtFechaHora getFechaFin() {
-		DtFechaHora d = new DtFechaHora(fechaFin);
-		return d;
+		DtFechaHora fecha = new DtFechaHora(fechaFin);
+		return fecha;
 	}
 	
 	public DtFechaHora getFechaAlta() {
-		DtFechaHora d = new DtFechaHora(fechaAlta);
-		return d;
+		DtFechaHora fecha = new DtFechaHora(fechaAlta);
+		return fecha;
 	}
 	
 	public float getDescuento() {
@@ -82,7 +82,8 @@ public class Cuponera {
 		categorias.addAll(act.getCategorias());
 		act.addClasesCup(claCup);
 		costo = costo + (1 - descuento/100)*act.getCosto()*num;
-		//DataPersistencia.getInstance().persistirActividadesCuponeras(claCup);
+		DataPersistencia.getInstance().persistirActividadesCuponeras(claCup);
+	
 	}
 
 	
@@ -111,20 +112,21 @@ public class Cuponera {
 			nombresCat.add(c.getNombre());
 		}
 		DtCuponera datosCup = new DtCuponera(getNombre(),  getDescripcion(),  getDescuento(),  getCosto(),  getFechaInicio(), 
-				getFechaFin(),  getFechaAlta(),  datosClases,  nombresCat);
+				getFechaFin(),  getFechaAlta(),  datosClases,  nombresCat,  getImg());
 		return datosCup;
 	}
-
-	public List<compraCuponera> getRc() {
-		return recibosCuponardos;
-	}
-	
 	public void addRecibo(compraCuponera reciboCup) {
 		recibosCuponardos.add(reciboCup);
 	}
-	
-	public void estafar(ClasesCuponera cl) {
-		clasesCuphead.remove(cl);
-		costo = costo - (1 - descuento/100)*cl.getAd().getCosto()*cl.getCantidadClases();
+	public List<compraCuponera> getRc() {
+		return recibosCuponardos;
+	}
+
+	public String getImg() {
+		return img;
+	}
+
+	public void setImg(String img) {
+		this.img = img;
 	}
 }

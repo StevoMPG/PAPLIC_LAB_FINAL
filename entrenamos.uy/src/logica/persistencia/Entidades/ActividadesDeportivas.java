@@ -15,6 +15,7 @@ import javax.persistence.TemporalType;
 
 import datatypes.DtActividadDeportivaExtra;
 import datatypes.DtFechaHora;
+import datatypes.tipoEstado;
 
 
 
@@ -51,6 +52,12 @@ public class ActividadesDeportivas implements Serializable {
     @Column(name = "INSTITUCION")
     private String institucion;
     
+    @Column(name = "ESTADO")
+    private String tipoEstado;
+    
+    @Column(name = "ALTA_POR")
+    private String profesor;
+    
     
     public String getNombre() {
         return nombre;
@@ -58,6 +65,22 @@ public class ActividadesDeportivas implements Serializable {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+    
+    public String getEstado() {
+        return tipoEstado;
+    }
+
+    public void setEstado(String tipoEstado) {
+        this.tipoEstado = tipoEstado;
+    }
+    
+    public String getProfesor() {
+        return profesor;
+    }
+
+    public void setProfesor(String profesor) {
+        this.profesor = profesor;
     }
     
 
@@ -118,7 +141,7 @@ public class ActividadesDeportivas implements Serializable {
     public DtActividadDeportivaExtra toDtActividadDeportivaExt() {
     	Set<String> nombreClases = new HashSet<>();
     	DtActividadDeportivaExtra res = new DtActividadDeportivaExtra(nombre, descripcion, duracion, costo,
-    			new DtFechaHora(fechaAlta), new HashSet<>(), nombreClases, null, null, null);
+    			new DtFechaHora(fechaAlta), new HashSet<>(), nombreClases, null, null, null, null);
     	return res;
     }
 }

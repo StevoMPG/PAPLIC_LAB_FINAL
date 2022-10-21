@@ -21,9 +21,9 @@ public class DtActividadDeportiva {
 	private Set<String> categorias;
 	private tipoEstado estado;
 	private String creador;
-	private String imgName;
+	private byte[] imgName;
 	
-	public DtActividadDeportiva(String nom, String desc, int dur, float cos, DtFechaHora fech, Set<String> categorias,  tipoEstado estados, String creador,  String imgName){
+	public DtActividadDeportiva(String nom, String desc, int dur, float cos, DtFechaHora fech, Set<String> categorias,  tipoEstado estados, String creador,  byte[] imgName){
 		this.nombre = nom;
 		this.descripcion = desc;
 		this.duracionMinutos = dur;
@@ -85,7 +85,7 @@ public class DtActividadDeportiva {
 		return creador;
 	}
 
-	public String getImgName() {
+	public byte[] getImgName() {
 		return imgName;
 	}
 	

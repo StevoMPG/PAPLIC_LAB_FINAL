@@ -102,7 +102,7 @@
 				        </div>
 				        <%if ((request.getAttribute("actividades") != null) || (request.getAttribute("cuponeras") != null)) {%>
 				        <div class="col-md-auto">
-				        	<button type="button" id="btn-filtro" class="btn-ir btn btn-primary mb-auto" data-bs-toggle="modal" data-bs-target="#filtroModal">
+				        	<button type="button" id="btn-filtro" class="btn-ir btn mb-auto" data-bs-toggle="modal" style="border-color: black; color:white; background-color: rgba(0, 0, 0, 0.79);" data-bs-target="#filtroModal">
 			                	Filtrar
 			              	</button>
 				        </div>
@@ -185,28 +185,28 @@
 	        <div class="modal-content">
 	            <div class="modal-header">
 	                <img src="<%=request.getContextPath()%>/assets/images/misc/iconoEntrenamos-uy.png" alt="EntrenamosUYLogo" width="40" height="30" class="d-inline-block align-text-top img-fluid me-2 ms-2 mb-3">
-	                <h2 class="fw-bold mb-0">Entrenamos.uy</h2>
+	                <h2 class="fw-bold mb-0" style="color: white;">Entrenamos.uy</h2>
 	                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 	            </div>
 	            <div class="modal-body">
 	                <form id="form-filtro" action="<%=request.getContextPath() + link%>&sort=<%=orden%>" method="POST" accept-charset="utf-8"> 
-	                	<h5 class="fw-bold mb-0">Instituciones:</h5>
+	                	<h5 class="fw-bold mb-0" style="color: white;">Instituciones:</h5>
 	                	<%int counter = 0;
 	                	filtro = (Set<?>) request.getAttribute("filtroInsti");
 	                	for (Object obj : listaInstituciones) {
 	                		counter++;%>
-	                    <div class="form-check float-left">
+	                    <div class="form-check float-left" style="color: white;">
 	                        <input type="checkbox" id="fltrI<%=counter%>" name="fltrI<%=counter%>" value="<%=(String) obj%>" 
 	                        	<%if (filtro.contains((String) obj)) {%> checked <% } %>>
 	                        <label for="fltrI<%=counter%>"><%=(String) obj%></label>
 	                    </div>
 	                    <% } %>
-	                    <h5 class="fw-bold mb-0">Categorias:</h5>
+	                    <h5 class="fw-bold mb-0" style="color: white;">Categorias:</h5>
 	                    <%counter = 0;
 	                	filtro = (Set<?>) request.getAttribute("filtroCat");
 	                    for (Object obj : listaCategorias) {
 	                    	counter++;%>
-	                    <div class="form-check float-left">
+	                    <div class="form-check float-left" style="color: white;">
 	                        <input type="checkbox" id="fltrC<%=counter%>" name="fltrC<%=counter%>" value="<%=(String) obj%>"
 	                        	<%if (filtro.contains((String) obj)) {%> checked <% } %>>
 	                        <label for="fltrC<%=counter%>"><%=(String) obj%></label>

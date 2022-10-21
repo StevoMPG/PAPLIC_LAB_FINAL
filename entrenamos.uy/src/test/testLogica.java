@@ -328,17 +328,17 @@ public class testLogica {
 	        // CUPONERAS
 	        // Pelota #P1
 	        ICC.ingresarCuponera("Pelota",   "Deportes con pelota.",   new DtFechaHora(2021,   5,   1,   0,   0,   0),   new DtFechaHora(2021,   7,   31,   23,   59,   59),   
-	        		20,   new DtFechaHora(2021,   4,   30,   0,   0,   0));
+	        		20,   new DtFechaHora(2021,   4,   30,   0,   0,   0), null);
 	        ICC.agregarActividadCuponera("Pelota",   "Telón",   "Voleibol",   7);
 	        ICC.agregarActividadCuponera("Pelota",   "Telón",   "Basquetbol",   18);
 	        // Gimnasia #P2
 	        ICC.ingresarCuponera("Gimnasia",   "Aeróbica y aparatos.",   new DtFechaHora(2021,   8,   1,   0,   0,   0),   new DtFechaHora(2021,   9,   30,   23,   59,   59),   
-	        		30,   new DtFechaHora(2021,   7,   15,   0,   0,   0));
+	        		30,   new DtFechaHora(2021,   7,   15,   0,   0,   0), null);
 	        ICC.agregarActividadCuponera("Gimnasia",   "Instituto Natural",   "Aeróbica",   2);
 	        ICC.agregarActividadCuponera("Gimnasia",   "Fuerza Bruta",   "Aparatos y pesas",   8);
 	        // Músculos #P2
 	        ICC.ingresarCuponera("Músculos",   "Pesas.",   new DtFechaHora(2021,   8,   15,   0,   0,   0),   new DtFechaHora(2021,   11,   15,   23,   59,   59),   
-	        		10,   new DtFechaHora(2021,   8,   1,   0,   0,   0));
+	        		10,   new DtFechaHora(2021,   8,   1,   0,   0,   0), null);
 	        ICC.agregarActividadCuponera("Músculos",   "Fuerza Bruta",   "Kickboxing",   11);
 	        ICC.agregarActividadCuponera("Músculos",   "Fuerza Bruta",   "Aparatos y pesas",   12);
 	        
@@ -1562,7 +1562,7 @@ public class testLogica {
 			}
 			// Generamos la cuponera a probar.
 	        ICC.ingresarCuponera("CupNueva",   "PruebaCuponera",   new DtFechaHora(2020,   1,   1,   0,   0,   0),   new DtFechaHora(2022,   1,   1,   0,   0,   0),   
-	        		55,   new DtFechaHora(2020,   1,   1,   0,   0,   0));
+	        		55,   new DtFechaHora(2020,   1,   1,   0,   0,   0), null);
 	        try {
 				ICC.agregarActividadCuponera("CupNueva",   "InstitutoAuxiliar",   "ActividadAuxiliar",   10);
 			} catch (CuponeraInmutableException ignore) {
@@ -1605,10 +1605,10 @@ public class testLogica {
 		try {
 			// Generamos la cuponera a probar.
 	        ICC.ingresarCuponera("CupARepetir",   "PrimeraIteracion",   new DtFechaHora(2020,   1,   1,   0,   0,   0),   new DtFechaHora(2022,   1,   1,   0,   0,   0),   
-	        		55,   new DtFechaHora(2020,   1,   1,   0,   0,   0));
+	        		55,   new DtFechaHora(2020,   1,   1,   0,   0,   0), null);
 	        Assertions.assertThrows(CuponeraRepetidaException.class,   () -> {
 	        		ICC.ingresarCuponera("CupARepetir",   "SegundaIteracion",   
-	        		new DtFechaHora(2020,   1,   1,   0,   0,   0),   new DtFechaHora(2022,   1,   1,   0,   0,   0),   55,   new DtFechaHora(2020,   1,   1,   0,   0,   0)); });
+	        		new DtFechaHora(2020,   1,   1,   0,   0,   0),   new DtFechaHora(2022,   1,   1,   0,   0,   0),   55,   new DtFechaHora(2020,   1,   1,   0,   0,   0), null); });
 		} catch (CuponeraRepetidaException e) {
 			fail(e.getMessage());
 			e.printStackTrace();
@@ -1633,7 +1633,7 @@ public class testLogica {
 			// Generamos la cuponera a probar.
 			try {
 		        ICC.ingresarCuponera("CupAuxiliar",   "PruebaCuponera",   new DtFechaHora(2020,   1,   1,   0,   0,   0),   new DtFechaHora(2022,   1,   1,   0,   0,   0),   
-		        		55,   new DtFechaHora(2020,   1,   1,   0,   0,   0));
+		        		55,   new DtFechaHora(2020,   1,   1,   0,   0,   0), null);
 			} catch (CuponeraRepetidaException ignore) { 
 				;
 			}
@@ -1664,7 +1664,7 @@ public class testLogica {
 			// Generamos la cuponera a probar.
 			try {
 		        ICC.ingresarCuponera("CupAuxiliar",   "PruebaCuponera",   new DtFechaHora(2020,   1,   1,   0,   0,   0),   new DtFechaHora(2022,   1,   1,   0,   0,   0),   
-		        		55,   new DtFechaHora(2020,   1,   1,   0,   0,   0));
+		        		55,   new DtFechaHora(2020,   1,   1,   0,   0,   0), null);
 			} catch (CuponeraRepetidaException ignore) {
 				;
 			}
@@ -1695,7 +1695,7 @@ public class testLogica {
 			// Generamos la cuponera a probar.
 	        Assertions.assertThrows(FechaInvalidaException.class,   () -> {
 	        		ICC.ingresarCuponera("CupAuxiliar",   "PruebaCuponera",   
-	        		new DtFechaHora(2020,   1,   1,   0,   0,   0),   new DtFechaHora(2022,   1,   1,   0,   0,   0),   55,   new DtFechaHora(2022,   1,   1,   0,   0,   0)); });
+	        		new DtFechaHora(2020,   1,   1,   0,   0,   0),   new DtFechaHora(2022,   1,   1,   0,   0,   0),   55,   new DtFechaHora(2022,   1,   1,   0,   0,   0), null); });
 		} catch (InstitucionException e) {
 			fail(e.getMessage());
 			e.printStackTrace();
@@ -2407,7 +2407,7 @@ public class testLogica {
 		Set<String> auxSet =new HashSet<>();
 		Set<String> nombresCuponerasSinRecibos=ICC.getNombreCuponeras();
 		try {
-			ICC.ingresarCuponera("Cuponera",   "cuponera",   new DtFechaHora(),   new DtFechaHora(),   10,   new DtFechaHora());
+			ICC.ingresarCuponera("Cuponera",   "cuponera",   new DtFechaHora(),   new DtFechaHora(),   10,   new DtFechaHora(), null);
 		} catch (CuponeraRepetidaException e) {
 			e.printStackTrace();
 		} catch (FechaInvalidaException e) {

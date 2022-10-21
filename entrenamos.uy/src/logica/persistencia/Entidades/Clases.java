@@ -157,7 +157,7 @@ public class Clases implements Serializable {
     	List<String> nickAlumnos = new ArrayList<>();
     	
     	DtClaseExtra res = new DtClaseExtra(nombre, "", nicknameProfesor, sociosMinimos, sociosMaximos, url, new DtFechaHora(fechaInicio),
-    			new DtFechaHora(fechaAlta), nickAlumnos, nickAlumnos);
+    			new DtFechaHora(fechaAlta), nickAlumnos, nickAlumnos, null);
     	return res;
     }   
 }

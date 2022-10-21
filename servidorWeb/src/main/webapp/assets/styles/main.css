@@ -17,7 +17,7 @@ body {
 	border-radius: 1em;
     margin-bottom: 1em;
     margin-left: 1em;
-    background-color: rgba(204 204 204 / 28%);
+    background-color: rgb(239, 41, 41);
     padding: 1em 1em 1em 1em;
 }
 .btn-ir {
@@ -91,12 +91,6 @@ body {
     padding:0;
 }
 
-.modal-content {
-    background-color:#ececec;
-    opacity: .95;
-    padding: 0 20;
-    box-shadow: 0px 0px 3px #848484;
-}
 
 .user-img {
     margin-top: -50px;
@@ -229,8 +223,7 @@ body {
 /*---FOOTER---*/
 
 .footer {
-    background: #112764;
-    color: #f0f0f0;
+    background-color: rgba(0, 0, 0, 0.79);
     margin-top: 5%;
 }
 

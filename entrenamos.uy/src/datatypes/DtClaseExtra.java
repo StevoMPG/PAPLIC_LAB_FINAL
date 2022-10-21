@@ -9,8 +9,8 @@ public class DtClaseExtra extends DtClase {
 	private List<String> soloNickAlumnos;
 	
 	public DtClaseExtra(String nom, String nickP,String correoP, int min, int max, String url, DtFechaHora fechC, DtFechaHora fechR, 
-			List<String> als, List<String> soloNickAlumnos) {
-		super(nom, nickP,correoP, min, max, url, fechC, fechR);
+			List<String> als, List<String> soloNickAlumnos, byte[] imgName) {
+		super(nom, nickP,correoP, min, max, url, fechC, fechR, imgName);
 		this.alumnos = als;
 		this.soloNickAlumnos = soloNickAlumnos;
 	}

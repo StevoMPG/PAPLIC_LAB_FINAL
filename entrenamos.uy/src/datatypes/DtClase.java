@@ -2,11 +2,12 @@ package datatypes;
 
 public class DtClase{
 
-	private String nombre,  correoProfesor,  nicknameProfesor,  urlwebsite,  imgName;
+	private String nombre,  correoProfesor,  nicknameProfesor,  urlwebsite;
+	byte [] imgName;
 	private int minSocios,  maxSocios;
 	private DtFechaHora fechaClase,  fechaRegistro;	
 	
-	public DtClase(String nom,  String nickP,  String emailP,  int min,  int max,  String url,  DtFechaHora fechC,  DtFechaHora fechR,  String img) {
+	public DtClase(String nom,  String nickP,  String emailP,  int min,  int max,  String url,  DtFechaHora fechC,  DtFechaHora fechR,  byte [] imgName) {
 		nombre = nom;
 		correoProfesor = emailP;
 		nicknameProfesor = nickP;
@@ -15,7 +16,7 @@ public class DtClase{
 		urlwebsite = url;
 		fechaClase = fechC;
 		fechaRegistro = fechR;
-		imgName = img;
+		this.imgName = imgName;
 	}
 	
 	public DtClase(String nom,  String nickP,  String emailP,  int min,  int max,  String url,  DtFechaHora fechC,  DtFechaHora fechR){
@@ -62,7 +63,7 @@ public class DtClase{
 		return this.fechaRegistro;
 	}
 
-	public String getImgName() {
-		return imgName;
+	public byte[] getImgName() {
+		return this.imgName;
 	}
 }

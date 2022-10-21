@@ -33,6 +33,9 @@ public class ActividadesCuponeras implements Serializable {
     @Column(name = "NOMBRE_CUPONERA")
     private String nombrec;
     
+    @Column(name = "CANT_CLASES")
+    private int clases;
+    
     public Long getId() {
         return id;
     }
@@ -48,6 +51,14 @@ public class ActividadesCuponeras implements Serializable {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+    
+    public int getClases() {
+        return clases;
+    }
+
+    public void setClases(int clases) {
+        this.clases = clases;
     }
     
     public String getNombrec() {

@@ -5,31 +5,35 @@
 <%@ page import="java.util.Set"%>
 <%! @SuppressWarnings("unchecked") %>
 
-<nav id="header" class="col-12 navbar navbar-expand-lg navbar-dark bg-dark">
+<nav id="header" class="col-12 navbar navbar-expand-lg navbar-dark bg">
     <div class="container-fluid">
-        <a class="navbar-brand fs-2 me-5 mb-2 mt-2 text-secondary" href="<%=request.getContextPath()%>/home">
-<img src="<%=request.getContextPath()%>/assets/images/misc/entrenamos.png" width="40" height="30" class="d-inline-block align-text-top img-fluid me-2 ms-2 mb-3">
-
-Entrenamos.uy</a>
-<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <a class="navbar-brand fs-2 me-5 mb-2 mt-2" style="color: white;" href="<%=request.getContextPath()%>/home">
+            <img src="<%=request.getContextPath()%>/assets/images/misc/entrenamos.png" alt="EUimg" width="40" height="30" class="d-inline-block align-text-top img-fluid me-2 ms-2 mb-3">
+            Entrenamos.uy
+        </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <form class="d-flex me-5 pe-5 container-fluid" action="<%=request.getContextPath()%>/search?actividades=yes&cuponeras=yes" method="POST">
             <input class="form-control me-2" type="search" id="campoTexto" name="campoTexto" placeholder="Actividades Deportivas,  Cuponeras" aria-label="Search">
-            <button type="submit" class="btn btn-outline-secondary">Buscar</button>
+            <button type="submit" class="btn" style="border-color: white; color:white;">Buscar</button>
         </form>
         
         <% if (request.getSession().getAttribute("loggedUser")==null){ %>
+        <ul id="nav-iniReg"  class="navbar-nav me-auto mb-2 mb-lg-0 d-flex text-right">
+            <li class="nav-item">
+              <button type="button" id="btn-inicio-sesion" class="btn-ir btn mt-3 ms-3 mb-3" style="border-color: white; color:white;" data-bs-toggle="modal" data-bs-target="#inicioSesionModal">
+                Iniciar Sesion
+              </button>
+            </li>
+            <li>
+              <button type="button" id="btn-registrarse" class="btn-ir btn mt-3 ms-3 mb-3" style="border-color: white; color:white;" data-bs-toggle="modal" data-bs-target="#registroModal">
+                Registrarse
+              </button>
+            </li>
+        </ul>
         
-        <ul id="nav-iniReg"  class="navbar-nav ms-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                  <a class="nav-link" data-bs-toggle="modal" data-bs-target="#inicioSesionModal">Iniciar Sesión</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" data-bs-toggle="modal" data-bs-target="#registroModal">Registrarse</a>
-                </li>
-            </ul>       
 
         <% } else { 
         	DtUsuarioExtra u = (DtUsuarioExtra)request.getSession().getAttribute("loggedUser");
@@ -47,7 +51,7 @@ Entrenamos.uy</a>
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 d-flex text-right">
                <li>
                	 <form id="logout-session" action="<%=request.getContextPath()%>/api/logout" method="GET">
-                 	<button class="btn-ir btn btn-primary mt-3 ms-3 mb-3" type="submit">
+                 	<button class="btn-ir btn mt-3 ms-3 mb-3" style="border-color: white; color:white;"type="submit">
                    		Cerrar Sesion
                  	</button>
                  </form>
@@ -66,7 +70,7 @@ Entrenamos.uy</a>
           <div class="modal-content">
               <div class="modal-header">
                   <img src="<%=request.getContextPath()%>/assets/images/misc/iconoEntrenamos-uy.png" alt="EntrenamosUYLogo" width="40" height="30" class="d-inline-block align-text-top img-fluid me-2 ms-2 mb-3">
-                  <h2 class="fw-bold mb-0">Entrenamos.uy</h2>
+                  <h2 class="fw-bold mb-0" style="color: white">Entrenamos.uy</h2>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
@@ -80,14 +84,14 @@ Entrenamos.uy</a>
                           <label for="pass">Contraseña</label>                  
                       </div>
                       <input style="display: none;" class="form-control miurl" name="miurl" type="text">
-                      <button class="w-100 mb-2 btn btn-lg rounded-4 btn-primary" type="submit">Iniciar Sesión</button>
+                      <button class="w-100 mb-2 btn btn-lg rounded-4" style="border-color: black; color:black; background-color: rgba(255, 255, 255, 0.79);" type="submit">Iniciar Sesión</button>
                   </form>
               </div>
               <div class="modal-footer">
                   <hr class="my-6">
                   <div>
-                      <i>Aún no tienes cuenta? </i>
-                      <a id="regLink" href="#">Registrarte Aquí</a>
+                      <i style="color: white;"> Si no tienes cuenta: </i>
+                      <a id="regLink" href="#" style="color: white;"> Registrarte Aquí</a>
                   </div>
               </div>
           </div>
@@ -99,24 +103,24 @@ Entrenamos.uy</a>
       <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <img src="<%=request.getContextPath()%>/assets/images/misc/iconoEntrenamos-uy.png" alt="EntrenamosUYLogo" width="40" height="30" class="d-inline-block align-text-top img-fluid me-2 ms-2 mb-3">
-                <h2 class="fw-bold mb-0">Unéte a Entrenamos.uy</h2>
+                <img src="<%=request.getContextPath()%>/assets/images/misc/entrenamos.png" alt="EntrenamosUYLogo" width="40" height="30" class="d-inline-block align-text-top img-fluid me-2 ms-2 mb-3">
+                <h2 class="fw-bold mb-0" style="color: white;">Registrate</h2>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <form id="formulario-registro" action="<%=request.getContextPath()%>/signup" method="POST" data-root="<%=request.getContextPath()%>" onsubmit="return registrarse()" accept-charset="UTF-8" enctype="multipart/form-data">
                 
                     <div class="form-floating mb-3">
-                        <h5>Que eres?</h5>
+                        <h5 style="color: white;">Elige que usuario eres</h5>
                         <div id="socioRadio" class="form-check float-left">
                             <input class="form-check-input" type="radio" name="tipoU" value="0" name="radioSocio" id="radioSocio" checked>
-                            <label class="form-check-label" for="radioSocio">
+                            <label class="form-check-label" for="radioSocio" style="color: white;">
                             Socio
                             </label>
                         </div>
                         <div id="profeRadio" class="form-check float-left">
                             <input class="form-check-input" type="radio" name="tipoU" value="1" name="radioProfe" id="radioProfe">
-                            <label class="form-check-label" for="radioProfe">
+                            <label class="form-check-label" for="radioProfe" style="color: white;">
                             Profesor
                             </label>
                         </div>
@@ -137,7 +141,7 @@ Entrenamos.uy</a>
                         <input type="password" class="form-control rounded-4" id="pas2" name="pas2">
                         <label for="pas2">Confirmar Contraseña</label>                  
                     </div>
-                    <h5>Sobre ti</h5>
+                    <h5 style="color: white;">Sobre vos</h5>
                     <div id="nombreCompletoDiv" class="row form-floating mb-3">
                         <div id="divNombre" class="col-6 form-check float-left">
                             <div class="form-floating mb-2">
@@ -179,18 +183,18 @@ Entrenamos.uy</a>
                         <label for="webs">Sitio web <i style="font-size:0.7rem;"> (opcional)</i></label>
                     </div>
 					<div class="mb-3">
-					  <label for="formFile" class="form-label">Imagen de perfil <i style="font-size:0.7rem;"> (opcional)</i></label>
+					  <label for="formFile" class="form-label" style="color: white;">Imagen de perfil <i style="font-size:0.7rem;"> (opcional)</i></label>
 					  <input class="form-control" type="file" id="imgPerfil" name="imgPerfil" accept=".jpg, .jpeg, .png, .webp, .gif, .tiff">
 					</div>
 					<input style="display: none;" class="form-control miurl" name="miurl" type="text">
-                    <button class="w-100 mb-2 btn btn-lg rounded-4 btn-primary" type="submit">Registrarse</button>
+                    <button class="w-100 mb-2 btn btn-lg rounded-4" style="border-color: black; color:black; background-color: rgba(255, 255, 255, 0.79);" type="submit">Registrarse</button>
                 </form>
             </div>
             <div class="modal-footer">
                 <hr class="my-6">
                 <div>
-                    <i>Ya tienes cuenta? </i>
-                    <a id="iniLink" href="#">Inicia Sesión Aquí</a>
+                    <i style="color: white;">Si ya tienes cuenta: </i>
+                    <a id="iniLink" href="#" style="color: white;">Inicia Sesión Aquí</a>
                 </div>
             </div>
         </div>
@@ -205,7 +209,7 @@ Entrenamos.uy</a>
             <div class="modal-content">
                 <div class="modal-header">
                     <img src="<%=request.getContextPath()%>/assets/images/misc/iconoEntrenamos-uy.png" alt="EntrenamosUYLogo" width="40" height="30" class="d-inline-block align-text-top img-fluid me-2 ms-2 mb-3">
-                    <h2 class="fw-bold mb-0">Alta Actividad Deportiva</h2>
+                    <h2 class="fw-bold mb-0" style="color: white;">Alta Actividad Deportiva</h2>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -233,11 +237,11 @@ Entrenamos.uy</a>
                             </div>           
                          </div>  
 						<div class="mb-3">
-						  <label for="formFile" class="form-label">Imagen asociada <i style="font-size:0.7rem;"> (opcional)</i></label>
+						  <label for="formFile" class="form-label" style="color: white;">Imagen asociada <i style="font-size:0.7rem;"> (opcional)</i></label>
 						  <input class="form-control" type="file" name="imgAD" id="imgAD" accept=".jpg, .jpeg, .png, .webp, .gif, .tiff">
 						</div>
                         <div id="catDiv" class="form-floating mb-3">
-                        <p>Categorías asociadas <i style="font-size:0.7rem;"> (opcional)</i></p>
+                        <p style="color: white;">Categorías asociadas <i style="font-size:0.7rem;"> (opcional)</i></p>
 							<select style="width:29em;" name="catAD" id="catAD" class="cat" multiple aria-label="multiple select example">
 							  <%
 							  Set<String> s = (Set<String>)request.getAttribute("stdCategorias");
@@ -247,13 +251,13 @@ Entrenamos.uy</a>
 							</select>                          
                     </div>
                         <input style="display: none;" class="form-control miurl" name="miurl" type="text">
-                        <button class="w-100 mb-2 btn btn-lg rounded-4 btn-primary" type="submit">Confirmar Registro</button>
+                        <button class="w-100 mb-2 btn btn-lg rounded-4" style="border-color: black; color:black; background-color: rgba(255, 255, 255, 0.79);"type="submit">Confirmar Registro</button>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <hr class="my-6">
                     <div>
-                        <i>Entrenamos.uy - Alta Actividad Deportiva</i>
+                        <i style="color: white;">Entrenamos.uy - Alta Actividad Deportiva</i>
                     </div>
                 </div>
             </div>

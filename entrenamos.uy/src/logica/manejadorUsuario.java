@@ -63,7 +63,7 @@ public class manejadorUsuario {
 			usuarios.put(user.getNickname(), user);
 			correos.add(user.getCorreo());
 			if (user.esSocio()) {
-			//DataPersistencia.getInstance().persistirSocio(user);
+			DataPersistencia.getInstance().persistirSocio(user);
 			}
 			log.info("Usuario "+user.getNombre()+"registered, total: "+usuarios.size());
 			return true;

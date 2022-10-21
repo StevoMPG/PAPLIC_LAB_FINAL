@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
-    <footer class="footer" style="background-color: rgb(44, 44, 44);">
+    <footer class="footer" style="background-color: rgba(0, 0, 0, 0.79);"">
       <div class="footer-row row"  style="text-align: center;">
-        Grupo 2 - Todos los derechos reservados.
+        Grupo 2 - Comprendido por Steven Pereira - Nicolás Silva - Andres Romano - German Torres. 
+        Programación de Aplicaciones. Prof. Juan Taque.
       </div>
     </footer>
     

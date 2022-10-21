@@ -15,7 +15,7 @@ public interface IcontroladorCuponera {
 
 	
 	public int ingresarCuponera(String nombre, String descripcion, DtFechaHora inicio, DtFechaHora fin, 
-			int descuento, DtFechaHora alta) throws CuponeraRepetidaException, FechaInvalidaException;
+			int descuento, DtFechaHora alta, String img) throws CuponeraRepetidaException, FechaInvalidaException;
 	
 	public Set<String> getNombreCuponeras();
 	

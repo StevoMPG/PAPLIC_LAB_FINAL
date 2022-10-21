@@ -34,7 +34,7 @@ public class ActividadDeportiva {
 	private DtFechaHora fechaRegistro;
 	private Logger log;
 	private tipoEstado estado;
-	private String imgName;
+	private byte[]imgName;
 	private Profesor creador;
 	
 	public ActividadDeportiva(DtActividadDeportiva datosActDep,  Map<String,  Categoria> cat,  Profesor profe) {
@@ -79,7 +79,7 @@ public class ActividadDeportiva {
 		Clase aula = new Clase(clase,  profe,  this);
 		clases.put(clase.getNombre(),  aula);
 		profe.addClase(aula);
-		//DataPersistencia.getInstance().persistirClase(getClases().get(clase.getNombre()), inst);
+		DataPersistencia.getInstance().persistirClase(getClases().get(clase.getNombre()), inst);
 		log.info("ActDep "+nombre+" event: "+" new clase "+clase.getNombre());
 		return 0;
 	}
@@ -147,7 +147,7 @@ public class ActividadDeportiva {
 		Set<String> nombresClases = new HashSet<>(clases.keySet());
 		Set<String> nombresClasesCuponeras = new HashSet<>(clCuponera.keySet());
 		DtActividadDeportivaExtra actDep = new DtActividadDeportivaExtra(getNombre(),  getDescripcion(),  getDuracionMinutos(),  
-				getCosto(),  getFechaRegistro() ,  cats.keySet(),  nombresClases,  nombresClasesCuponeras,  estado,  creador.getNickname());
+				getCosto(),  getFechaRegistro() ,  cats.keySet(),  nombresClases,  nombresClasesCuponeras,  estado,  creador.getNickname(), imgName);
 		return actDep;
 	}
 	public Map<String, Clase> getClases(){
@@ -185,7 +185,7 @@ public class ActividadDeportiva {
 		return res;
 	}
 	
-	public void suicidar() {
+	/*public void suicidar() {
 		// TODO Auto-generated method stub
 		creador.remActDep(this);
 		for(Entry<String, Clase> x: clases.entrySet())
@@ -193,7 +193,7 @@ public class ActividadDeportiva {
 		for(Entry<String, ClasesCuponera> x : clCuponera.entrySet())
 			x.getValue().estafar();
 	}
-	
+	*/
 	public Profesor getCreador() {
 		return creador;
 	}

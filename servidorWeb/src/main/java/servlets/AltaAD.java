@@ -54,7 +54,7 @@ public class AltaAD extends HttpServlet {
     	int duracion = Integer.parseInt(rp(r, "durAD").trim());
     	float costo = Float.parseFloat(rp(r, "costoAD").trim());
         DtActividadDeportiva datosAD = new DtActividadDeportiva(rp(r, "nombreAD"), rp(r, "descAD"), duracion, costo, 
-        		new DtFechaHora(), new HashSet<String>(), tipoEstado.ingresada, p.getNickname(), filename); //cat    
+        		new DtFechaHora(), new HashSet<String>(), tipoEstado.ingresada, p.getNickname(), filename.getBytes()); //cat    
         try {
 	        if (IADC.ingresarDatosActividadDep(p.getNombreInstitucion(),  datosAD)) {
 	    		ru=Parametrizer.remParam(ru,  "e",  "4");

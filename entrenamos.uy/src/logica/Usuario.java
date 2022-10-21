@@ -112,19 +112,19 @@ public abstract class Usuario {
     	this.setImagen(datos.getImagen());
     }
     
-    public void agregarSeguidor(Usuario manuelitoElUsuario) {
-    	seguidores.put(manuelitoElUsuario.getNickname(),  manuelitoElUsuario);
+    public void agregarSeguidor(Usuario u) {
+    	seguidores.put(u.getNickname(),  u);
     }
     
-    public void agregarSeguido(Usuario robertoCarlos) {
-    	seguidos.put(robertoCarlos.getNickname(),  robertoCarlos);
+    public void agregarSeguido(Usuario u) {
+    	seguidos.put(u.getNickname(), u);
     }
     
-    public void removerSeguidor(Usuario usuarioooooooooo) {
-    	seguidores.remove(usuarioooooooooo.getNickname());
+    public void removerSeguidor(Usuario u) {
+    	seguidores.remove(u.getNickname());
     }
     
-    public void removerSeguido(Usuario ricardoFort) {
-    	seguidos.remove(ricardoFort.getNickname());
+    public void removerSeguido(Usuario u) {
+    	seguidos.remove(u.getNickname());
     }
 }

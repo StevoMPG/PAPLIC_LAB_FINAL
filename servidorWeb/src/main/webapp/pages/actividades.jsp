@@ -42,13 +42,13 @@
 						    <img alt="imagenActividad" id="mainImgDiv" src="<%=request.getContextPath()%>/api/content?c=act&id=<%=datosActDep.getNombre()%>">
 					    </div>
                     </div>
-                	<div class="col-9 py-3">
-				        <div id="user-info" class="row">
-                            <p><strong id="user-nickname"><%=datosActDep.getNombre()%></strong></p>
+                	<div class="col-9 py-3" style="background-color: rgba(255, 251, 251, 0.78); border-radius: 10% / 50%; margin-bottom: 15px;padding-left: 39px;">
+				        <div id="user-info" class="row" >
+                            <p style="color: white);"><strong  id="user-nickname"><%=datosActDep.getNombre()%></strong></p>
 				        </div>
                         <div id="creatorDiv" class="row">
                             <div class="col-auto">
-                                <h4><strong>Ingresada por:</strong></h4>
+                                <h4 style="color: white);"><strong>Ingresada por:</strong></h4>
                             </div>
                             	<div class="col-auto">
                                 	<img id="actDepCreator" alt="imagenUsuario" id="img-perfil" src="<%=request.getContextPath()%>/api/content?c=usu&id=<%=(new String(((DtUsuarioExtra)datosCreador).getNickname()))%>">
@@ -63,16 +63,16 @@
                               </div>
                         </div>
                     </div>
-		        <div id="actd-inferior" class= "row card-body mb-3">
+		        <div id="actd-inferior" class= "row card-body mb-3" style="background-color: rgba(255, 251, 251, 0.78); border-radius: 10% / 50%; margin-bottom: 15px;padding-left: 39px;">
                     <div class="row">
-                        <div class="col-sm-3">
-                            <h6 class="mb-0"><strong>Institución asociada:</strong></h6>
+                        <div class="col-sm-3" style="color: white);">
+                            <h6 class="mb-0" style="color: white);"><strong>Institución asociada:</strong></h6>
                         </div>
                         <div class="col-sm-9 text-secondary">
                             <%=institucion%>
                         </div>
                         <div class="col-sm-3">
-                            <h6 class="mb-0"><strong>Descripción:</strong></h6>
+                            <h6 class="mb-0" style="color: white);"><strong>Descripción:</strong></h6>
                         </div>
                         <div class="col-sm-9 text-secondary">
                             <%=datosActDep.getDescripcion()%>
@@ -80,7 +80,7 @@
                     </div>
                     <div class="row">
                         <div class="col-sm-3">
-                            <h6 class="mb-0"><strong>Duración:</strong></h6>
+                            <h6 class="mb-0" style="color: white);"><strong>Duración:</strong></h6>
                         </div>
                         <div class="col-sm-9 text-secondary">
                             <%=datosActDep.getDuracionMinutos()%> minutos
@@ -88,7 +88,7 @@
                     </div>
                     <div class="row">
                         <div class="col-sm-3">
-                            <h6 class="mb-0"><strong>Costo:</strong></h6>
+                            <h6 class="mb-0" style="color: white);"><strong>Costo:</strong></h6>
                         </div>
                         <div class="col-sm-9 text-secondary">
                             $<%=datosActDep.getCosto()%>
@@ -96,7 +96,7 @@
                     </div>
                     <div class="row">
                         <div class="col-sm-3">
-                            <h6 class="mb-0"><strong>Fecha de Alta:</strong></h6>
+                            <h6 class="mb-0" style="color: white);"><strong>Fecha de Alta:</strong></h6>
                         </div>
                         <div class="col-sm-9 text-secondary">
                             <%=datosActDep.getFechaRegistro().toFecha()%>
@@ -114,39 +114,41 @@
 		        </div>
                 <br>
                 <%if (loggedUser instanceof DtProfesorExtra && ((DtProfesorExtra)loggedUser).getNombreInstitucion().equals(institucion) && datosActDep.getEstado()==tipoEstado.aceptada) { %>
-	                <button class="w-100 mb-2 btn btn-lg rounded-4 btn-primary" type="submit" data-bs-toggle="modal" data-bs-target="#altaClaseModal" >
+	                <button class="w-100 mb-2 btn btn-lg rounded-4" style="border-color: black; color:white; background-color: rgba(0, 0, 0, 0.79);" type="submit" data-bs-toggle="modal" data-bs-target="#altaClaseModal" >
 	                    Dar de alta una clase para esta actividad
 	                </button>
 	            <%} %>
             </div>
-            <div class="col-sm-3 ps-1 ps-sm-2" style="color: gray;">
+             <div class="col-sm-3 ps-1 ps-sm-2" style="color: white;">
                 <div class="extraInfoDiv row">
                     <h5>Clases</h5>
-					<ul id="listaActividades" class=" py-3">
+					<ul id="listaActividades" class=" py-3" style="background-color: rgba(0, 0, 0, 0); border-radius: 10% / 50%; margin-bottom: 15px;padding-left: 39px;">
 						<%for (Object dtClase : datosClases) { %>
-							<li> 
-                            	<a href="<%=request.getContextPath()%>/clases?clase=<%=((DtClaseExtra)dtClase).getNombre()%>" class="nav-link" style="color: white;"><%=((DtClaseExtra)dtClase).getNombre()%></a>
+							<li class="container border card-body elementoLista"  style="background-color: rgb(255, 255, 255); border-radius: 10% / 50%; margin-bottom: 15px;padding-left: 39px;"> 
+                            	<img alt="imagenClases"  src="<%=request.getContextPath()%>/api/content?c=cla&id=<%=((DtClaseExtra)dtClase).getNombre()%>" class="vertical-align-middle imagenSeleccionable">
+                            	<a href="<%=request.getContextPath()%>/clases?clase=<%=((DtClaseExtra)dtClase).getNombre()%>" class="clase color-blue"><%=((DtClaseExtra)dtClase).getNombre()%></a>
                         	</li> 
 						<% } %>              
 					</ul>
                 </div>
-                <div class="extraInfoDiv row">
+                <div class="extraInfoDiv row" style="color: white;">
                     <h5>Cuponeras</h5>
-					<ul id="listaActividades" class=" py-3">
+					<ul id="listaActividades" class=" py-3" style="background-color: rgba(0, 0, 0, 0); border-radius: 10% / 50%; margin-bottom: 15px;padding-left: 39px;">
 						<%for (Object datosCup : datosCuponeras) { %>
-							<li>
-                            	<a href="<%=request.getContextPath()%>/cuponeras?cuponera=<%=((DtCuponera)datosCup).getNombre()%>" class="nav-link" style="color: white;"><%=((DtCuponera)datosCup).getNombre()%></a>
+							<li class="container border card-body elementoLista" style="background-color: rgb(255, 255, 255); border-radius: 10% / 50%; margin-bottom: 15px;padding-left: 39px;"> 
+                            	<img alt="imagenCuponera"  src="<%=request.getContextPath()%>/api/content?c=cup&id=<%=((DtCuponera)datosCup).getNombre()%>" class="vertical-align-middle imagenSeleccionable">
+                            	<a href="<%=request.getContextPath()%>/cuponeras?cuponera=<%=((DtCuponera)datosCup).getNombre()%>" class="clase color-blue"><%=((DtCuponera)datosCup).getNombre()%></a>
                         	</li>
                         <% } %>                
 					</ul>
                 </div>
-                <div class="extraInfoDiv row">
+                <div class="extraInfoDiv row" style="color: white;">
                     <h5>Categorías</h5>
-					<ul id="listaActividades" class=" py-3">
+					<ul id="listaActividades" class=" py-3" style="background-color: rgba(0, 0, 0, 0); border-radius: 10% / 50%; margin-bottom: 15px;padding-left: 39px;">
 						<%Set<String> categorias = datosActDep.getCategorias();%>
 						<%for (String cat : categorias) { %>
-							<li> 
-                            	<a href="<%=request.getContextPath()%>/search?actividades=yes&cuponeras=yes&fltrC1=<%=cat%>" class="nav-link" style="color: white;"><%=cat%></a>
+							<li class="container border card-body elementoLista" style="background-color: rgb(255, 255, 255); border-radius: 10% / 50%; margin-bottom: 15px;padding-left: 39px;"> > 
+                            	<a href="<%=request.getContextPath()%>/search?actividades=yes&cuponeras=yes&fltrC1=<%=cat%>" class="clase color-blue"><%=cat%></a>
                         	</li>
                         <% } %>               
 					</ul>
@@ -164,7 +166,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <img src="<%=request.getContextPath()%>/assets/images/misc/iconoEntrenamos-uy.png" alt="EntrenamosUYLogo" width="40" height="30" class="d-inline-block align-text-top img-fluid me-2 ms-2 mb-3">
-                    <h2 class="fw-bold mb-0">Alta de Clase</h2>
+                    <h2 class="fw-bold mb-0" style="color: white;">Alta de Clase</h2>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -203,7 +205,7 @@
 			                    </div>
                             </div>           
                         </div>
-                        <h6>Cupos de Inscripción</h6>
+                        <h6 style="color: white;">Cupos minimos y maximos</h6>
                         <div id="nombreCompletoDiv" class="row form-floating mb-3">
                             <div id="divNombre" class="col-6 form-check float-left">
                                 <div class="form-floating mb-2">
@@ -222,18 +224,18 @@
                             <input type="text" class="form-control rounded-4" name="url" id="urlin" placeholder="">
                             <label for="urlin">URL</label>                  
                         </div>
-                        <h6>Imagen asociada <i style="font-size:0.7rem;"> (opcional)</i></h6>
+                        <h6 style="color: white;">Imagen asociada <i style="font-size:0.7rem;"> (opcional)</i></h6>
                         <div id="imgPick" class="mb-3">
                             <input type="file" class="form-control" name="img" id="customFil2e" accept=".jpg, .jpeg, .png, .webp, .gif, .tiff">
                   
                         </div>
-                        <button class="w-100 mb-2 btn btn-lg rounded-4 btn-primary" type="submit">Confirmar Registro</button>
+                        <button class="w-100 mb-2 btn btn-lg rounded-4" style="border-color: black; color:black; background-color: rgba(255, 255, 255, 0.79);"type="submit">Confirmar Registro</button>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <hr class="my-6">
                     <div>
-                        <i>Entrenamos.uy - Alta Dictado de Clase</i>
+                        <i style="color: white;">Entrenamos.uy - Alta Dictado de Clase</i>
                     </div>
                 </div>
             </div>

@@ -37,7 +37,7 @@
 				    		<img alt="imagenClase" id="mainImgDiv" src="<%=request.getContextPath()%>/api/content?c=cla&id=<%=datosClase.getNombre()%>">
 			    		</div>
            			</div>
-            		<div class="col-9 py-3">
+            		<div class="col-9 py-3" style="background-color: rgba(255, 251, 251, 0.78); border-radius: 10% / 50%; margin-bottom: 15px;padding-left: 39px;">
 				      	<div id="user-info" class="row">
                 			<p><strong id="user-nickname"> <%=datosClase.getNombre()%> </strong> <a id="user-type" href="<%=request.getContextPath()%>/actividades?actividad=<%=nombreActividad%>"> (<%=nombreActividad%>) </a></p>
 				      	</div>
@@ -54,12 +54,13 @@
               				<%if (esSocio) { %>
 	              				<div class="col-auto">
 	              					<% if (estaInscripto || estaCaducada || estaLlena) {%>
-	              					<button id="botonQueNoSirveXD" type="button" class="w-100 mb-2 btn btn-lg rounded-4 btn-primary" disabled>
+	              					<button id="botonQueNoSirveXD" type="button" style="border-color: black; color:white; background-color: rgba(0, 0, 0, 0.79);" class="w-100 mb-2 btn btn-lg rounded-4" disabled>
 					                  <%if (estaInscripto) {%>Estas inscripto<%} else if (estaCaducada) {%>Clase finalizada
 					                  <%} else {%>Clase llena<% } %>
 					                </button>
 	              					<%} else {%>
-					                <button id="botonInsc" type="button" class="w-100 mb-2 btn btn-lg rounded-4 btn-primary" type="submit" data-bs-toggle="modal" data-bs-target="#inscModal">
+					                <button id="botonInsc" type="button" class="w-100 mb-2 btn rounded-4" style="border-color: black; color:white; background-color: rgba(0, 0, 0, 0.79);"
+					                 type="submit" data-bs-toggle="modal" data-bs-target="#inscModal">
 					                  Inscribirse
 					                </button>
 					                <%}%>
@@ -68,7 +69,7 @@
              			</div>
           			</div>
 		      	</div>
-		      	<div id="user-inferior" class= "row card-body mb-3">
+		      	<div id="user-inferior" class= "row card-body mb-3" style="background-color: rgba(255, 251, 251, 0.78); border-radius: 10% / 50%; margin-bottom: 15px;padding-left: 39px;">
 	           		<div class="row">
 	             			<div class="col-sm-3">
 	                 			<h6 class="mb-0"><strong>Fecha y Hora de Inicio:</strong></h6>
@@ -114,10 +115,10 @@
 		    <div class="col-sm-3 ps-1 ps-sm-3">
 		    	<div id= "user-consultaInscriptos" class="extraInfoDiv row">
 		    		<%  List<String> nickAlumnos = datosClase.getNickAlumnos();%>
-		      		<h5>Usuarios Inscriptos (<%=nickAlumnos.size()%>)</h5>
-		      		<ul id="listaInscriptos" class="py-3">
+		      		<h5 style="color: white;">Usuarios Inscriptos (<%=nickAlumnos.size()%>)</h5>
+		      		<ul id="listaInscriptos" class="py-3" style="background-color: rgba(0, 0, 0, 0); border-radius: 10% / 50%; margin-bottom: 15px;padding-left: 39px;">
 		      			<%  for (String alumno : nickAlumnos) { %>
-		      				<li class="container border card-body elementoLista">
+		      				<li class="container border card-body elementoLista" style="background-color: rgb(255, 255, 255); border-radius: 10% / 50%; margin-bottom: 15px;padding-left: 39px;"> >
 				           		<img alt="Default"  src="<%=request.getContextPath()%>/api/content?c=usu&id=<%=alumno%>" class="vertical-align-middle imagenSeleccionable">
 				           		<a class="clase color-blue" href="<%=request.getContextPath()%>/usuarios?nickname=<%=alumno%>"><%=alumno%></a>
 				        	</li>
@@ -134,7 +135,7 @@
     <div class="modal fade" id="inscModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
           <div class="modal-content">
-              <div class="modal-header">
+              <div class="modal-header" style="color: white;">
                   <img src="<%=request.getContextPath()%>/assets/images/misc/iconoEntrenamos-uy.png" alt="EntrenamosUYLogo" width="40" height="30" class="d-inline-block align-text-top img-fluid me-2 ms-2 mb-3">
                   <h2 class="fw-bold mb-0">Inscripción a Clase</h2>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -144,8 +145,8 @@
                   	method="POST">
                   	<%Set<?> cupDisponibles = (Set<?>) request.getAttribute("cupDisponibles");
                   	  String precio = (String) request.getAttribute("precio");%>
-                    <div class="form-floating mb-3">
-                      <h5>Pago Asociado</h5>
+                    <div class="form-floating mb-3" style="color: white;">
+                      <h5 >Pago Asociado</h5>
                       <div id="genRadio" class="form-check float-left">
                           <input class="form-check-input" type="radio" name="tipoInsc" id="radioGen" value="general" checked>
                           <label class="form-check-label" for="radioGen">
@@ -155,7 +156,7 @@
                       <div id="cupRadio" class="form-check float-left">
                           <input class="form-check-input" type="radio" name="tipoInsc" id="radioCup" value="cuponera"
                           	<%if (cupDisponibles.size() == 0) { %> disabled <% } %>>
-                          <label class="form-check-label" for="radioCup">
+                          <label class="form-check-label" style="color: white;" for="radioCup">
                           Cuponera
                           </label>
                       </div>
@@ -169,13 +170,13 @@
                       </select>
                       <label for="cups">Cuponera a utilizar</label>                               
                     </div>
-                    <button id="confInscbtn" class="w-100 mb-2 btn btn-lg rounded-4 btn-primary" type="submit">Confirmar</button>
+                    <button id="confInscbtn" class="w-100 mb-2 btn btn-lg rounded-4" style="border-color: black; color:black; background-color: rgba(255, 255, 255, 0.79);"type="submit">Confirmar</button>
                   </form>
               </div>
               <div class="modal-footer">
                   <hr class="my-6">
                   <div>
-                      <i>Registro de dictado de clase - entrenamos.uy</i>
+                      <i style="color: white;">Registro de dictado de clase - entrenamos.uy</i>
                   </div>
               </div>
           </div>

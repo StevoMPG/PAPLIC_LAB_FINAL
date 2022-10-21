@@ -1,16 +1,35 @@
 package logica.persistencia;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+
 import javax.persistence.*;
 
 
+import datatypes.DtActividadDeportivaExtra;
+import datatypes.DtClaseExtra;
+import datatypes.DtSocio;
+import datatypes.DtUsuario;
+import datatypes.DtUsuarioExtra;
+import excepciones.ActividadDeportivaException;
+import excepciones.ClaseException;
+import excepciones.UsuarioNoExisteException;
 import logica.ActividadDeportiva;
+import logica.Categoria;
 import logica.Clase;
 import logica.ClasesCuponera;
 import logica.Cuponera;
 import logica.Institucion;
 import logica.Profesor;
+import logica.Socio;
 import logica.Usuario;
 import logica.compraClase;
+import logica.manejadorUsuario;
 import logica.persistencia.Datatypes.TipoUsuario;
 import logica.persistencia.Entidades.*;
 
@@ -40,6 +59,8 @@ public class DataPersistencia {
 		    ap.setCosto(act.getCosto());
 		    ap.setFechaAlta(act.getFechaRegistro().toCalendar());
 		    ap.setInstitucion(ins.getNombre());
+		    ap.setEstado(act.getEstado().name());
+		    ap.setProfesor(act.getCreador().getNickname());
 		    em.getTransaction().begin();
 	    	em.persist(ap);
 	    	em.getTransaction().commit();
@@ -87,6 +108,7 @@ public class DataPersistencia {
 				Socios s = new Socios();
 				s.setNickname(user.getNickname());
 				s.setNombre(user.getNombre());
+				s.setContrasenia(user.getContrasenia());
 				s.setApellido(user.getApellido());
 				s.setEmail(user.getCorreo());
 				s.setFechaNacimiento(user.getFecha().toCalendar());
@@ -123,18 +145,26 @@ public class DataPersistencia {
 		                + "SET "
 		                + "`FECHA_NACIMIENTO` = ? "
 		                + "WHERE `NICKNAME` = ?; ");
+				
+				Query y = em.createNativeQuery("UPDATE `SOCIOS` "
+		                + "SET "
+		                + "`CONTRASENIA` = ? "
+		                + "WHERE `NICKNAME` = ?; ");
 	
 				s.setParameter(1, user.getNombre());
 				q.setParameter(1, user.getApellido());
 				w.setParameter(1, user.getFecha().toCalendar()); 
+				y.setParameter(1, user.getContrasenia());
 				s.setParameter(2, user.getNickname());
 				q.setParameter(2, user.getNickname());
 				w.setParameter(2, user.getNickname());
+				y.setParameter(2, user.getNickname());
 			//	s.setImagen(user.getImagen());
 				em.getTransaction().begin();
 				s.executeUpdate();
 				q.executeUpdate();
 				w.executeUpdate();
+				y.executeUpdate();
 				em.getTransaction().commit();
 		
 		} catch (Exception e) {
@@ -153,6 +183,7 @@ public class DataPersistencia {
 					s.setNickname(p.getNickname());
 					s.setNombre(p.getNombre());
 					s.setApellido(p.getApellido());
+					s.setContrasenia(p.getContrasenia());
 					s.setEmail(p.getCorreo());
 					s.setFechaNacimiento(p.getFecha().toCalendar());
 					s.setTipoUsuario(TipoUsuario.Profesor);
@@ -183,6 +214,7 @@ public class DataPersistencia {
 		                + "`NOMBRE` = ? "
 		                + "WHERE `NICKNAME` = ?; ");
 				
+				
 				Query q = em.createNativeQuery("UPDATE `PROFESORES` "
 		                + "SET "
 		                + "`APELLIDO` = ? "
@@ -208,6 +240,11 @@ public class DataPersistencia {
 		                + "`WEB` = ? "
 		                + "WHERE `NICKNAME` = ?; ");
 
+
+				Query y = em.createNativeQuery("UPDATE `PROFESORES` "
+		                + "SET "
+		                + "`CONTRASENIA` = ? "
+		                + "WHERE `NICKNAME` = ?; ");
 	
 				s.setParameter(1, user.getNombre());
 				q.setParameter(1, user.getApellido());
@@ -215,12 +252,14 @@ public class DataPersistencia {
 				e.setParameter(1, user.getDescripcion());
 				r.setParameter(1, user.getBiografia());
 				t.setParameter(1, user.getWebsite());
+				y.setParameter(1, user.getContrasenia());
 				s.setParameter(2, user.getNickname());
 				q.setParameter(2, user.getNickname());
 				w.setParameter(2, user.getNickname());
 				e.setParameter(2, user.getNickname());
 				r.setParameter(2, user.getNickname());
 				t.setParameter(2, user.getNickname());
+				y.setParameter(2, user.getNickname());
 			//	s.setImagen(user.getImagen());
 				em.getTransaction().begin();
 				s.executeUpdate();
@@ -229,6 +268,7 @@ public class DataPersistencia {
 				e.executeUpdate();
 				r.executeUpdate();
 				t.executeUpdate();
+				y.executeUpdate();
 				em.getTransaction().commit();
 			
 			} catch (Exception e) {
@@ -256,6 +296,7 @@ public class DataPersistencia {
 				em.close();
 			}
 	}
+		
 		
 		
 		public void persistirCuponeras(Cuponera cup) {
@@ -309,6 +350,7 @@ public class DataPersistencia {
 					ActividadesCuponeras s = new ActividadesCuponeras();
 					s.setNombre(cp.getNombreActDep());
 					s.setNombrec(cp.getNombreCuponera());
+					s.setClases(cp.getCantidadClases());
 
 					em.getTransaction().begin();
 					em.persist(s);
@@ -321,6 +363,114 @@ public class DataPersistencia {
 				em.close();
 			}
 	} 
+	 
+	 public void persistirCategorias(Categoria c) {
+			EntityManager em = emFabrica.createEntityManager();
+			try {
+					Categorias s = new Categorias();
+					s.setNombre(c.getNombre());
+
+					em.getTransaction().begin();
+					em.persist(s);
+					em.getTransaction().commit();
+		
+			} catch (Exception e) {
+				e.printStackTrace();
+				em.getTransaction().rollback();
+			} finally {
+				em.close();
+			}
+	} 
+	 
+	 public void seguir(String seguidor,  String seguido) throws UsuarioNoExisteException {
+			manejadorUsuario handlerUsuario = manejadorUsuario.getInstance();
+			Usuario seguidorU = handlerUsuario.findUsuario(seguidor);
+			Usuario seguidoU = handlerUsuario.findUsuario(seguido);
+			seguidorU.agregarSeguido(seguidoU);
+			seguidoU.agregarSeguidor(seguidorU);
+		}
+	 
+	 public void persistirSeguidores(String seguidor,  String seguido) throws UsuarioNoExisteException {
+			EntityManager em = emFabrica.createEntityManager();
+			manejadorUsuario handlerUsuario = manejadorUsuario.getInstance();
+			Usuario seguidorU = handlerUsuario.findUsuario(seguidor);
+			Usuario seguidoU = handlerUsuario.findUsuario(seguido);
+			try {
+					Seguidores s = new Seguidores();
+					s.setNombre(seguidorU.getNickname());
+					s.setNombrec(seguidoU.getNickname());
+
+					em.getTransaction().begin();
+					em.persist(s);
+					em.getTransaction().commit();
+		
+			} catch (Exception e) {
+				e.printStackTrace();
+				em.getTransaction().rollback();
+			} finally {
+				em.close();
+			}
+	 }
+	 
+	 
+	 public void persistirAprobarActividad(ActividadDeportiva act) {
+			EntityManager em = emFabrica.createEntityManager();
+
+			try {
+
+				Query s = em.createNativeQuery("UPDATE `ACTIVIDADES_DEPORTIVAS` "
+		                + "SET "
+		                + "`ESTADO` = ? "
+		                + "WHERE `NOMBRE_ACTIVIDAD` = ?; ");
+				
+			
+	
+				s.setParameter(1, act.getEstado().name());
+				
+				s.setParameter(2, act.getNombre());
+
+			//	s.setImagen(user.getImagen());
+				em.getTransaction().begin();
+				s.executeUpdate();
+				em.getTransaction().commit();
+			
+			} catch (Exception e) {
+				e.printStackTrace();
+				em.getTransaction().rollback();
+			} finally {
+				em.close();
+			}
+		}
+	/*	getHU().findUsuario(user1).removerSeguido(getHU().findUsuario(user2));
+		getHU().findUsuario(user2).removerSeguidor(getHU().findUsuario(user1));
+	*/	
+			public void persistirDESSeguidores(String user1,  String user2) throws UsuarioNoExisteException {
+				EntityManager em = emFabrica.createEntityManager();
+				manejadorUsuario HU = manejadorUsuario.getInstance();
+				Usuario seguidorU = HU.findUsuario(user1);
+				Usuario seguidoU = HU.findUsuario(user2);
+				try {
+
+						Query s = em.createQuery("DELET FROM Seguidores WHERE NOMBRE_SEGUIDOR = ?;");
+					
+						s.setParameter(1, seguidoU );
+						
+					//	s.setParameter(2, seguidorU);
+
+						em.getTransaction().begin();
+						em.persist(s);
+						em.getTransaction().commit();
+			
+				} catch (Exception e) {
+					e.printStackTrace();
+					em.getTransaction().rollback();
+				} finally {
+					em.close();
+				}
+	} 
+	 
+
+	 
 	
 	public void nuketownDetonator() {
 		EntityManager em = emFabrica.createEntityManager();
@@ -334,6 +484,8 @@ public class DataPersistencia {
 		    Query q6 = em.createQuery("DELETE FROM Instituciones");
 		    Query q7 = em.createQuery("DELETE FROM Cuponeras");
 		    Query q8 = em.createQuery("DELETE FROM ActividadesCuponeras");
+		    Query q9 = em.createQuery("DELETE FROM Categorias");
+		    Query q10 = em.createQuery("DELETE FROM Seguidores");
 		    q1.executeUpdate();
 		    q2.executeUpdate();
 		    q3.executeUpdate();
@@ -342,6 +494,8 @@ public class DataPersistencia {
 		    q6.executeUpdate();
 		    q7.executeUpdate();
 		    q8.executeUpdate();
+		    q9.executeUpdate();
+		    q10.executeUpdate();
 		    em.getTransaction().commit();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -349,6 +503,139 @@ public class DataPersistencia {
 		} finally {
 			em.close();
 		}
+	}
+	
+	public Set<String> obtenerActividades() {
+		EntityManager em = emFabrica.createEntityManager();
+		Set<String> nombreActividades = new HashSet<>();
+		try {
+			em.getTransaction().begin();
+			TypedQuery<ActividadesDeportivas> select = em.createQuery("SELECT a FROM ActividadesDeportivas a ORDER BY a.nombre DESC",
+					ActividadesDeportivas.class);
+			for (ActividadesDeportivas actDep : select.getResultList()) {
+				nombreActividades.add(actDep.getNombre());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			em.getTransaction().rollback();
+		} finally {
+			em.close();
+		}
+		return nombreActividades;
+	}
+	
+	public Set<String> obtenerClases() {
+		EntityManager em = emFabrica.createEntityManager();
+		Set<String> nombreClases = new HashSet<>();
+		try {
+			em.getTransaction().begin();
+			TypedQuery<Clases> select = em.createQuery("SELECT c FROM Clases c ORDER BY c.nombre DESC",	Clases.class);
+			for (Clases claseDB : select.getResultList()) {
+				nombreClases.add(claseDB.getNombre());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			em.getTransaction().rollback();
+		} finally {
+			em.close();
+		}
+		return nombreClases;
+	}
+	
+	public Set<String> obtenerClases(String nombreActividad) {
+		EntityManager em = emFabrica.createEntityManager();
+		Set<String> nombreClases = new HashSet<>();
+		try {
+			em.getTransaction().begin();
+			TypedQuery<Clases> select = em.createQuery("SELECT c FROM Clases c INNER JOIN ActividadesDeportivas ad" +
+					" WHERE (ad.nombre = :nombre) ORDER BY c.nombre DESC",	Clases.class);
+    	    select.setParameter("nombre", nombreActividad);
+			for (Clases claseDB : select.getResultList()) {
+				nombreClases.add(claseDB.getNombre());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			em.getTransaction().rollback();
+		} finally {
+			em.close();
+		}
+		return nombreClases;
+	}
+	
+	
+
+	// PRECONDICION!!! Existe al menos una actividad con 'nombreActDep' en la persistencia.
+	public DtActividadDeportivaExtra getActividad(String nombreActDep) throws ActividadDeportivaException {
+		EntityManager em = emFabrica.createEntityManager();
+		try {
+			em.getTransaction().begin();
+			TypedQuery<ActividadesDeportivas> select = em.createQuery("SELECT act FROM ActividadesDeportivas act WHERE act.nombre=:nombre",ActividadesDeportivas.class);
+			select.setParameter("nombre", nombreActDep);
+			if (select.getResultList().size() > 0) {
+				ActividadesDeportivas act = select.getSingleResult();
+				return act.toDtActividadDeportivaExt();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			em.getTransaction().rollback(); 
+		} finally {
+			em.close();
+		}
+		throw new ActividadDeportivaException("La actividad deportiva "+nombreActDep+" no se encuentra presente en el sistema.");
+	}
+	
+	// PRECONDICION!!! Existe al menos una clase con 'nombreClase' en la persistencia.
+	public DtClaseExtra getClase(String nombreClase) throws ClaseException {
+		EntityManager em = emFabrica.createEntityManager();
+		try {
+			em.getTransaction().begin();
+			TypedQuery<Clases> select = em.createQuery("SELECT cl FROM Clases cl WHERE cl.nombre=:nombre",Clases.class);
+			select.setParameter("nombre", nombreClase);
+			if (select.getResultList().size() > 0) {
+				Clases clase = select.getSingleResult();
+				return clase.toDtClaseExt();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			em.getTransaction().rollback(); 
+		} finally {
+			em.close();
+		}
+		throw new ClaseException("La clase "+nombreClase+" no se encuentra presente en el sistema.");
+	}
+	
+	
+	
+	
+	public DtUsuarioExtra getUsuario(String nombreSocio) throws UsuarioNoExisteException {
+		EntityManager em = emFabrica.createEntityManager();
+		try {
+			em.getTransaction().begin();
+			TypedQuery<Socios> select = em.createQuery("SELECT s FROM Socios s WHERE s.nickname=:nombre",Socios.class);
+			select.setParameter("nombre", nombreSocio);
+			if(select.getResultList().size()>0) {
+				Socios s = select.getSingleResult();
+				em.getTransaction().commit();
+				//System.out.println("SOCIO: "+s.toString());
+				return s.toDtUsuarioExt();
+			}
+			else{
+				TypedQuery<Profesores> select2 = em.createQuery("SELECT s FROM Profesores s WHERE s.nickname=:nombre",Profesores.class);
+				select2.setParameter("nombre", nombreSocio);
+				if(select2.getResultList().size()>0) {
+					Profesores s = select2.getSingleResult();
+					em.getTransaction().commit();
+					//System.out.println("PROF: "+s.toString());
+					return s.toDtUsuarioExt();
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			em.getTransaction().rollback(); 
+		} finally {
+			em.close();
+		}
+		throw new UsuarioNoExisteException("El usuario "+nombreSocio+" no se encuentra presente en el sistema.");
 	}
 }
 

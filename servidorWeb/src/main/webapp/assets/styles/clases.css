@@ -21,7 +21,7 @@ body {
     margin-bottom: 10px;
     border-style: solid;
     border-width: 1px;
-    border-color: #0275d8;
+    border-color: black;
 }
 #actDepCreator{
     object-fit: cover;
@@ -132,7 +132,7 @@ body {
     justify-content: center;
     border-style: solid;
     border-width: 2px;
-    border-color: #0275d8;
+    border-color: black;
 }
 
 .clase {
@@ -158,12 +158,13 @@ body {
 	margin-top: 1em;
 }
 .extraInfoDiv{
-	border-radius: 1em;
+	border-radius: 10% / 50%;
     margin-bottom: 1em;
     margin-left: 1em;
-    background-color: rgba(204 204 204 / 28%);
+    background-color: rgba(0, 0, 0, 0.79);
     padding: 1em 1em 1em 1em;
 }
+
 
 .elementoLista{
 	width: 100%;
@@ -192,3 +193,4 @@ body {
 .container-fluid mt-4{
 	background-color: rgb(44, 44, 44);
 }
+

@@ -9,7 +9,7 @@ import excepciones.FechaInvalidaException;
 import excepciones.InstitucionException;
 import excepciones.NoExisteCuponeraException;
 import excepciones.UsuarioNoExisteException;
-
+import logica.persistencia.DataPersistencia;
 import datatypes.DtFechaHora;
 import datatypes.DtcompraClase;
 import datatypes.tipoEstado;
@@ -235,6 +235,6 @@ public class controladorClase implements IcontroladorClase {
 				;
 			}
 		}
-		throw new ClaseException("La clase " + nombreClase + " no existe en el Sistema.");
+		return DataPersistencia.getInstance().getClase(nombreClase);
 	}
 }

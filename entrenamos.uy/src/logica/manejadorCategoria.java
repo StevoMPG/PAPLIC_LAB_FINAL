@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.HashMap;
 
 import excepciones.CategoriaException;
+import logica.persistencia.DataPersistencia;
 
 public class manejadorCategoria {
 	
@@ -27,6 +28,7 @@ public class manejadorCategoria {
 			throw new CategoriaException("Ya existe una Categoria en el Sistema con ese nombre.");
 		} else {
 			categorias.put(cat.getNombre(),  cat);
+			DataPersistencia.getInstance().persistirCategorias(cat);
 		}
 	}
 	

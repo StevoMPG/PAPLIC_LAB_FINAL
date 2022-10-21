@@ -11,11 +11,10 @@ body {
 	align-items: center;
 }
 .extraInfoDiv{
-	border-radius: 1em;
+	border-radius: 10% / 50%;
     margin-bottom: 1em;
     margin-left: 1em;
-    margin-top: 1em;
-    background-color:rgb(44, 44, 44);
+    background-color: rgba(0, 0, 0, 0.79);
     padding: 1em 1em 1em 1em;
 }
 .btn-ir {
@@ -32,6 +31,7 @@ body {
     background-size: cover;
     background-position: center center;
 }
+
 
 .navbar-2 {
     background-color: rgb(44, 44, 44);
@@ -64,7 +64,7 @@ body {
     justify-content: center;
     border-style: solid;
     border-width: 2px;
-    border-color: #0275d8;
+    border-color: #fff;
 }
 #logout-session{
  white-space: nowrap;
@@ -120,8 +120,8 @@ body {
 }
 
 .modal-content {
-    background-color:#ececec;
-    opacity: .95;
+	background-color: rgba(0, 0, 0, 0.79);
+	opacity: .95;
     padding: 0 20;
     box-shadow: 0px 0px 3px #848484;
 }
@@ -144,6 +144,11 @@ body {
     border: 0;
     padding-left: 54px;
     border-radius: 5px;
+}
+
+.bg {
+	
+	background-color: rgba(0, 0, 0, 0.79);
 }
 
 .form-group::before {

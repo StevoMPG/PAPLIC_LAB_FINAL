@@ -1,6 +1,7 @@
 package logica;
 
 import datatypes.DtActividadDeportiva;
+import datatypes.DtCategoria;
 import datatypes.DtInstitucion;
 
 import excepciones.UsuarioNoExisteException;
@@ -62,17 +63,18 @@ public class Institucion {
     
     public void addProfesor(Profesor profe) {
     	profesores.add(profe);
-    	//DataPersistencia.getInstance().persistirProfesor(profe);
+    	DataPersistencia.getInstance().persistirProfesor(profe);
     	log.info("Institucion "+nombre+" event: "+" new prof "+profe.getNickname());
     }
     
    
     public int addActividadDeportiva(DtActividadDeportiva datosAD,   Map<String,   Categoria> cat,   Profesor creador, Institucion ins) {
         ActividadDeportiva actDep = new ActividadDeportiva(datosAD,  cat,  creador);
+       
         if (actsDeps.containsKey(datosAD.getNombre()))
         	return 1;
 		actsDeps.put(datosAD.getNombre(),   actDep);
-		//DataPersistencia.getInstance().persistirActividad(getActsDeps().get(datosAD.getNombre()), ins);
+		DataPersistencia.getInstance().persistirActividad(getActsDeps().get(datosAD.getNombre()), ins);
     	log.info("Institucion "+nombre+" event: "+" new actDep "+actDep.getNombre());
 		return 0;
     }

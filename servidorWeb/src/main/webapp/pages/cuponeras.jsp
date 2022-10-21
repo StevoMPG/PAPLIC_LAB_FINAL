@@ -54,7 +54,7 @@
 			    		<img alt="imagenCuponera" id="cupImg" src="<%=request.getContextPath()%>/api/content?c=cup&id=<%=c.getNombre()%>">
 		    		</div>
         		</div>
-           		<div class="col-9 py-3">
+           		<div class="col-9 py-3" style="background-color: rgba(255, 251, 251, 0.78); border-radius: 10% / 50%; margin-bottom: 15px;padding-left: 39px;">
 			      	<div id="user-info" class="row">
                			<p><strong id="user-nickname"> <%= c.getNombre() %> </strong></p>
 			      	</div>
@@ -62,12 +62,12 @@
 	    	    		<div class="col-auto">
 	    	    	<%  Boolean vot = (usrLogged != null) && (usrLogged instanceof DtSocioExtra) && (comprada == false);
 	    	    	if (vot == true){ %>
-						<button type="button" class="btn btn-primary" id="boto" onclick="location.href='<%=request.getContextPath()%>/ComprarCuponera?cuponera=<%=c.getNombre()%>'">
+						<button type="button" class="btn" style="border-color: black; color:white; background-color: rgba(0, 0, 0, 0.79);" id="boto" onclick="location.href='<%=request.getContextPath()%>/ComprarCuponera?cuponera=<%=c.getNombre()%>'">
 				            	Comprar
 				        </button>	
 				      <%}%>
 				      <%if ((usrLogged != null) && (usrLogged instanceof DtSocioExtra) && (comprada == true)){ %>
-				    	<button type="button" disabled class="btn btn-primary" id="boto" onclick="location.href='<%=request.getContextPath()%>/ComprarCuponera?cuponera=<%=c.getNombre()%>'">
+				    	<button type="button" disabled class="btn" style="border-color: black; color:white; background-color: rgba(0, 0, 0, 0.79);" id="boto" onclick="location.href='<%=request.getContextPath()%>/ComprarCuponera?cuponera=<%=c.getNombre()%>'">
 				            	Comprado
 				        </button>  
 				      <%}%>
@@ -75,7 +75,7 @@
 	    	    	</div>
     	    	</div>
           </div>
-          <div id="user-inferior" class= "row card-body mb-3">
+          <div id="user-inferior" class= "row card-body mb-3" style="background-color: rgba(255, 251, 251, 0.78); border-radius: 10% / 50%; margin-bottom: 15px;padding-left: 39px;">
       		<div class="row">
        			<div class="col-sm-3">
            			<h6 class="mb-0"><strong>Descripción:</strong></h6>
@@ -118,13 +118,13 @@
            	</div>
 		</div>
        </div>
-       <div class="col-sm-3 ps-1 ps-sm-3">
-       	<div id= "user-consultaInscriptos" class="extraInfoDiv row">
-      		<h5>Actividades Deportivas</h5>
-      		<ul id="listaInscriptos" class="py-3">
+       <div class="col-sm-3 ps-1 ps-sm-3" >
+       	<div id= "user-consultaInscriptos" class="extraInfoDiv row" >
+      		<h5 style="color: white;">Actividades Deportivas</h5>
+      		<ul id="listaInscriptos" class="py-3" style="background-color: rgba(0, 0, 0, 0); border-radius: 10% / 50%;"> >
       			<% List<DtClasesCuponeras> acts = c.getContenido();
                    for (DtClasesCuponeras x :acts){ %>
-   				<li class="container border card-body elementoLista">
+   				<li class="container border card-body elementoLista" style="background-color: rgb(255, 255, 255); border-radius: 10% / 50%; margin-bottom: 15px;padding-left: 39px;"> 
 	           		<img alt="imagenActividad"  src="<%=request.getContextPath()%>/api/content?c=act&id=<%=x.getNombreActividad()%>" class="vertical-align-middle imagenSeleccionable">
 	           		<a class="clase color-blue" href="<%=request.getContextPath()%>/actividades?actividad=<%= x.getNombreActividad()%>"> <%= x.getNombreActividad() %> / <%=x.getCantidadClases() %><%if (x.getCantidadClases()>1){ %> clases<%}else{ %> clase<%} %>  </a>
 	        	</li>
@@ -132,11 +132,11 @@
       		</ul>
     	</div>
     	<div id= "user-consultaInscriptos" class="extraInfoDiv row">
-      		<h5>Categorías</h5>
-      		<ul id="listaInscriptos" class="py-3">
+      		<h5 style="color: white;">Categorías</h5>
+      		<ul id="listaInscriptos" class="py-3" style="background-color: rgba(0, 0, 0, 0); border-radius: 10% / 50%;">
       			<% List<String> cats = c.getCategorias();
             		for (String x :cats){  %>
-   				<li class="container border card-body elementoLista">
+   				<li class="container border card-body elementoLista" style="background-color: rgb(255, 255, 255); border-radius: 10% / 50%; margin-bottom: 15px;padding-left: 39px;">
 	           		<a class="clase color-blue" href="<%=request.getContextPath()%>/search?actividades=yes&cuponeras=yes&fltrC1=<%=x%>"> <%=x%>  </a>
 	        	</li>
       			<%  } %>

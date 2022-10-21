@@ -497,7 +497,7 @@ public class CrearCuponera extends JInternalFrame {
         			this.getTitle(), JOptionPane.ERROR_MESSAGE);
         } else {
         	try {
-	        	cupo.ingresarCuponera(nombreU, descripcion, FInicio, FFinal, desc, alta);
+	        	cupo.ingresarCuponera(nombreU, descripcion, FInicio, FFinal, desc, alta, null);
 	    		JOptionPane.showMessageDialog(this, "La cuponera ha sido creada con exito.", this.getTitle(), JOptionPane.INFORMATION_MESSAGE);  
 				clear();
         	} catch (CuponeraRepetidaException e) {
