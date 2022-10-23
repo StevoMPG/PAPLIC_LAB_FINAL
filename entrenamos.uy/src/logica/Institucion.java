@@ -6,13 +6,20 @@ import datatypes.DtInstitucion;
 
 import excepciones.UsuarioNoExisteException;
 import logica.persistencia.DataPersistencia;
+import logica.persistencia.Entidades.ActividadesDeportivas;
+import logica.persistencia.Entidades.Instituciones;
 import excepciones.ActividadDeportivaException;
+import excepciones.InstitucionException;
 
 import java.util.Set;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+
 import java.util.Map;
 import java.util.HashSet;
 import java.util.HashMap;
@@ -59,6 +66,10 @@ public class Institucion {
     public ActividadDeportiva findActividad(String actDepNombre) {
     	return actsDeps.get(actDepNombre);
     }
+    
+//    public ActividadDeportiva findActividad(String actDepNombre) {
+//    	return DataPersistencia.getInstance().getActividad(actDepNombre);
+//    }
 
     
     public void addProfesor(Profesor profe) {
@@ -88,6 +99,17 @@ public class Institucion {
     public Set<String> obtenerNombresActDep() {
 		return actsDeps.keySet();
     }
+    
+//    public Set<String> obtenerNombresActDep() {
+//		return (Set<String>) DataPersistencia.getInstance().obtenerActividades();
+//    }
+    
+    
+//  @SuppressWarnings("unchecked")
+//public Set<String> obtenerNombresActDep() {
+//		return (Set<String>) DataPersistencia.getInstance().consultarActividades();
+//  }
+
 
 
     public ActividadDeportiva getActDep(String nombreActDep) throws ActividadDeportivaException {

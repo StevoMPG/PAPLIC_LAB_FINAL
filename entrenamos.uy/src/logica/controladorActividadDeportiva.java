@@ -38,14 +38,22 @@ public class controladorActividadDeportiva  implements IcontroladorActividadDepo
 	}	
 	
 	public Set<String> obtenerInstituciones(){
-		return getHI().obtenerInstituciones();
+		
+		return new HashSet<>(DataPersistencia.getInstance().consultarInstituciones());
+//		return getHI().obtenerInstituciones();
 	}		
+	
 	public Set<String> obtenerActividades(String ins) throws InstitucionException {
 		return getHI().findInstitucion(ins).obtenerNombresActDep();
 	}
 	
-	
+//	@SuppressWarnings("unchecked")
+//	public Set<String> obtenerActividades(String ins) throws InstitucionException {
+//	return  (Set<String>) DataPersistencia.getInstance().findInstitucion(ins).;
+//}
 
+
+	
 	
 	public Boolean ingresarDatosActividadDep(String nombreInsti,  DtActividadDeportiva datosAD) throws InstitucionException, 
 	ActividadDeportivaException{
@@ -210,7 +218,6 @@ public class controladorActividadDeportiva  implements IcontroladorActividadDepo
 				;
 			}
 		}
-		throw new ActividadDeportivaException("La actividad deportiva " + nombreActDep + " no existe en el Sistema.");
+		return DataPersistencia.getInstance().getActividad(nombreActDep);
 	}
-
 }

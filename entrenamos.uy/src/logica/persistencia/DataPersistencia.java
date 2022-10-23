@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.Vector;
 
 import javax.persistence.*;
 
@@ -18,6 +19,7 @@ import datatypes.DtUsuario;
 import datatypes.DtUsuarioExtra;
 import excepciones.ActividadDeportivaException;
 import excepciones.ClaseException;
+import excepciones.InstitucionException;
 import excepciones.UsuarioNoExisteException;
 import logica.ActividadDeportiva;
 import logica.Categoria;
@@ -46,6 +48,8 @@ public class DataPersistencia {
 			instancia = new DataPersistencia();
 		return instancia;
 	}
+	
+
 	
 
 	public void persistirActividad(ActividadDeportiva act, Institucion ins) {
@@ -369,7 +373,7 @@ public class DataPersistencia {
 			try {
 					Categorias s = new Categorias();
 					s.setNombre(c.getNombre());
-
+					
 					em.getTransaction().begin();
 					em.persist(s);
 					em.getTransaction().commit();
@@ -382,14 +386,10 @@ public class DataPersistencia {
 			}
 	} 
 	 
-	 public void seguir(String seguidor,  String seguido) throws UsuarioNoExisteException {
-			manejadorUsuario handlerUsuario = manejadorUsuario.getInstance();
-			Usuario seguidorU = handlerUsuario.findUsuario(seguidor);
-			Usuario seguidoU = handlerUsuario.findUsuario(seguido);
-			seguidorU.agregarSeguido(seguidoU);
-			seguidoU.agregarSeguidor(seguidorU);
-		}
+
 	 
+	 
+
 	 public void persistirSeguidores(String seguidor,  String seguido) throws UsuarioNoExisteException {
 			EntityManager em = emFabrica.createEntityManager();
 			manejadorUsuario handlerUsuario = manejadorUsuario.getInstance();
@@ -451,7 +451,7 @@ public class DataPersistencia {
 				Usuario seguidoU = HU.findUsuario(user2);
 				try {
 
-						Query s = em.createQuery("DELET FROM Seguidores WHERE NOMBRE_SEGUIDOR = ?;");
+						Query s = em.createQuery("SELECT  FROM Seguidores WHERE NOMBRE_SEGUIDOR = ?;");
 					
 						s.setParameter(1, seguidoU );
 						
@@ -505,25 +505,72 @@ public class DataPersistencia {
 		}
 	}
 	
-	public Set<String> obtenerActividades() {
-		EntityManager em = emFabrica.createEntityManager();
-		Set<String> nombreActividades = new HashSet<>();
-		try {
-			em.getTransaction().begin();
-			TypedQuery<ActividadesDeportivas> select = em.createQuery("SELECT a FROM ActividadesDeportivas a ORDER BY a.nombre DESC",
-					ActividadesDeportivas.class);
-			for (ActividadesDeportivas actDep : select.getResultList()) {
-				nombreActividades.add(actDep.getNombre());
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			em.getTransaction().rollback();
-		} finally {
-			em.close();
-		}
-		return nombreActividades;
-	}
 	
+
+public Vector<String> consultarCategorias() {
+	EntityManager em = emFabrica.createEntityManager();
+	String query = "SELECT NOMBRE_CATEGORIA FROM CATEGORIAS";
+	@SuppressWarnings("unchecked")
+	List<String> r = (List<String>) em.createNativeQuery(query).getResultList();
+	return (Vector<String>) r;
+	
+}
+
+public Vector<String> consultarInstituciones() {
+	EntityManager em = emFabrica.createEntityManager();
+	String query = "SELECT NOMBRE_INSTITUCION FROM INSTITUCIONES";
+	@SuppressWarnings("unchecked")
+	List<String> r = (List<String>) em.createNativeQuery(query).getResultList();
+	return (Vector<String>) r;
+	
+}
+
+	
+//public compraClase consultarRegistroClase (String socio, String clase) {
+//	EntityManager em = emFabrica.createEntityManager();
+//	return (compraClase)em.createNativeQuery("SELECT * FROM REGISTROS_CLASES x WHERE x.clase='"+clase+"' AND x.socio='"+socio+"' LIMIT 1", compraClase.class).getSingleResult();
+//	
+//}
+//	
+
+//public ActividadDeportiva consultarActividades (String nombreAct) {
+//	EntityManager em = emFabrica.createEntityManager();
+//	return (ActividadDeportiva)em.createNativeQuery("SELECT * FROM ACTIVIDADES_DEPORTIVAS x WHERE x.nombre='"+nombreAct+"' LIMIT 1", ActividadesDeportivas.class).getSingleResult();
+//	
+//}
+
+
+//public Cuponeras consultarCuponera(String nombreCup){
+//	try {
+//	EntityManager em = emFabrica.createEntityManager();
+//	Cuponeras cuponera = em.find(Cuponeras.class, nombreCup);
+//	return cuponera;
+//	
+//	}catch (Exception e) {
+//		e.printStackTrace();
+//		return null;
+//	}
+//	
+
+	
+public Set<String> obtenerActividades() {
+	EntityManager em = emFabrica.createEntityManager();
+	Set<String> nombreActividades = new HashSet<>();
+	try {
+		em.getTransaction().begin();
+		TypedQuery<ActividadesDeportivas> select = (TypedQuery<ActividadesDeportivas>) em.createNativeQuery("SELECT NOMBRE_ACTIVIDAD FROM ACTIVIDADES_DEPORTIVAS",ActividadesDeportivas.class);
+		for (ActividadesDeportivas actDep : select.getResultList()) {
+			nombreActividades.add(actDep.getNombre());
+		}
+	} catch (Exception e) {
+		e.printStackTrace();
+		em.getTransaction().rollback();
+	} finally {
+		em.close();
+	}
+	return nombreActividades;
+}
+
 	public Set<String> obtenerClases() {
 		EntityManager em = emFabrica.createEntityManager();
 		Set<String> nombreClases = new HashSet<>();

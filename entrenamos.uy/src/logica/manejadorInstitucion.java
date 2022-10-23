@@ -41,11 +41,10 @@ public class manejadorInstitucion {
 			throw new InstitucionException("La institucion no existe en el Sistema.");
 	}
 
+
+	
 	public Set<String> obtenerInstituciones() {
-		Set<String> nombreInstituciones = new HashSet<>();
-		for(Map.Entry<String, Institucion> x: instituciones.entrySet())
-			nombreInstituciones.add(x.getKey());
-		return nombreInstituciones; 
+		return new HashSet<>(DataPersistencia.getInstance().consultarInstituciones());
 	}
 
 	public int addInstitucion(Institucion ins) {

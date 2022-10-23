@@ -34,7 +34,7 @@ public class ActividadesDeportivas implements Serializable {
     @Column(name = "NOMBRE_ACTIVIDAD",
     		nullable = false,
     		unique = true)
-    private String nombre;
+    private String nombreAct;
     
     @Column(name = "DESCRIPCION")
     private String descripcion;
@@ -60,11 +60,11 @@ public class ActividadesDeportivas implements Serializable {
     
     
     public String getNombre() {
-        return nombre;
+        return nombreAct;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setNombre(String nombreAct) {
+        this.nombreAct = nombreAct;
     }
     
     public String getEstado() {
@@ -130,7 +130,7 @@ public class ActividadesDeportivas implements Serializable {
     public String toString() {
     	String fechaAlt = fechaAlta.get(Calendar.DAY_OF_MONTH) + "/" + fechaAlta.get(Calendar.MONTH) + 
     			"/" + fechaAlta.get(Calendar.YEAR);
-        return "ActividadesDeportivas [nombre = " + nombre +
+        return "ActividadesDeportivas [nombre = " + nombreAct +
         		", desripcion = " + descripcion +
         		", duracion = " + duracion +
         		", costo = " + costo +
@@ -140,7 +140,7 @@ public class ActividadesDeportivas implements Serializable {
     
     public DtActividadDeportivaExtra toDtActividadDeportivaExt() {
     	Set<String> nombreClases = new HashSet<>();
-    	DtActividadDeportivaExtra res = new DtActividadDeportivaExtra(nombre, descripcion, duracion, costo,
+    	DtActividadDeportivaExtra res = new DtActividadDeportivaExtra(nombreAct, descripcion, duracion, costo,
     			new DtFechaHora(fechaAlta), new HashSet<>(), nombreClases, null, null, null, null);
     	return res;
     }

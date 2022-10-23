@@ -3,6 +3,7 @@ package logica;
 import java.util.Set;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.HashSet;
 
 import excepciones.CategoriaException;
 import logica.persistencia.DataPersistencia;
@@ -44,7 +45,11 @@ public class manejadorCategoria {
 		return categorias.containsKey(catNombre);
 	}
 	
+//	public Set<String> getNombreCategorias() {
+//		return categorias.keySet();
+//	}
+	
 	public Set<String> getNombreCategorias() {
-		return categorias.keySet();
+		return new HashSet<>(DataPersistencia.getInstance().consultarCategorias());
 	}
 }
