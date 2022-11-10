@@ -220,6 +220,7 @@ public class controladorActividadDeportiva  implements IcontroladorActividadDepo
 				;
 			}
 		}
+
 		return DataPersistencia.getInstance().getActividad(nombreActDep);
 	}
 	

@@ -22,29 +22,29 @@
 	    <p class="bienvenida-socio mt-3">Bienvenido <b><%=loggedUser.getNickname()%></b> a la plataforma movil de Entrenamos.uy</p>
 	</div>
 	
-	<div id="section-titular" class="row">
+	<div id="section-titular" class="row" style="background-color: rgba(0, 0, 0, 0.79);" >
 	    <h1>En esta plataforma podras encontrar</h1>
 	</div>
 	
-	<div id="section-actDeps" class="row">
+	<div id="section-actDeps" class="row" style="background-color: rgba(0, 0, 0, 0.79);">
 	    <div class="col-5 ms-1 ps-3">
 	        <img src="<%=request.getContextPath()%>/assets/images/misc/actDepInfo.png" alt="">
 	    </div>
-	    <div id="texto-actDeps" class="col-6">
-	        <p>Información sobre las actividades deportivas</p>
+	    <div id="texto-actDeps" class="col-6" >
+	        <p>Información de las actividades deportivas</p>
 	    </div>
 	</div>
 	
-	  <div id="section-clases" class="row pb-4">
+	  <div id="section-clases" class="row pb-4" style="background-color: rgba(0, 0, 0, 0.79);">
 	      <div id="texto-clases" class="col-6 ms-3 ps-4">
-	          <p>Informacion sobre las clases que brinda la plataforma</p>
+	          <p>Informacion de las clases</p>
 	      </div>
 	      <div class="col-5 ms-3 pe-5">
 	          <img src="<%=request.getContextPath()%>/assets/images/misc/claseInfo.png" alt="">
 	      </div>
 	  </div>
 	
-	  <div id="section-institucion" class="row pb-4">
+	  <div id="section-institucion" class="row pb-4" style="background-color: rgba(0, 0, 0, 0.79);">
 	    <div class="col-5 ms-2 pe-5">
 	        <img src="<%=request.getContextPath()%>/assets/images/misc/institucionInfo.png" alt="">
 	    </div>
@@ -53,56 +53,24 @@
 	  </div>
 	</div>
 	
-	<div id="titular-pdm" class="row pt-4">
-	    <h1><i class="fas fa-award"></i> Profesor del Mes</h1>
-	</div>
-	
-	<div id="img-pdm" class="row pt-3 pb-4">
-	    <div class="row">
-	      <img src="<%=request.getContextPath()%>/assets/images/misc/empleadoMes.png" alt="">
-	    </div>
-	    <div class="row pt-2">
-	      <h1>Viktor (Fuerza Bruta)</h1>
-	    </div>
-	    <div class="row pt-2 px-3">
-	      <p>
-	        El equipo directivo de entrenamos.uy con gran placer felicita a Viktor por su larga trayectoria en el sitio. Proveniente de Moscow, Viktor vino a Uruguay a enseñar como levantar unas buenas pesas. Este no conoce los límites, y esto mismo es lo que tanto motiva a sus estudiantes.
-	      </p>
-	    </div>
-	</div>
-	
-	<div id="section-bs" class="row pt-4 pb-4">
-	    <div class="row">
-	      <h1>A sacudir los huesos!</h1>
-	    </div>
-	    <div class="row pt-4 pb-4">
-	      <img src="<%=request.getContextPath()%>/assets/images/misc/boneSafe1.jpg" alt="">
-	    </div>
-	    <div class="row ps-5 pe-4">
-	      <p>
-	        En entrenamos.uy tomamos todas las precauciones necesarias para que los huesos de nuestros clientes se mantengan sanos e integrales. De ahora en adelante, todas nuestras actividades deportivas son cuidadosamente analizadas y aprobadas como Bone Safe.
-	      </p>
-	    </div>
-	</div>
-	
-	<div id="section-sponsors" class="row pt-5 pb-5">
+	<div id="section-sponsors" class="row pt-5 pb-5" style="background-color: rgba(255, 255, 255, 0.79);">
 	    <div class="row text-center">
 	        <h1>Sponsors</h1>
 	    </div>
 	    <div class="row mt-4">
 	        <div class="col-6 text-center">
-	            <img src="<%=request.getContextPath()%>/assets/images/misc/logoPowerade.jpg" alt="">
+	            <img src="<%=request.getContextPath()%>/assets/images/misc/logoUTEC.jpeg" alt="">
 	        </div>
 	        <div class="col-6 text-center">
-	            <img src="<%=request.getContextPath()%>/assets/images/misc/logoGatorade.jpg" alt="">
+	            <img src="<%=request.getContextPath()%>/assets/images/misc/logoDorado.png" alt="">
 	        </div>
 	    </div>
 	    <div class="row mt-4">
 	        <div class="col-6 text-center">
-	            <img src="<%=request.getContextPath()%>/assets/images/misc/logoUniversal.png" alt="">
+	            <img src="<%=request.getContextPath()%>/assets/images/misc/logoUruguay.png" alt="">
 	        </div>
 	        <div class="col-6 text-center">
-	            <img src="<%=request.getContextPath()%>/assets/images/misc/logoAdidas.jpg" alt="">
+	            <img src="<%=request.getContextPath()%>/assets/images/misc/logoPuma.png" alt="">
 	        </div>
 	    </div>
 	</div>

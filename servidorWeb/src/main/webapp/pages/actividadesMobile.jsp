@@ -30,8 +30,8 @@ if ((loggedUser != null) && (loggedUser instanceof DtSocioExtra)) {%>
 	Set<?> datosClases = (Set<?>) request.getAttribute("datosClases");
 	Set<?> datosCuponeras = (Set<?>) request.getAttribute("datosCuponeras");
 	%>
-   <div id="section-infoActDep" class="row pt-4 pb-4">
-       <div class="row">
+   <div id="section-infoActDep" class="row pt-4 pb-4"  >
+       <div class="row" >
            <h1 id="title"><%=datosActDep.getNombre()%></h1>
        </div>
        <div class="row pt-2">
@@ -116,27 +116,27 @@ if ((loggedUser != null) && (loggedUser instanceof DtSocioExtra)) {%>
      <% } %>
   </div>
 
-  <div id="section-sponsors" class="row pt-5 pb-5">
-    <div class="row text-center">
-        <h1>Sponsors</h1>
-    </div>
-    <div class="row mt-4">
-        <div class="col-6 text-center">
-            <img src="<%=request.getContextPath()%>/assets/images/misc/logoPowerade.jpg" alt="">
-        </div>
-        <div class="col-6 text-center">
-            <img src="<%=request.getContextPath()%>/assets/images/misc/logoGatorade.jpg" alt="">
-        </div>
-    </div>
-    <div class="row mt-4">
-        <div class="col-6 text-center">
-            <img src="<%=request.getContextPath()%>/assets/images/misc/logoUniversal.png" alt="">
-        </div>
-        <div class="col-6 text-center">
-            <img src="<%=request.getContextPath()%>/assets/images/misc/logoAdidas.jpg" alt="">
-        </div>
-    </div>
-</div>
+ <div id="section-sponsors" class="row pt-5 pb-5" style="background-color: rgba(255, 255, 255, 0.79);">
+	    <div class="row text-center">
+	        <h1>Sponsors</h1>
+	    </div>
+	    <div class="row mt-4">
+	        <div class="col-6 text-center">
+	            <img src="<%=request.getContextPath()%>/assets/images/misc/logoUTEC.jpeg" alt="">
+	        </div>
+	        <div class="col-6 text-center">
+	            <img src="<%=request.getContextPath()%>/assets/images/misc/logoDorado.png" alt="">
+	        </div>
+	    </div>
+	    <div class="row mt-4">
+	        <div class="col-6 text-center">
+	            <img src="<%=request.getContextPath()%>/assets/images/misc/logoUruguay.png" alt="">
+	        </div>
+	        <div class="col-6 text-center">
+	            <img src="<%=request.getContextPath()%>/assets/images/misc/logoPuma.png" alt="">
+	        </div>
+	    </div>
+	</div>
 <jsp:include page="/template/footerMobile.jsp"/>
 <% } %>
 </body>

@@ -349,7 +349,7 @@ public class Main {
 		        // Calistenia #C1
 		        IDCC.ingresarDatosClase("Fuerza Bruta",  "Aparatos y pesas",  new DtClase("Calistenia",  "viktor",  "viktor",  
 		        		1,  5,  "https://www.musculos.com/Calistenia",  new DtFechaHora(2021, 4, 15, 15, 30, 0),  new DtFechaHora(2021, 3, 31, 0, 0, 0),  "Calistenia.png",
-		        		"https://www.youtube.com/watch?v=_IMil1LjZ8",new DtPremio("No hay ",0,null, null)));
+		        		"https://www.youtube.com/watch?v=_IMil1LjZ8",new DtPremio("Compu del Taque",2,null, null)));
 		        // Peso libre #C2
 		        IDCC.ingresarDatosClase("Fuerza Bruta",  "Aparatos y pesas",  new DtClase("Peso libre",  "viktor",  "viktor",  
 		        		1,  5,  "https://www.musculos.com/pesolibre",  new DtFechaHora(2021, 5, 1, 17, 0, 0),  new DtFechaHora(2021, 3, 31, 0, 0, 0),null,

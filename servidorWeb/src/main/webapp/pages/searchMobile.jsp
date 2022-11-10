@@ -160,24 +160,24 @@
         </div>
     </div>
 	
-	  <div id="section-sponsors" class="row pt-5 pb-5">
+	 <div id="section-sponsors" class="row pt-5 pb-5" style="background-color: rgba(255, 255, 255, 0.79);">
 	    <div class="row text-center">
 	        <h1>Sponsors</h1>
 	    </div>
 	    <div class="row mt-4">
 	        <div class="col-6 text-center">
-	            <img src="<%=request.getContextPath()%>/assets/images/misc/logoPowerade.jpg" alt="">
+	            <img src="<%=request.getContextPath()%>/assets/images/misc/logoUTEC.jpeg" alt="">
 	        </div>
 	        <div class="col-6 text-center">
-	            <img src="<%=request.getContextPath()%>/assets/images/misc/logoGatorade.jpg" alt="">
+	            <img src="<%=request.getContextPath()%>/assets/images/misc/logoDorado.png" alt="">
 	        </div>
 	    </div>
 	    <div class="row mt-4">
 	        <div class="col-6 text-center">
-	            <img src="<%=request.getContextPath()%>/assets/images/misc/logoUniversal.png" alt="">
+	            <img src="<%=request.getContextPath()%>/assets/images/misc/logoUruguay.png" alt="">
 	        </div>
 	        <div class="col-6 text-center">
-	            <img src="<%=request.getContextPath()%>/assets/images/misc/logoAdidas.jpg" alt="">
+	            <img src="<%=request.getContextPath()%>/assets/images/misc/logoPuma.png" alt="">
 	        </div>
 	    </div>
 	</div>

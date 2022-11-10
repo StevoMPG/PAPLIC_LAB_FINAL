@@ -11,11 +11,11 @@
 	<link rel="stylesheet" href="<%=request.getContextPath()%>/assets/styles/loginMobile.css">
 </head>
 <body>
-<div class="main col-11">
+<div class="main col-11" style="background-color: rgba(0, 0, 0, 0.79);">
     <div class="row">
       <div class="row">
             <img id="iconoEUY" src="<%=request.getContextPath()%>/assets/images/misc/iconoEntrenamos-uy.png" alt="" class="">
-            <h1 id="titulo">Entrenamos.uy</h1>
+            <h1 id="titulo" style="color: white">Entrenamos.uy</h1>
       </div>
       <form id="formulario-sesion" action="<%=request.getContextPath()%>/login" method="POST" data-root="<%=request.getContextPath()%>"> 
         <div class="form-floating mb-3 mt-3 mx-4">
@@ -28,7 +28,7 @@
         </div>
         <div id="btn-recordarme" class="mx-4 mb-2">
           <input class="form-check-input" name="rememberme" type="checkbox" value="true" id="recordarme">
-          <label class="form-check-label" for="recordarme">
+          <label class="form-check-label" for="recordarme" style="color: white">
           Recordarme
           </label>
         </div>

@@ -16,6 +16,8 @@ import javax.swing.ImageIcon;
 
 import logica.Fabrica;
 import logica.IcontroladorUsuario;
+import logica.manejadorLogs;
+import logica.persistencia.LogEntry;
 import main.Main;
 import logica.IcontroladorActividadDeportiva;
 import logica.IcontroladorClase;
@@ -478,6 +480,28 @@ public class Principal {
 					acceptActDep.clear();
 					acceptActDep.setVisible(true);
 				}
+			}
+		});
+		
+		
+		//////////////////////////////////////////////////////////////
+		// Comienza con las opciones avanzadas
+		JMenu menuBaseDeDatos = new JMenu("Avanzado\r\n");
+		menuBar.add(menuBaseDeDatos);
+		
+		JMenuItem itemBaseActividad = new JMenuItem("Abrir logs sitio web");
+		menuBaseDeDatos.add(itemBaseActividad);
+		itemBaseActividad.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				org.hsqldb.util.DatabaseManager.main(new String[] { "--url","jdbc:mysql://localhost:3306/loggerdb", "--user", "tecnologo", "--password", "tecnologo", "--noexit"});
+			}
+		});
+		
+		JMenuItem itemLimpiarBaseActividad = new JMenuItem("Borrar logs persistidos");
+		menuBaseDeDatos.add(itemLimpiarBaseActividad);
+		itemLimpiarBaseActividad.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				manejadorLogs.getInstance().nuketownDetonator();
 			}
 		});
 	}

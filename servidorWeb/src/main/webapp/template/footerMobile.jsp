@@ -1,4 +1,4 @@
-<footer class="footerMobile pb-2">
+<footer class="footerMobile pb-2" style="background-color: rgba(0, 0, 0, 0.79);">
   <div class="footerMobile-row row">
       Grupo 2 - Programación de Aplicaciones. Prof. Juan Taque.
   </div>
@@ -13,10 +13,10 @@
         <p>Nicolas Silva</p>
   </div>
   <div class="row fs-6">
-        <p>German Correa</p>
+        <p>Andres Romano</p>
   </div>
   <div class="row fs-6">
-        <p>Andres Romano</p>
+        <p>German Correa</p>
   </div>
 </footer>
     

@@ -199,7 +199,7 @@
 		            <%if (loggedUser instanceof DtSocioExtra && estaInscripto && datosClase.getFechaClase().esMenor(new DtFechaHora()) && datosClase.getNickAlumnos().contains(loggedUser.getNickname())) {
 		            	String valLink = request.getContextPath()+"/valorar?usu="+loggedUser.getNickname()+"&ins="+nombreInstitucion+"&act="+nombreActividad+"&cla="+datosClase.getNombre();%>
 						<div class="mt-3" data-valoracion="<%=(datosClase.getCalificaciones().containsKey(loggedUser.getNickname())) ? datosClase.getCalificaciones().get(loggedUser.getNickname()): "-1" %>" id="Valoraciones">
-							<h6><strong>Su valoración de <%=datosClase.getNicknameProfesor()%> en esta clase: </strong></h6>
+							<h6 style="color: white"><strong>Su valoración de <%=datosClase.getNicknameProfesor()%> en esta clase: </strong></h6>
 						    <div class="rating-group">
 						        <input disabled checked class="rating__input rating__input--none" name="rating3" id="rating3-none" value="0" type="radio">
 						        

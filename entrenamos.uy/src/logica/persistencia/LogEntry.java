@@ -3,6 +3,7 @@ package logica.persistencia;
 
 import java.util.Calendar;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,11 +16,19 @@ public class LogEntry {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "ID")
 	private String id;
 	
+	@Column(name = "URL")
 	private String url;
+	
+	@Column(name = "IP")
 	private String ip;
+	
+	@Column(name = "BROWSER")
 	private String browser;
+	
+	@Column(name = "OS")
 	private String os;
 	
 	@Temporal(TemporalType.TIMESTAMP)
