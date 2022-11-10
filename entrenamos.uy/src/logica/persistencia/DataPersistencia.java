@@ -335,6 +335,7 @@ public class DataPersistencia {
 					s.setFechaRegistro(cup.getFechaInscripcion().toCalendar());
 					s.setCosto(cup.getCosto());
 					s.setTipoPago(cup.esTipoCuponera());
+					
 
 					em.getTransaction().begin();
 					em.persist(s);
@@ -553,12 +554,145 @@ public Vector<String> consultarInstituciones() {
 //	
 
 	
+//public Set<String> obtenerActividades() {
+//	EntityManager em = emFabrica.createEntityManager();
+//	Set<String> nombreActividades = new HashSet<>();
+//	try {
+//		em.getTransaction().begin();
+//		TypedQuery<ActividadesDeportivas> select = (TypedQuery<ActividadesDeportivas>) em.createNativeQuery("SELECT NOMBRE_ACTIVIDAD FROM ACTIVIDADES_DEPORTIVAS",ActividadesDeportivas.class);
+//		for (ActividaesDeportivas actDep : select.getResultList()) {
+//			nombreActividades.add(actDep.getNombre());
+//		}
+//	} catch (Exception e) {
+//		e.printStackTrace();
+//		em.getTransaction().rollback();
+//	} finally {
+//		em.close();
+//	}
+//	return nombreActividades;
+//}
+//
+//	public Set<String> obtenerClases() {
+//		EntityManager em = emFabrica.createEntityManager();
+//		Set<String> nombreClases = new HashSet<>();
+//		try {
+//			em.getTransaction().begin();
+//			TypedQuery<Clases> select = em.createQuery("SELECT c FROM Clases c ORDER BY c.nombre DESC",	Clases.class);
+//			for (Clases claseDB : select.getResultList()) {
+//				nombreClases.add(claseDB.getNombre());
+//			}
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			em.getTransaction().rollback();
+//		} finally {
+//			em.close();
+//		}
+//		return nombreClases;
+//	}
+//	
+//	public Set<String> obtenerClases(String nombreActividad) {
+//		EntityManager em = emFabrica.createEntityManager();
+//		Set<String> nombreClases = new HashSet<>();
+//		try {
+//			em.getTransaction().begin();
+//			TypedQuery<Clases> select = em.createQuery("SELECT c FROM Clases c INNER JOIN ActividadesDeportivas ad" +
+//					" WHERE (ad.nombre = :nombre) ORDER BY c.nombre DESC",	Clases.class);
+//    	    select.setParameter("nombre", nombreActividad);
+//			for (Clases claseDB : select.getResultList()) {
+//				nombreClases.add(claseDB.getNombre());
+//			}
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			em.getTransaction().rollback();
+//		} finally {
+//			em.close();
+//		}
+//		return nombreClases;
+//	}
+//	
+//	
+//
+//	// PRECONDICION!!! Existe al menos una actividad con 'nombreActDep' en la persistencia.
+//	public DtActividadDeportivaExtra getActividad(String nombreActDep) throws ActividadDeportivaException {
+//		EntityManager em = emFabrica.createEntityManager();
+//		try {
+//			em.getTransaction().begin();
+//			TypedQuery<ActividadesDeportivas> select = em.createQuery("SELECT act FROM ActividadesDeportivas act WHERE act.nombre=:nombre",ActividadesDeportivas.class);
+//			select.setParameter("nombre", nombreActDep);
+//			if (select.getResultList().size() > 0) {
+//				ActividadesDeportivas act = select.getSingleResult();
+//				return act.toDtActividadDeportivaExt();
+//			}
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			em.getTransaction().rollback(); 
+//		} finally {
+//			em.close();
+//		}
+//		throw new ActividadDeportivaException("La actividad deportiva "+nombreActDep+" no se encuentra presente en el sistema.");
+//	}
+//	
+//	// PRECONDICION!!! Existe al menos una clase con 'nombreClase' en la persistencia.
+//	public DtClaseExtra getClase(String nombreClase) throws ClaseException {
+//		EntityManager em = emFabrica.createEntityManager();
+//		try {
+//			em.getTransaction().begin();
+//			TypedQuery<Clases> select = em.createQuery("SELECT cl FROM Clases cl WHERE cl.nombre=:nombre",Clases.class);
+//			select.setParameter("nombre", nombreClase);
+//			if (select.getResultList().size() > 0) {
+//				Clases clase = select.getSingleResult();
+//				return clase.toDtClaseExt();
+//			}
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			em.getTransaction().rollback(); 
+//		} finally {
+//			em.close();
+//		}
+//		throw new ClaseException("La clase "+nombreClase+" no se encuentra presente en el sistema.");
+//	}
+//	
+//	
+//	
+//	
+//	public DtUsuarioExtra getUsuario(String nombreSocio) throws UsuarioNoExisteException {
+//		EntityManager em = emFabrica.createEntityManager();
+//		try {
+//			em.getTransaction().begin();
+//			TypedQuery<Socios> select = em.createQuery("SELECT s FROM Socios s WHERE s.nickname=:nombre",Socios.class);
+//			select.setParameter("nombre", nombreSocio);
+//			if(select.getResultList().size()>0) {
+//				Socios s = select.getSingleResult();
+//				em.getTransaction().commit();
+//				//System.out.println("SOCIO: "+s.toString());
+//				return s.toDtUsuarioExt();
+//			}
+//			else{
+//				TypedQuery<Profesores> select2 = em.createQuery("SELECT s FROM Profesores s WHERE s.nickname=:nombre",Profesores.class);
+//				select2.setParameter("nombre", nombreSocio);
+//				if(select2.getResultList().size()>0) {
+//					Profesores s = select2.getSingleResult();
+//					em.getTransaction().commit();
+//					//System.out.println("PROF: "+s.toString());
+//					return s.toDtUsuarioExt();
+//				}
+//			}
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			em.getTransaction().rollback(); 
+//		} finally {
+//			em.close();
+//		}
+//		throw new UsuarioNoExisteException("El usuario "+nombreSocio+" no se encuentra presente en el sistema.");
+//	}
+
 public Set<String> obtenerActividades() {
 	EntityManager em = emFabrica.createEntityManager();
 	Set<String> nombreActividades = new HashSet<>();
 	try {
 		em.getTransaction().begin();
-		TypedQuery<ActividadesDeportivas> select = (TypedQuery<ActividadesDeportivas>) em.createNativeQuery("SELECT NOMBRE_ACTIVIDAD FROM ACTIVIDADES_DEPORTIVAS",ActividadesDeportivas.class);
+		TypedQuery<ActividadesDeportivas> select = em.createQuery("SELECT a FROM ActividadesDeportivas a ORDER BY a.nombreAct DESC",
+				ActividadesDeportivas.class);
 		for (ActividadesDeportivas actDep : select.getResultList()) {
 			nombreActividades.add(actDep.getNombre());
 		}
@@ -571,119 +705,161 @@ public Set<String> obtenerActividades() {
 	return nombreActividades;
 }
 
-	public Set<String> obtenerClases() {
-		EntityManager em = emFabrica.createEntityManager();
-		Set<String> nombreClases = new HashSet<>();
-		try {
-			em.getTransaction().begin();
-			TypedQuery<Clases> select = em.createQuery("SELECT c FROM Clases c ORDER BY c.nombre DESC",	Clases.class);
-			for (Clases claseDB : select.getResultList()) {
-				nombreClases.add(claseDB.getNombre());
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			em.getTransaction().rollback();
-		} finally {
-			em.close();
+public Set<String> obtenerClases() {
+	EntityManager em = emFabrica.createEntityManager();
+	Set<String> nombreClases = new HashSet<>();
+	try {
+		em.getTransaction().begin();
+		TypedQuery<Clases> select = em.createQuery("SELECT c FROM Clases c ORDER BY c.nombre DESC",	Clases.class);
+		for (Clases claseDB : select.getResultList()) {
+			nombreClases.add(claseDB.getNombre());
 		}
-		return nombreClases;
+	} catch (Exception e) {
+		e.printStackTrace();
+		em.getTransaction().rollback();
+	} finally {
+		em.close();
 	}
-	
-	public Set<String> obtenerClases(String nombreActividad) {
-		EntityManager em = emFabrica.createEntityManager();
-		Set<String> nombreClases = new HashSet<>();
-		try {
-			em.getTransaction().begin();
-			TypedQuery<Clases> select = em.createQuery("SELECT c FROM Clases c INNER JOIN ActividadesDeportivas ad" +
-					" WHERE (ad.nombre = :nombre) ORDER BY c.nombre DESC",	Clases.class);
-    	    select.setParameter("nombre", nombreActividad);
-			for (Clases claseDB : select.getResultList()) {
-				nombreClases.add(claseDB.getNombre());
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			em.getTransaction().rollback();
-		} finally {
-			em.close();
-		}
-		return nombreClases;
-	}
-	
-	
+	return nombreClases;
+}
 
-	// PRECONDICION!!! Existe al menos una actividad con 'nombreActDep' en la persistencia.
-	public DtActividadDeportivaExtra getActividad(String nombreActDep) throws ActividadDeportivaException {
-		EntityManager em = emFabrica.createEntityManager();
-		try {
-			em.getTransaction().begin();
-			TypedQuery<ActividadesDeportivas> select = em.createQuery("SELECT act FROM ActividadesDeportivas act WHERE act.nombre=:nombre",ActividadesDeportivas.class);
-			select.setParameter("nombre", nombreActDep);
-			if (select.getResultList().size() > 0) {
-				ActividadesDeportivas act = select.getSingleResult();
-				return act.toDtActividadDeportivaExt();
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			em.getTransaction().rollback(); 
-		} finally {
-			em.close();
+public Set<String> obtenerClases(String nombreActividad) {
+	EntityManager em = emFabrica.createEntityManager();
+	Set<String> nombreClases = new HashSet<>();
+	try {
+		em.getTransaction().begin();
+		TypedQuery<Clases> select = em.createQuery("SELECT c FROM Clases c INNER JOIN ActividadesDeportivas ad" +
+				" WHERE (ad.nombreAct = :nombreAct) ORDER BY c.nombre DESC",	Clases.class);
+	    select.setParameter("nombre", nombreActividad);
+		for (Clases claseDB : select.getResultList()) {
+			nombreClases.add(claseDB.getNombre());
 		}
-		throw new ActividadDeportivaException("La actividad deportiva "+nombreActDep+" no se encuentra presente en el sistema.");
+	} catch (Exception e) {
+		e.printStackTrace();
+		em.getTransaction().rollback();
+	} finally {
+		em.close();
 	}
-	
-	// PRECONDICION!!! Existe al menos una clase con 'nombreClase' en la persistencia.
-	public DtClaseExtra getClase(String nombreClase) throws ClaseException {
-		EntityManager em = emFabrica.createEntityManager();
-		try {
-			em.getTransaction().begin();
-			TypedQuery<Clases> select = em.createQuery("SELECT cl FROM Clases cl WHERE cl.nombre=:nombre",Clases.class);
-			select.setParameter("nombre", nombreClase);
-			if (select.getResultList().size() > 0) {
-				Clases clase = select.getSingleResult();
-				return clase.toDtClaseExt();
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			em.getTransaction().rollback(); 
-		} finally {
-			em.close();
+	return nombreClases;
+}
+
+public Set<String> obtenerActividades(String nickProfesor){
+	EntityManager em = emFabrica.createEntityManager();
+	Set<String> nombresAD = new HashSet<>();
+	try {
+		em.getTransaction().begin();
+		TypedQuery<ActividadesDeportivas> select = em.createQuery("SELECT ad FROM ActividadesDeportivas ad INNER JOIN Profesores p "
+				+ "WHERE p.nickname=:nombre",ActividadesDeportivas.class);
+		select.setParameter("nombre", nickProfesor);
+		for (ActividadesDeportivas adDB : select.getResultList()) {
+			if(adDB.getProfesor().equals(nickProfesor))
+				nombresAD.add(adDB.getNombre());
 		}
-		throw new ClaseException("La clase "+nombreClase+" no se encuentra presente en el sistema.");
+	} catch (Exception e) {
+		e.printStackTrace();
+		em.getTransaction().rollback();
+	} finally {
+		em.close();
 	}
-	
-	
-	
-	
-	public DtUsuarioExtra getUsuario(String nombreSocio) throws UsuarioNoExisteException {
-		EntityManager em = emFabrica.createEntityManager();
-		try {
-			em.getTransaction().begin();
-			TypedQuery<Socios> select = em.createQuery("SELECT s FROM Socios s WHERE s.nickname=:nombre",Socios.class);
-			select.setParameter("nombre", nombreSocio);
-			if(select.getResultList().size()>0) {
-				Socios s = select.getSingleResult();
+	return nombresAD;
+}	
+
+public Map<String, Set<String>> obtenerActividadxClasesSocio(String nombreSocio) {
+	EntityManager em = emFabrica.createEntityManager();
+	Map<String, Set<String>> res = new HashMap<>();
+	try {
+		em.getTransaction().begin();
+		TypedQuery<Registros> select = em.createQuery("SELECT reg FROM Registros reg", Registros.class);
+		Map<String,String> clasexact = new HashMap<>();
+		for(Registros x: select.getResultList()) {
+			if (x.getSocio().equals(nombreSocio))
+				clasexact.put(x.getClase(), x.getAct());
+		}
+		for(Entry<String, String> x: clasexact.entrySet()) {
+			if(!res.containsKey(x.getValue()))
+				res.put(x.getValue(), new HashSet<String>());
+			res.get(x.getValue()).add(x.getKey());
+		}
+	} catch (Exception e) {
+		e.printStackTrace();
+		em.getTransaction().rollback();
+	} finally {
+		em.close();
+	}
+	return res;
+}
+
+// PRECONDICION!!! Existe al menos una actividad con 'nombreActDep' en la persistencia.
+public DtActividadDeportivaExtra getActividad(String nombreActDep) throws ActividadDeportivaException {
+	EntityManager em = emFabrica.createEntityManager();
+	try {
+		em.getTransaction().begin();
+		TypedQuery<ActividadesDeportivas> select = em.createQuery("SELECT act FROM ActividadesDeportivas act WHERE act.nombreAct=:nombreAct",ActividadesDeportivas.class);
+		select.setParameter("nombreAct", nombreActDep);
+		if (select.getResultList().size() > 0) {
+			ActividadesDeportivas act = select.getSingleResult();
+			return act.toDtActividadDeportivaExt();
+		}
+	} catch (Exception e) {
+		e.printStackTrace();
+		em.getTransaction().rollback(); 
+	} finally {
+		em.close();
+	}
+	throw new ActividadDeportivaException("La actividad deportiva "+nombreActDep+" no se encuentra presente en el sistema.");
+}
+
+// PRECONDICION!!! Existe al menos una clase con 'nombreClase' en la persistencia.
+public DtClaseExtra getClase(String nombreClase) throws ClaseException {
+	EntityManager em = emFabrica.createEntityManager();
+	try {
+		em.getTransaction().begin();
+		TypedQuery<Clases> select = em.createQuery("SELECT cl FROM Clases cl WHERE cl.nombre=:nombre",Clases.class);
+		select.setParameter("nombre", nombreClase);
+		if (select.getResultList().size() > 0) {
+			Clases clase = select.getSingleResult();
+			return clase.toDtClaseExt();
+		}
+	} catch (Exception e) {
+		e.printStackTrace();
+		em.getTransaction().rollback(); 
+	} finally {
+		em.close();
+	}
+	throw new ClaseException("La clase "+nombreClase+" no se encuentra presente en el sistema.");
+}
+
+public DtUsuarioExtra getUsuario(String nombreSocio) throws UsuarioNoExisteException {
+	EntityManager em = emFabrica.createEntityManager();
+	try {
+		em.getTransaction().begin();
+		TypedQuery<Socios> select = em.createQuery("SELECT s FROM Socios s WHERE s.nickname=:nombre",Socios.class);
+		select.setParameter("nombre", nombreSocio);
+		if(select.getResultList().size()>0) {
+			Socios s = select.getSingleResult();
+			em.getTransaction().commit();
+			//System.out.println("SOCIO: "+s.toString());
+			return s.toDtUsuarioExt();
+		}
+		else{
+			TypedQuery<Profesores> select2 = em.createQuery("SELECT s FROM Profesores s WHERE s.nickname=:nombre",Profesores.class);
+			select2.setParameter("nombre", nombreSocio);
+			if(select2.getResultList().size()>0) {
+				Profesores s = select2.getSingleResult();
 				em.getTransaction().commit();
-				//System.out.println("SOCIO: "+s.toString());
+				//System.out.println("PROF: "+s.toString());
 				return s.toDtUsuarioExt();
 			}
-			else{
-				TypedQuery<Profesores> select2 = em.createQuery("SELECT s FROM Profesores s WHERE s.nickname=:nombre",Profesores.class);
-				select2.setParameter("nombre", nombreSocio);
-				if(select2.getResultList().size()>0) {
-					Profesores s = select2.getSingleResult();
-					em.getTransaction().commit();
-					//System.out.println("PROF: "+s.toString());
-					return s.toDtUsuarioExt();
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			em.getTransaction().rollback(); 
-		} finally {
-			em.close();
 		}
-		throw new UsuarioNoExisteException("El usuario "+nombreSocio+" no se encuentra presente en el sistema.");
+	} catch (Exception e) {
+		e.printStackTrace();
+		em.getTransaction().rollback(); 
+	} finally {
+		em.close();
 	}
+	throw new UsuarioNoExisteException("El usuario "+nombreSocio+" no se encuentra presente en el sistema.");
+}
+
 }
 
 

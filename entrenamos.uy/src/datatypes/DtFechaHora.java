@@ -66,6 +66,10 @@ public class DtFechaHora {
 		return this.segundos;
 	}
 	
+	public void setMinutos(int min) {
+		minutos = min;
+	}
+	
 	public String toFechaHora() {
 		String res = new String();
 	    res += dia + "/" + mes + "/" + anio + " - ";

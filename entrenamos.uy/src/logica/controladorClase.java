@@ -1,6 +1,7 @@
 package logica;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import excepciones.ActividadDeportivaException;
@@ -70,7 +71,11 @@ public class controladorClase implements IcontroladorClase {
 				}
 			}
 		}
-	
+		try {
+			if (DataPersistencia.getInstance().obtenerClases().contains(datos.getNombre())) {
+				throw new ClaseException("Ya existe una clase con ese nombre en la base de datos.");	
+			}
+		} catch (ClaseException ignore) { }
 
 		Profesor profe = getHI().findInstitucion(ins).getProfesor(datos.getNicknameProfesor());
 		ActividadDeportiva actDept = getHI().findInstitucion(ins).getActDep(actDep);
@@ -85,7 +90,7 @@ public class controladorClase implements IcontroladorClase {
 	}
 
 	
-	public void inscribirSocio(String ins,  String actDep,  String clase,  String socio,  tipoRegistro tipRegistro,  DtFechaHora fechaReg,  String cuponera) 
+	public void inscribirSocio(String ins,  String actDep,  String clase,  String socio,  tipoRegistro tipoRegistro,  DtFechaHora  fechaReg,  String cuponera) 
 			throws  ClaseException,  FechaInvalidaException,  NoExisteCuponeraException,  InstitucionException,  
 			UsuarioNoExisteException,  ActividadDeportivaException { 
 		ActividadDeportiva activity = getHI().findInstitucion(ins).getActDep(actDep);
@@ -100,13 +105,12 @@ public class controladorClase implements IcontroladorClase {
 		if (!fechaReg.esMenor(claseSelec.getFechaClase())) {
 			throw new FechaInvalidaException("La Fecha de Inscripcion es posterior a la Fecha en la que inicia la Clase seleccionada.");
 		}
-		if (tipRegistro==tipoRegistro.general) {
-			((Socio) getHU().findUsuario(socio)).inscribirSocio(activity,  claseSelec,  tipRegistro,  fechaReg, null);
+		if (tipoRegistro==tipoRegistro.general) {
+			((Socio) getHU().findUsuario(socio)).inscribirSocio(activity,  claseSelec,  tipoRegistro,  fechaReg,  null);
 		}
 		else {
-			((Socio) getHU().findUsuario(socio)).inscribirSocio(activity,  claseSelec,  tipRegistro,  fechaReg,  getHC().getCup(cuponera));
+			((Socio) getHU().findUsuario(socio)).inscribirSocio(activity,  claseSelec,  tipoRegistro,  fechaReg,  getHC().getCup(cuponera));
 		}
-	
 	}
 	
 	
@@ -236,5 +240,48 @@ public class controladorClase implements IcontroladorClase {
 			}
 		}
 		return DataPersistencia.getInstance().getClase(nombreClase);
+	}
+	
+	@Override
+	public Set<String> sortearPremios(String ins, String actDep, String clase)
+			throws InstitucionException, ClaseException, ActividadDeportivaException {
+		Clase leclase = getHI().findInstitucion(ins).getActDep(actDep).findClase(clase);
+		if (leclase != null) {
+			DtFechaHora fechaf = new DtFechaHora();
+			fechaf.setMinutos(fechaf.getMinutos()-leclase.getAD().getDuracionMinutos());
+			if (leclase.getFechaClase().esMenor(fechaf)) {
+				List<compraClase> recibos = leclase.getRecibo();
+				Set<Socio> ssss = new HashSet<>();
+				for (compraClase x: recibos) {
+					ssss.add(x.getSocio());
+				}
+				ssss = leclase.getPrize().realizarSorteo(ssss);
+				Set<String> result = new HashSet<>();
+				for (Socio x: ssss) {
+					result.add(x.getNickname());
+					x.addPremio(leclase.getPrize());
+				}
+				return result;
+			}
+			else
+				throw new ClaseException("No se puede realizar sorteos de clases no finalizadas.");
+		} else {
+			throw new ClaseException("La clase seleccionada no pertenece a esta ActividadDeportiva o Institucion.");
+		}
+	}
+	
+
+	
+	public void sorteoLegal(Set<String> socios, String inst, String act, String clas, String descPremio,int cantPremio, DtFechaHora fec) throws UsuarioNoExisteException, ClaseException, InstitucionException{
+		
+		Clase cla = getHI().findInstitucion(inst).findActividad(act).findClase(clas);
+		Premio prem = new Premio(cla,descPremio, cantPremio, true, fec);
+		cla.setPremio(prem);
+		
+		for (String soc: socios) {
+			Socio sociooo = (Socio) getHU().findUsuario(soc);
+			sociooo.addPremio(prem);
+			prem.addWiner(sociooo);
+		}
 	}
 }

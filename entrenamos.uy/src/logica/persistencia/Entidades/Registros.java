@@ -37,6 +37,9 @@ public class Registros implements Serializable {
     
     @Column(name = "NOMBRE_CLASE")
     private String nclase;
+    
+    @Column(name = "NOMBRE_ACTIVIDAD")
+    private String nact;
 
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -89,6 +92,14 @@ public class Registros implements Serializable {
 
 	public void setClase(String nclase) {
 		this.nclase = nclase;
+	}
+	
+	public String getAct() {
+		return nact;
+	}
+
+	public void setAct(String nact) {
+		this.nact = nact;
 	}
 	
 	

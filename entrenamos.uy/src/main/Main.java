@@ -18,6 +18,7 @@ import datatypes.DtActividadDeportiva;
 import datatypes.DtCategoria;
 import datatypes.DtClase;
 import datatypes.DtFechaHora;
+import datatypes.DtPremio;
 import datatypes.DtProfesor;
 import datatypes.DtSocio;
 import datatypes.tipoEstado;
@@ -28,6 +29,11 @@ import logica.IcontroladorActividadDeportiva;
 import logica.IcontroladorClase;
 import logica.IcontroladorCuponera;
 import logica.persistencia.DataPersistencia;
+import webServices.WSActividadController;
+import webServices.WSClaseController;
+import webServices.WSContentController;
+import webServices.WSCuponeraController;
+import webServices.WSUsuarioController;
 import workstation.Principal;
 
 public class Main {
@@ -39,38 +45,94 @@ public class Main {
     /**
      * @param args the command line arguments
      */
-	 public static void main(String[] args) {
-	    	Set<String> flags = new HashSet<>();
-	    	flags.addAll(Arrays.asList(args));
+    public static void main(String[] args) {
+    	Set<String> flags = new HashSet<>();
+    	flags.addAll(Arrays.asList(args));
+    	cargarConfig();
+    	
+    	if(!flags.contains("--empty")) {
+    		try {
+    			// Nukeamos la persistencia.
+    			DataPersistencia.getInstance().nuketownDetonator();
+    			cargaDeCasos();
+    		} catch(Exception e) {
+    			System.out.println("Oh noes! Ha habido un problema al cargar los casos de prueba. ");
+    			e.printStackTrace();
+    		}
+    	}
+    	
+    	if(!flags.contains("--workstation-only")) {
+	    	System.out.println("DEPLOYING WEB SERVICES...");
+	        WSUsuarioController servicio1 = new WSUsuarioController();
+	        WSActividadController servicio2 = new WSActividadController();
+	        WSCuponeraController servicio3 = new WSCuponeraController();
+	        WSClaseController servicio4 = new WSClaseController();
+	        WSContentController servicio5 = new WSContentController();
+	        servicio1.publicar();
+	        servicio2.publicar();
+	        servicio3.publicar();
+	        servicio4.publicar();
+	        servicio5.publicar();
+	        System.out.println("ALL WEB SERVICES HAVE BEEN DEPLOYED SUCCESSFULLY!");
+    	}
+	
+    	if(!flags.contains("--ws-only")) {
+	        System.out.println("Initializing workstation...");
+			EventQueue.invokeLater(new Runnable() {
+				public void run() {
+					try {
+						Principal window = new Principal();
+						window.getEntrenamosUy().setVisible(true);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			});
+    	}
+    }
 
-	    	if(!flags.contains("--empty")) {
-	    		try {
-	    			// Nukeamos la persistencia.
-	    			DataPersistencia.getInstance().nuketownDetonator();
-	    			cargaDeCasos();
-	    		} catch(Exception e) {
-	    			System.out.println("UPS! Ha habido un problema al cargar los casos de prueba. ");
+    public static void cargarConfig() {
+    	String home = System.getProperty("user.home");
+    	File srvCentralprp = new File(home + "/.entrenamosUy");
+    	if(srvCentralprp.mkdir()) {
+    		System.out.println("Config folder was not found... creating default config folder at "+home);
+        	try(InputStream s = Main.class.getClassLoader().getResourceAsStream("META-INF/entrenamosuy.properties")){
+        		Files.copy(s, (new File(home + "/.entrenamosUy/servidorCentral.properties").toPath()));
+        	} catch (IOException e) {
+    			e.printStackTrace();
+    		}
+    	}
+    	else {
+	    	File prp = new File(home+"/.entrenamosUy/servidorCentral.properties");
+	    	if(!(prp.exists())) {
+	    		System.out.println("Config file was not found... generating default config at "+prp);
+	        	try(InputStream s = Main.class.getClassLoader().getResourceAsStream("META-INF/entrenamosuy.properties")){
+	        		Files.copy(s, prp.toPath());
+	        	} catch (IOException e) {
 	    			e.printStackTrace();
 	    		}
 	    	}
-	    	
-	    	
-	    	
-	    	if(!flags.contains("--workstation-only")) {
-		        System.out.println("Iniciando puesto de trabajo del administrador...");
-				EventQueue.invokeLater(new Runnable() {
-					public void run() {
-						try {
-							Principal window = new Principal();
-							window.getEntrenamosUy().setVisible(true);
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
-					}
-				});
-	    	}
-	    }
-
+    	}
+    	File prp = new File(home+"/.entrenamosUy/servidorCentral.properties");
+    	config = new Properties();
+    	try(InputStream s = Files.newInputStream(prp.toPath())){
+    		config.load(s);
+    	} catch (IOException e) {
+			e.printStackTrace();
+		} 
+    	//Lee propiedades que no estaban en el home.
+    	Properties def = new Properties();
+    	try(InputStream s = Main.class.getClassLoader().getResourceAsStream("META-INF/entrenamosuy.properties")) {
+			def.load(s); 
+			for(Entry<Object, Object> x: def.entrySet()) {
+				if(config.getProperty((String) x.getKey())==null)
+					config.setProperty((String) x.getKey(), def.getProperty((String) x.getKey()));
+			}
+			config.store(new FileOutputStream(home+"/.entrenamosUy/servidorCentral.properties"), "");
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}   
+    }
 
 	    
 	 	public static void cargaDeCasos() throws Exception{
@@ -254,22 +316,22 @@ public class Main {
 				// ALTA ACTIVIDAD DEPORTIVA
 		        // Aparatos y pesas #A1
 				IADC.ingresarDatosActividadDep("Fuerza Bruta",  new DtActividadDeportiva("Aparatos y pesas", 
-						"Clases de aparatos,  pesas y calistenia.",  90,  550,  new DtFechaHora(2021, 3, 31, 0, 0, 0),  A1cat,  tipoEstado.aceptada,  "viktor", "Aparatos y pesas.png".getBytes()));
+						"Clases de aparatos,  pesas y calistenia.",  90,  550,  new DtFechaHora(2021, 3, 31, 0, 0, 0),  A1cat,  tipoEstado.aceptada,  "viktor", "Aparatos y pesas.png"));
 				// Voleibol #A2
 				IADC.ingresarDatosActividadDep("Telón",  new DtActividadDeportiva("Voleibol", 
-						"Voleibol en todas sus formas.",  120,  750,  new DtFechaHora(2021, 4, 20, 0, 0, 0),  A2cat,  tipoEstado.aceptada,  "denis", "Voleibol.png".getBytes()));
+						"Voleibol en todas sus formas.",  120,  750,  new DtFechaHora(2021, 4, 20, 0, 0, 0),  A2cat,  tipoEstado.aceptada,  "denis", "Voleibol.png"));
 				// Aeróbica #A3
 				IADC.ingresarDatosActividadDep("Instituto Natural",  new DtActividadDeportiva("Aeróbica", 
-						"Para cuidar el aparato cardiovascular.",  110,  800,  new DtFechaHora(2021, 5, 30, 0, 0, 0),  A3cat,  tipoEstado.aceptada,  "Administrador", "Aeróbica.png".getBytes()));
+						"Para cuidar el aparato cardiovascular.",  110,  800,  new DtFechaHora(2021, 5, 30, 0, 0, 0),  A3cat,  tipoEstado.aceptada,  "Administrador", "Aeróbica.png"));
 				// Kickboxing #A4
 				IADC.ingresarDatosActividadDep("Fuerza Bruta",  new DtActividadDeportiva("Kickboxing", 
-						"En busca del nuevo campeón de boxeo.",  100,  980,  new DtFechaHora(2021, 6, 7, 0, 0, 0),  A4cat,  tipoEstado.aceptada,  "TheBoss", "Kickboxing.png".getBytes()));
+						"En busca del nuevo campeón de boxeo.",  100,  980,  new DtFechaHora(2021, 6, 7, 0, 0, 0),  A4cat,  tipoEstado.aceptada,  "TheBoss", "Kickboxing.png"));
 				// Atletismo #A5
 				IADC.ingresarDatosActividadDep("Telón",  new DtActividadDeportiva("Atletismo", 
-						"100m ,  200m,  postas y carreras con obstaculos.",  150,  500,  new DtFechaHora(2021, 7, 8, 0, 0, 0),  A5cat,  tipoEstado.aceptada,  "denis", "Atletismo.png".getBytes()));
+						"100m ,  200m,  postas y carreras con obstaculos.",  150,  500,  new DtFechaHora(2021, 7, 8, 0, 0, 0),  A5cat,  tipoEstado.aceptada,  "denis", "Atletismo.png"));
 				// Basquetbol #A6
 				IADC.ingresarDatosActividadDep("Telón",  new DtActividadDeportiva("Basquetbol", 
-						"Baquetbol para todos.",  80,  450,  new DtFechaHora(2021, 7, 31, 0, 0, 0),  A6cat,  tipoEstado.aceptada,  "Nelson", "Basquetbol.png".getBytes()));
+						"Baquetbol para todos.",  80,  450,  new DtFechaHora(2021, 7, 31, 0, 0, 0),  A6cat,  tipoEstado.aceptada,  "Nelson"));
 		        // AparatosII #A7
 				IADC.ingresarDatosActividadDep("Fuerza Bruta",  new DtActividadDeportiva("Aparatos II", 
 						"Clases de aparatos avanzadas.",  60,  1500,  new DtFechaHora(2021, 8, 15, 0, 0, 0),  A7cat,  tipoEstado.rechazada,  "Administrador"));
@@ -278,63 +340,88 @@ public class Main {
 						"El Método Pilates combina diferentes capacidades físicas.",  45,  600,  new DtFechaHora(2021, 8, 30, 0, 0, 0),  A8cat,  tipoEstado.ingresada,  "clazar"));
 				// VoleibolII #A9
 				IADC.ingresarDatosActividadDep("Telón",  new DtActividadDeportiva("Voleibol II", 
-						"Voleibol avanzado.",  120,  1000,  new DtFechaHora(2021, 9, 1, 0, 0, 0),  A9cat,  tipoEstado.rechazada,  "denis", "Voleibol II".getBytes()));
+						"Voleibol avanzado.",  120,  1000,  new DtFechaHora(2021, 9, 1, 0, 0, 0),  A9cat,  tipoEstado.rechazada,  "denis", "Voleibol II.png"));
 				// BasquetbolII #A10
 				IADC.ingresarDatosActividadDep("Telón",  new DtActividadDeportiva("Basquetbol II", 
 						"Basequetbol avanzado.",  80,  600,  new DtFechaHora(2021, 9, 7, 0, 0, 0),  A10cat,  tipoEstado.ingresada,  "denis"));
 				
-		        // ALTA CLASE
+				 // ALTA CLASE
 		        // Calistenia #C1
 		        IDCC.ingresarDatosClase("Fuerza Bruta",  "Aparatos y pesas",  new DtClase("Calistenia",  "viktor",  "viktor",  
-		        		1,  5,  "https://www.musculos.com/Calistenia",  new DtFechaHora(2021, 4, 15, 15, 30, 0),  new DtFechaHora(2021, 3, 31, 0, 0, 0), "Calistenia.png".getBytes()));
+		        		1,  5,  "https://www.musculos.com/Calistenia",  new DtFechaHora(2021, 4, 15, 15, 30, 0),  new DtFechaHora(2021, 3, 31, 0, 0, 0),  "Calistenia.png",
+		        		"https://www.youtube.com/watch?v=_IMil1LjZ8",new DtPremio("No hay ",0,null, null)));
 		        // Peso libre #C2
 		        IDCC.ingresarDatosClase("Fuerza Bruta",  "Aparatos y pesas",  new DtClase("Peso libre",  "viktor",  "viktor",  
-		        		1,  5,  "https://www.musculos.com/pesolibre",  new DtFechaHora(2021, 5, 1, 17, 0, 0),  new DtFechaHora(2021, 3, 31, 0, 0, 0)));
+		        		1,  5,  "https://www.musculos.com/pesolibre",  new DtFechaHora(2021, 5, 1, 17, 0, 0),  new DtFechaHora(2021, 3, 31, 0, 0, 0),null,
+		        		"https://www.youtube.com/watch?v=KHFHi6ci9Fg",new DtPremio("No hay ",0,null, null)));
 		        // Aparatos #C3
 		        IDCC.ingresarDatosClase("Fuerza Bruta",  "Aparatos y pesas",  new DtClase("Aparatos",  "viktor",  "viktor",  
-		        		1,  7,  "https://www.musculos.com/aparatos",  new DtFechaHora(2021, 6, 1, 18, 0, 0),  new DtFechaHora(2021, 3, 31, 0, 0, 0)));
+		        		1,  7,  "https://www.musculos.com/aparatos",  new DtFechaHora(2021, 6, 1, 18, 0, 0),  new DtFechaHora(2021, 3, 31, 0, 0, 0),"Aparatos.png",
+		        		"https://www.youtube.com/watch?v=6YTVPjjm3e8"));
 		        // Voleibol #C4
 		        IDCC.ingresarDatosClase("Telón",  "Voleibol",  new DtClase("Voleibol",  "denis",  "denis", 
-		        		10,  21,  "https://telon.com.uy/voley",  new DtFechaHora(2021, 6, 10, 19, 0, 0),  new DtFechaHora(2021, 4, 20, 0, 0, 0), "Voleibol.png".getBytes()));
+		        		10,  21,  "https://telon.com.uy/voley",  new DtFechaHora(2021, 6, 10, 19, 0, 0),  new DtFechaHora(2021, 4, 20, 0, 0, 0), "Voleibol.png",
+		        		"https://www.youtube.com/watch?v=PwBsJxHFz98",new DtPremio("No hay ",0,null, null)));
 		        // Braza #C5
 		        IDCC.ingresarDatosClase("Telón",  "Voleibol",  new DtClase("Braza",  "Nelson",  "Nelson", 
-		        		2,  6,  "https://telon.com.uy/natacionB",  new DtFechaHora(2021, 7, 10, 20, 0, 0),  new DtFechaHora(2021, 4, 20, 0, 0, 0), "Braza.png".getBytes()));
+		        		2,  6,  "https://telon.com.uy/natacionB",  new DtFechaHora(2021, 7, 10, 20, 0, 0),  new DtFechaHora(2021, 4, 20, 0, 0, 0),  "Braza.png", 
+		        		null, new DtPremio("No hay ",0,null, null)));
 		        // Mariposa #C6
 		        IDCC.ingresarDatosClase("Telón",  "Voleibol",  new DtClase("Mariposa",  "Nelson",  "Nelson", 
-		        		2,  6,  "https://telon.com.uy/natacionM",  new DtFechaHora(2021, 8, 10, 17, 45, 0),  new DtFechaHora(2021, 4, 20, 0, 0, 0), "Mariposa.png".getBytes()));
+		        		2,  6,  "https://telon.com.uy/natacionM",  new DtFechaHora(2021, 8, 10, 17, 45, 0),  new DtFechaHora(2021, 4, 20, 0, 0, 0),  "Mariposa.png", 
+		        		null));
 		        // Aeróbica niños #C7
 		        IDCC.ingresarDatosClase("Instituto Natural",  "Aeróbica",  new DtClase("Aeróbica niños",  "clazar",  "clazar", 
-		        		5,  10,  "https://www.inatural.com/aeroni",  new DtFechaHora(2021, 8, 15, 16, 30, 0),  new DtFechaHora(2021, 5, 30, 0, 0, 0)));
+		        		5,  10,  "https://www.inatural.com/aeroni",  new DtFechaHora(2021, 8, 15, 16, 30, 0),  new DtFechaHora(2021, 5, 30, 0, 0, 0), null, 
+		        		null));
 		        // Aeróbico adulto mayor #C8
 		        IDCC.ingresarDatosClase("Instituto Natural",  "Aeróbica",  new DtClase("Aeróbico adulto mayor",  "clazar",  "clazar", 
-		        		5,  12,  "https://www.inatural.com/aeroam",  new DtFechaHora(2021, 8, 31, 19, 30, 0),  new DtFechaHora(2021, 5, 30, 0, 0, 0)));
+		        		5,  12,  "https://www.inatural.com/aeroam",  new DtFechaHora(2021, 8, 31, 19, 30, 0),  new DtFechaHora(2021, 5, 30, 0, 0, 0), null, 
+		        		null, new DtPremio("No hay", 0, null, null)));
 		        // Aeróbico #C9
 		        IDCC.ingresarDatosClase("Instituto Natural",  "Aeróbica",  new DtClase("Aeróbica",  "clazar",  "clazar", 
-		        		5,  20,  "https://www.inatural.com/aerogral",  new DtFechaHora(2021, 9, 30, 20, 0, 0),  new DtFechaHora(2021, 5, 30, 0, 0, 0)));
+		        		5,  20,  "https://www.inatural.com/aerogral",  new DtFechaHora(2021, 9, 30, 20, 0, 0),  new DtFechaHora(2021, 5, 30, 0, 0, 0), null, 
+		        		null));
 		        // Boxeo I #C10
 		        IDCC.ingresarDatosClase("Fuerza Bruta",  "Kickboxing",  new DtClase("Boxeo I",  "TheBoss",  "TheBoss", 
-		        		1,  4,  "https://www.musculos.com/boxeo1",  new DtFechaHora(2021, 9, 1, 19, 30, 0),  new DtFechaHora(2021, 6, 7, 0, 0, 0), "Boxeo I.png".getBytes()));
+		        		1,  4,  "https://www.musculos.com/boxeo1",  new DtFechaHora(2021, 9, 1, 19, 30, 0),  new DtFechaHora(2021, 6, 7, 0, 0, 0),  "Boxeo I.png",
+		        		"https://www.youtube.com/watch?v=-gGx_WqKAh8", new DtPremio("No hay ",0,null, null)));
 		        // Boxeo II #C11
 		        IDCC.ingresarDatosClase("Fuerza Bruta",  "Kickboxing",  new DtClase("Boxeo II",  "TheBoss",  "TheBoss", 
-		        		2,  2,  "https://www.musculos.com/boxeo2",  new DtFechaHora(2021, 9, 30, 17, 0, 0),  new DtFechaHora(2021, 6, 7, 0, 0, 0), "Boxeo II.png".getBytes()));
+		        		2,  2,  "https://www.musculos.com/boxeo2",  new DtFechaHora(2021, 9, 30, 17, 0, 0),  new DtFechaHora(2021, 6, 7, 0, 0, 0),  "Boxeo II.png", 
+		        		"https://www.youtube.com/watch?v=-gGx_WqKAh8"));
 		        // Músculos para boxeo #C12
 		        IDCC.ingresarDatosClase("Fuerza Bruta",  "Kickboxing",  new DtClase("Músculos para boxeo",  "viktor",  "viktor", 
-		        		1,  5,  "https://www.musculos.com/muscbox",  new DtFechaHora(2021, 10, 15, 20, 0, 0),  new DtFechaHora(2021, 6, 7, 0, 0, 0), "Músculos para boxeo.png".getBytes()));
+		        		1,  5,  "https://www.musculos.com/muscbox",  new DtFechaHora(2021, 10, 15, 20, 0, 0),  new DtFechaHora(2021, 6, 7, 0, 0, 0),  "Músculos para boxeo.png", 
+		        		null,new DtPremio("No hay ",0,null, null)));
 		        // 100 M #C13
 		        IDCC.ingresarDatosClase("Telón",  "Atletismo",  new DtClase("100 M",  "lale",  "lale", 
-		        		3,  10,  "https://telon.com.uy/100m",  new DtFechaHora(2021, 9, 25, 19, 0, 0),  new DtFechaHora(2021, 7, 8, 0, 0, 0), "100 M.png".getBytes()));
+		        		3,  10,  "https://telon.com.uy/100m",  new DtFechaHora(2021, 9, 25, 19, 0, 0),  new DtFechaHora(2021, 7, 8, 0, 0, 0), "100 M.png",
+		        		null, new DtPremio("No hay ",0,null, null)));
 		        // 200 M #C14
 		        IDCC.ingresarDatosClase("Telón",  "Atletismo",  new DtClase("200 M",  "lale",  "lale", 
-		        		3,  10,  "https://telon.com.uy/200m",  new DtFechaHora(2021, 11, 5, 18, 30, 0),  new DtFechaHora(2021, 7, 8, 0, 0, 0), "200 M.png".getBytes()));
+		        		3,  10,  "https://telon.com.uy/200m",  new DtFechaHora(2021, 11, 5, 18, 30, 0),  new DtFechaHora(2021, 7, 8, 0, 0, 0), "200 M.png",
+		        		null, new DtPremio("No hay ",0,null, null)));
 		        // Posta #C15
 		        IDCC.ingresarDatosClase("Telón",  "Atletismo",  new DtClase("Posta",  "lale",  "lale", 
-		        		8,  16,  "https://telon.com.uy/posta",  new DtFechaHora(2021, 11, 25, 17, 45, 0),  new DtFechaHora(2021, 7, 8, 0, 0, 0), "Posta.png".getBytes()));
+		        		8,  16,  "https://telon.com.uy/posta",  new DtFechaHora(2021, 11, 29, 17, 45, 0),  new DtFechaHora(2021, 7, 8, 0, 0, 0),  "Posta.png",
+		        		"https://www.youtube.com/watch?v=OGs4c0C8jx8",new DtPremio("No hay ",0,null, null)));
 		        // Basquet I #C16
 		        IDCC.ingresarDatosClase("Telón",  "Basquetbol",  new DtClase("Basquet I",  "aldo",  "aldo", 
-		        		10,  15,  "https://telon.com.uy/bball1",  new DtFechaHora(2021, 11, 3, 21, 0, 0),  new DtFechaHora(2021, 7, 31, 0, 0, 0), "Basquet I.png".getBytes()));
+		        		10,  15,  "https://telon.com.uy/bball1",  new DtFechaHora(2021, 11, 3, 21, 0, 0),  new DtFechaHora(2021, 7, 31, 0, 0, 0),null,
+		        		"https://www.youtube.com/watch?v=VMeQ4yRvGrc",new DtPremio("No hay ",0,null, null)));
 		        // Basquet II #C17
 		        IDCC.ingresarDatosClase("Telón",  "Basquetbol",  new DtClase("Basquet II",  "aldo",  "aldo", 
-		        		10,  10,  "https://telon.com.uy/bball2",  new DtFechaHora(2021, 11, 21, 21, 0, 0),  new DtFechaHora(2021, 7, 31, 0, 0, 0), "Basquet I.png".getBytes()));
+		        		10,  10,  "https://telon.com.uy/bball2",  new DtFechaHora(2021, 11, 20, 21, 0, 0),  new DtFechaHora(2021, 7, 31, 0, 0, 0),null, 
+		        		"https://www.youtube.com/watch?v=VMeQ4yRvGrc",new DtPremio("Juego de muñequitas",5,null, null)));
+		        // Aparatos #C18
+		        IDCC.ingresarDatosClase("Fuerza Bruta",   "Aparatos y pesas",   new DtClase("Aparatos II",   "viktor",   "viktor",   
+		        		1,   5,   "https://www.musculos.com/aparatos",   new DtFechaHora(2021,   11,   30,   20,   0,   0),   new DtFechaHora(2021,   11,   15,   0,   0,   0),null,
+		        		"https://www.youtube.com/watch?v=6YTVPjjm3e8", new DtPremio("Pesa Rusa 5k",2,null, null)));
+		        // Boxeo II #C19
+		        IDCC.ingresarDatosClase("Fuerza Bruta",   "Kickboxing",   new DtClase("Boxeo III",   "TheBoss",   "TheBoss",   
+		        		2,   6,   "https://www.musculos.com/boxeo2",   new DtFechaHora(2021,   12,   1,   19,   0,   0),   new DtFechaHora(2021,   11,   10,   0,   0,   0), "BoxeoIII.png", 
+		        		null, new DtPremio("Guantillas",2,null, null)));
 		        
 		        // CUPONERAS
 		        // Pelota #P1
@@ -353,6 +440,11 @@ public class Main {
 		        ICC.agregarActividadCuponera("Músculos",  "Fuerza Bruta",  "Kickboxing",  11);
 		        ICC.agregarActividadCuponera("Músculos",  "Fuerza Bruta",  "Aparatos y pesas",  12);
 		        
+		        // Pista #P4
+		        ICC.ingresarCuponera("Pista",  "Entrenamiento de atletismo",  new DtFechaHora(2021, 10, 1, 0, 0, 0),  new DtFechaHora(2021, 12, 31, 23, 59, 59),  
+		        		15,  new DtFechaHora(2021, 9, 1, 0, 0, 0), "Pista.jpg");
+		        ICC.agregarActividadCuponera("Pista",  "Telón",  "Atletismo",  20);
+		        
 		        // COMPRA CUPONERAS
 		        IUC.comprarCuponera("Pelota", "guille", new DtFechaHora());
 		        IUC.comprarCuponera("Gimnasia", "m1k4", new DtFechaHora());
@@ -360,6 +452,7 @@ public class Main {
 		        IUC.comprarCuponera("Músculos", "sergiop", new DtFechaHora());
 		        IUC.comprarCuponera("Músculos", "andy", new DtFechaHora());
 		        IUC.comprarCuponera("Pelota", "Emi71", new DtFechaHora());
+		        IUC.comprarCuponera("Pista", "caro", new DtFechaHora());
 		        
 		        
 		        // REGISTRO A CLASE
@@ -502,6 +595,87 @@ public class Main {
 				IDCC.inscribirSocio("Telón",  "Basquetbol",  "Basquet II",  "caro",  tipoRegistro.general,  
 						new DtFechaHora(2021, 9, 2, 0, 0, 0),  null);
 
+				
+				//Valoracionando a Profesores
+				// #1
+				IUC.valorarProfesor("Emi71", "Telón",  "Voleibol", "Voleibol", 4);
+				// #2
+				IUC.valorarProfesor("Emi71", "Instituto Natural",  "Aeróbica", "Aeróbico adulto mayor", 5);
+				// #3
+				IUC.valorarProfesor("caro", "Fuerza Bruta",  "Aparatos y pesas", "Calistenia", 4);
+				// #4
+				IUC.valorarProfesor("caro", "Fuerza Bruta",  "Aparatos y pesas", "Peso libre", 5);
+				// #5
+				IUC.valorarProfesor("caro", "Fuerza Bruta",  "Aparatos y pesas",  "Aparatos", 4);
+				// #6
+				IUC.valorarProfesor("guille", "Telón",  "Voleibol", "Braza", 5);
+				// #7
+				IUC.valorarProfesor("guille", "Instituto Natural",  "Aeróbica",  "Aeróbico adulto mayor", 3);
+				// #8
+				IUC.valorarProfesor("sergiop", "Telón",  "Voleibol", "Mariposa", 4);
+				// #9
+				IUC.valorarProfesor("andy", "Telón",  "Voleibol", "Mariposa", 2);
+				// #10
+				IUC.valorarProfesor("andy", "Fuerza Bruta",  "Kickboxing", "Boxeo I", 4);
+				// #11
+				IUC.valorarProfesor("m1k4", "Instituto Natural",  "Aeróbica", "Aeróbica niños", 5);
+				// #12
+				IUC.valorarProfesor("m1k4", "Fuerza Bruta",  "Kickboxing", "Boxeo I", 5);
+				
+				//Favoriteasiones de actividades
+				//#1
+				IUC.favoritearActividad("Emi71", "Telón", "Voleibol");
+				//#2
+				IUC.favoritearActividad("caro", "Telón", "Atletismo");
+				//#3
+				IUC.favoritearActividad("caro", "Fuerza Bruta", "Aparatos y pesas");
+				//#4
+				IUC.favoritearActividad("guille", "Fuerza Bruta", "Kickboxing");
+				//#5
+				IUC.favoritearActividad("sergiop", "Fuerza Bruta", "Aparatos y pesas");
+				//#6
+				IUC.favoritearActividad("andy", "Telón", "Voleibol");
+				//#7
+				IUC.favoritearActividad("andy", "Fuerza Bruta", "Kickboxing");
+				//#8
+				IUC.favoritearActividad("m1k4", "Telón", "Voleibol");
+				//#9
+				IUC.favoritearActividad("m1k4", "Fuerza Bruta", "Kickboxing");
+
+				// Premios 
+				// Premios C3
+				Set<String> winsC3 = new HashSet<>();
+				winsC3.add("charly");
+				winsC3.add("caro");
+		        winsC3.add("m1k4");
+				IDCC.sorteoLegal(winsC3, "Fuerza Bruta",  "Aparatos y pesas", "Aparatos", "Rueda de abdominales ", 3, new DtFechaHora(2021, 6, 2, 0, 0, 0));
+
+				// PremioS C6	       
+		        Set<String> winsC6 = new HashSet<>();
+		    	winsC6.add("charly");
+		    	winsC6.add("sergiop");
+		        IDCC.sorteoLegal(winsC6, "Telón",  "Voleibol", "Mariposa", "Lentes de natación", 2, new DtFechaHora(2021, 8, 11, 0, 0, 0));
+		        
+		        // Premio C7
+		        Set<String> winers7 = new HashSet<>();
+		        winers7.add("m1k4");
+		        IDCC.sorteoLegal(winers7, "Instituto Natural",  "Aeróbica", "Aeróbica niños", "Caramañola infantil", 3, new DtFechaHora(2021, 8, 16, 0, 0, 0));
+		         
+		        // Premios C9	        
+		        Set<String> winsC9 = new HashSet<>();
+		    	winsC9.add("caro");
+		    	winsC9.add("euge");
+		    	IDCC.sorteoLegal(winsC9, "Instituto Natural",  "Aeróbica", "Aeróbica", "Caramañola", 2, new DtFechaHora(2021, 10, 1, 0, 0, 0));
+		    	
+		    	// Premios C11
+		        Set<String> winsC11 = new HashSet<>();
+		    	winsC11.add("guille");
+		    	winsC11.add("sergiop");
+		    	IDCC.sorteoLegal(winsC11, "Fuerza Bruta",  "Kickboxing",  "Boxeo II", "Guantillas",2, new DtFechaHora(2021, 10, 1, 0, 0, 0));
+		  		
+				
+				//Finalizacionando Actividades
+				IADC.finalizarActividad("Voleibol");
 				
 			} catch (Exception e) {
 	        	throw e;

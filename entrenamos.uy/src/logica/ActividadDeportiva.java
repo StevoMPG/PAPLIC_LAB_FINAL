@@ -27,6 +27,7 @@ public class ActividadDeportiva {
 	private Map<String,  Clase> clases;  // Nombre de clase y clase
 	private Map<String,  ClasesCuponera> clCuponera;
 	private Map<String,  Categoria> cats;
+	private Set<Socio> favoritos;
 	private String nombre;
 	private String descripcion;
 	private int duracionMinutos;
@@ -34,8 +35,8 @@ public class ActividadDeportiva {
 	private DtFechaHora fechaRegistro;
 	private Logger log;
 	private tipoEstado estado;
-	private byte[]imgName;
 	private Profesor creador;
+	private String imgName;
 	
 	public ActividadDeportiva(DtActividadDeportiva datosActDep,  Map<String,  Categoria> cat,  Profesor profe) {
 		nombre=datosActDep.getNombre();
@@ -50,9 +51,9 @@ public class ActividadDeportiva {
 		crearHandler();
 	}
 	private void crearHandler() {
-		
 		clases = new HashMap<>();
 		clCuponera= new HashMap<>();
+		favoritos = new HashSet<>();
 		log = Logger.getLogger(manejadorInstitucion.class.getName());
 		log.setLevel(Level.INFO);
 		Handler handler = new ConsoleHandler();
@@ -62,7 +63,6 @@ public class ActividadDeportiva {
 	public String getNombre() {
 		return nombre;
 	}
-	
 	public int addClasesCup(ClasesCuponera claseCup) {
 		if (clCuponera.containsKey(claseCup.getNombreCuponera()))
 			return 1;
@@ -70,7 +70,6 @@ public class ActividadDeportiva {
 		log.info("ActDep "+nombre+" event: "+" new cup added "+claseCup.getNombreCuponera());
 		return 0;
 	}
-	
 	
 	public int addClase(DtClase clase,  Profesor profe, String nombreInsti) throws InstitucionException {
 		Institucion inst = getHI().findInstitucion(nombreInsti);
@@ -88,33 +87,12 @@ public class ActividadDeportiva {
 		return  manejadorInstitucion.getInstance();
 	}
 
-/*	NO SE USA MAS DE MOMENTO!
- * 
- * public DtActividadDeportiva getDt(){
-		DtActividadDeportiva x = new DtActividadDeportiva(nombre, descripcion, duracionMinutos, costo, fechaRegistro);
-		return x;
-	}
-	
-	public DtClaseExtra getClaseDatos(String c) {
-		return clases.get(c).getDt();
-	}
-	
-	public Set<DtClase> getDatosClases() {
-		Set<DtClase> resultado = new HashSet<>();
-		for(Map.Entry<String, Clase> x: clases.entrySet())
-			resultado.add(x.getValue().getDt());
-		return resultado;
-	}
-	
-	*/
-	
 	public Set<String> getNombreClases(){
 		return clases.keySet();		
 	}
-	
-
-	
-
+	public Map<String, Clase> getClases(){
+		return clases;
+	}
 	public Clase findClase(String clase) throws ClaseException {
 		Clase res = clases.get(clase);
 		if (res == null) {
@@ -122,7 +100,7 @@ public class ActividadDeportiva {
 		}
 		return res;
 	}
-	
+
 	public String getDescripcion() {
 		return descripcion;
 	}
@@ -142,26 +120,13 @@ public class ActividadDeportiva {
 				return true;
         return false;
 	}
-	
 	public DtActividadDeportivaExtra getDtExt() {
 		Set<String> nombresClases = new HashSet<>(clases.keySet());
 		Set<String> nombresClasesCuponeras = new HashSet<>(clCuponera.keySet());
 		DtActividadDeportivaExtra actDep = new DtActividadDeportivaExtra(getNombre(),  getDescripcion(),  getDuracionMinutos(),  
-				getCosto(),  getFechaRegistro() ,  cats.keySet(),  nombresClases,  nombresClasesCuponeras,  estado,  creador.getNickname(), imgName);
+				getCosto(),  getFechaRegistro() ,  cats.keySet(),  nombresClases,  nombresClasesCuponeras,  estado,  creador.getNickname(),  imgName,favoritos.size());
 		return actDep;
 	}
-	public Map<String, Clase> getClases(){
-		return clases;
-	}
-	
-	public Map<String,  ClasesCuponera> getClaseCuponeras() {
-		return clCuponera;
-	}
-	
-	/*public Institucion getINS() {
-		return ins;
-	}
-	*/
 	public tipoEstado getEstado() {
 		return estado;
 	}
@@ -184,8 +149,22 @@ public class ActividadDeportiva {
 		res.addAll(cats.values());
 		return res;
 	}
-	
-	/*public void suicidar() {
+	public Map<String,  ClasesCuponera> getClaseCuponeras() {
+		return clCuponera;
+	}
+	public Set<Socio> getFavoritos() {
+		return favoritos;
+	}
+	public void setFavoritos(Set<Socio> favoritos) {
+		this.favoritos = favoritos;
+	}
+	public void changeFavoritos(Socio user) {
+		if (favoritos.contains(user))
+			favoritos.remove(user);
+		else
+			favoritos.add(user);
+	}
+	public void suicidar() {
 		// TODO Auto-generated method stub
 		creador.remActDep(this);
 		for(Entry<String, Clase> x: clases.entrySet())
@@ -193,9 +172,7 @@ public class ActividadDeportiva {
 		for(Entry<String, ClasesCuponera> x : clCuponera.entrySet())
 			x.getValue().estafar();
 	}
-	*/
 	public Profesor getCreador() {
 		return creador;
 	}
-
 }

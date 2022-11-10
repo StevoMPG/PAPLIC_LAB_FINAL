@@ -5,7 +5,7 @@
 <%@ page import="java.util.Set"%>
 <%! @SuppressWarnings("unchecked") %>
 
-<nav id="header" class="col-12 navbar navbar-expand-lg navbar-dark bg">
+<nav id="header" class="col-12 navbar navbar-expand-lg navbar-dark bg" style="border-color: black; color:black; background-color: rgba(0, 0, 0, 0.79);">
     <div class="container-fluid">
         <a class="navbar-brand fs-2 me-5 mb-2 mt-2" style="color: white;" href="<%=request.getContextPath()%>/home">
             <img src="<%=request.getContextPath()%>/assets/images/misc/entrenamos.png" alt="EUimg" width="40" height="30" class="d-inline-block align-text-top img-fluid me-2 ms-2 mb-3">
@@ -67,14 +67,14 @@
     <!--MODAL INICIAR SESION-->
     <div class="modal fade" id="inicioSesionModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
-          <div class="modal-content">
+          <div class="modal-content" style="background-color: rgba(0, 0, 0, 0.79);">
               <div class="modal-header">
                   <img src="<%=request.getContextPath()%>/assets/images/misc/iconoEntrenamos-uy.png" alt="EntrenamosUYLogo" width="40" height="30" class="d-inline-block align-text-top img-fluid me-2 ms-2 mb-3">
                   <h2 class="fw-bold mb-0" style="color: white">Entrenamos.uy</h2>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
-                  <form id="formulario-sesion" action="<%=request.getContextPath()%>/login" method="POST" data-root="<%=request.getContextPath()%>"> 
+                  <form id="formulario-sesion" action="<%=request.getContextPath()%>/login" method="POST" onsubmit="return login()" data-root="<%=request.getContextPath()%>"> 
                       <div class="form-floating mb-3">
                           <input type="text" class="form-control rounded-4" id="user" name="nick-login" placeholder="name@example.com">
                           <label for="user">Correo electrónico / Nickname</label>
@@ -101,7 +101,7 @@
     <!--MODAL REGISTRO-->
     <div class="modal fade" id="registroModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
-        <div class="modal-content">
+        <div class="modal-content" style="background-color: rgba(0, 0, 0, 0.79);">
             <div class="modal-header">
                 <img src="<%=request.getContextPath()%>/assets/images/misc/entrenamos.png" alt="EntrenamosUYLogo" width="40" height="30" class="d-inline-block align-text-top img-fluid me-2 ms-2 mb-3">
                 <h2 class="fw-bold mb-0" style="color: white;">Registrate</h2>
@@ -113,24 +113,24 @@
                     <div class="form-floating mb-3">
                         <h5 style="color: white;">Elige que usuario eres</h5>
                         <div id="socioRadio" class="form-check float-left">
-                            <input class="form-check-input" type="radio" name="tipoU" value="0" name="radioSocio" id="radioSocio" checked>
+                            <input class="form-check-input" type="radio" name="tipoU" value="0" name="radioSocio" id="radioSocio" <%=((request.getSession().getAttribute("ctxtipoU")==null || request.getSession().getAttribute("ctxtipoU").equals("0")) ? "checked" : "")%>>
                             <label class="form-check-label" for="radioSocio" style="color: white;">
                             Socio
                             </label>
                         </div>
                         <div id="profeRadio" class="form-check float-left">
-                            <input class="form-check-input" type="radio" name="tipoU" value="1" name="radioProfe" id="radioProfe">
+                            <input class="form-check-input" type="radio" name="tipoU" value="1" name="radioProfe" id="radioProfe" <%=((request.getSession().getAttribute("ctxtipoU")==null || request.getSession().getAttribute("ctxtipoU").equals("0")) ? "" : "checked")%>>
                             <label class="form-check-label" for="radioProfe" style="color: white;">
                             Profesor
                             </label>
                         </div>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control rounded-4" id="nickk" name="nickk" >
+                        <input type="text" class="form-control rounded-4" id="nickk" name="nickk" value="<%=((request.getSession().getAttribute("ctxnickk")!=null) ? request.getSession().getAttribute("ctxnickk") : "")%>">
                         <label for="nickk">Nickname</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="email" class="form-control rounded-4" id="emaill" name="emaill">
+                        <input type="email" class="form-control rounded-4" id="emaill" name="emaill"  value="<%=((request.getSession().getAttribute("ctxemaill")!=null) ? request.getSession().getAttribute("ctxemaill") : "")%>">
                         <label for="emaill">Correo electrónico</label>                  
                     </div>
                     <div class="form-floating mb-3">
@@ -145,41 +145,42 @@
                     <div id="nombreCompletoDiv" class="row form-floating mb-3">
                         <div id="divNombre" class="col-6 form-check float-left">
                             <div class="form-floating mb-2">
-                                <input type="text" class="form-control rounded-4" id="nomm" name="nomm">
+                                <input type="text" class="form-control rounded-4" id="nomm" name="nomm" value="<%=((request.getSession().getAttribute("ctxnomm")!=null) ? request.getSession().getAttribute("ctxnomm") : "")%>">
                                 <label for="nomm">Nombre</label>           
                             </div>      
                         </div>
                         <div id="divApellido" class="col-6 form-check float-left">
                             <div class="form-floating mb-2">
-                                <input type="text" class="form-control rounded-4" id="ape" name="ape" >
+                                <input type="text" class="form-control rounded-4" id="ape" name="ape"  value="<%=((request.getSession().getAttribute("ctxape")!=null) ? request.getSession().getAttribute("ctxape") : "")%>">
                                 <label for="ape">Apellido</label>           
                             </div>                           
                         </div>             
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="date" class="form-control rounded-4" id="nac" name="nac" >
+                        <input type="date" class="form-control rounded-4" id="nac" name="nac" value="<%=((request.getSession().getAttribute("ctxnac")!=null) ? request.getSession().getAttribute("ctxnac") : "")%>">
                         <label for="nomm">Fecha de nacimiento</label>     
                     </div>
                     <div id="institDiv" class="form-floating mb-3">
                         <select name="instit" id="instit" class="form-select" data-live-search="true">
 							  <%
 							  Set<String> s = (Set<String>)request.getAttribute("stdInstituciones");
-							  for (String t: s){ %>
-                            <option data-tokens="<%=t%>"><%=t%></option>
+							  for (String t: s){ %> 
+							  <option <%=( (request.getSession().getAttribute("ctxinstit")!=null && request.getSession().getAttribute("ctxinstit").equals(t) ) ? "selected" : "")%> data-tokens="<%=t%>"><%=t%></option>
+                            
                         <% } %>
                         </select>
                         <label for="instit">Institución asociada</label>                               
                     </div>
                     <div id="descDiv" class="form-group form-floating mb-3">
-                        <textarea class="form-control" id="desc" rows="15" oninput='this.style.height = "";this.style.height = this.scrollHeight +3+ "px"' name="descRU" ></textarea>
+                        <textarea class="form-control" id="desc" rows="15" oninput='this.style.height = "";this.style.height = this.scrollHeight +3+ "px"' name="descRU" ><%=((request.getSession().getAttribute("ctxdescRU")!=null) ? request.getSession().getAttribute("ctxdescRU") : "")%></textarea>
                         <label for="desc">Descripción</label>     
                     </div>
                     <div id="bioDiv" class="form-group form-floating mb-3">
-                        <textarea class="form-control" id="bio" rows="15" oninput='this.style.height = "";this.style.height = this.scrollHeight +3+ "px"' name="bioRU" ></textarea>
+                        <textarea class="form-control" id="bio" rows="15" oninput='this.style.height = "";this.style.height = this.scrollHeight +3+ "px"' name="bioRU" ><%=((request.getSession().getAttribute("ctxbioRU")!=null) ? request.getSession().getAttribute("ctxbioRU") : "")%></textarea>
                         <label for="desc">Biografía <i style="font-size:0.7rem;"> (opcional)</i></label>     
                     </div>
                     <div id="webDiv" class="form-floating mb-3">
-                        <input type="text" class="form-control rounded-4" id="webs" name="websRU" >
+                        <input type="text" class="form-control rounded-4" id="webs" name="websRU" value="<%=((request.getSession().getAttribute("ctxebsRU")!=null) ? request.getSession().getAttribute("ctxebsRU") : "")%>">
                         <label for="webs">Sitio web <i style="font-size:0.7rem;"> (opcional)</i></label>
                     </div>
 					<div class="mb-3">
@@ -206,7 +207,7 @@
 	if (u instanceof DtProfesorExtra){ %>
     <div class="modal fade" id="altaActModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
-            <div class="modal-content">
+            <div class="modal-content" style="background-color: rgba(0, 0, 0, 0.79);">
                 <div class="modal-header">
                     <img src="<%=request.getContextPath()%>/assets/images/misc/iconoEntrenamos-uy.png" alt="EntrenamosUYLogo" width="40" height="30" class="d-inline-block align-text-top img-fluid me-2 ms-2 mb-3">
                     <h2 class="fw-bold mb-0" style="color: white;">Alta Actividad Deportiva</h2>
@@ -215,23 +216,23 @@
                 <div class="modal-body">
                     <form id="formulario-altaAD" action="<%=request.getContextPath()%>/alta_ad" data-root="<%=request.getContextPath()%>" method="post" onsubmit="return altaAD()" enctype="multipart/form-data" accept-charset="UTF-8">
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control rounded-4" name="nombreAD" id="nombreAD" placeholder="">
+                            <input type="text" class="form-control rounded-4" name="nombreAD" id="nombreAD" value="<%=((request.getSession().getAttribute("ctxnombreAD")!=null) ? request.getSession().getAttribute("ctxnombreAD") : "")%>" placeholder="">
                             <label for="floatingInput">Nombre</label>
                         </div>
                                             <div id="descDiv" class="form-group form-floating mb-3">
-                        <textarea class="form-control" name="descAD" id="descAD" rows="15" oninput='this.style.height = "";this.style.height = this.scrollHeight +3+ "px"' ></textarea>
+                        <textarea class="form-control" name="descAD" id="descAD" rows="15" oninput='this.style.height = "";this.style.height = this.scrollHeight +3+ "px"'><%=((request.getSession().getAttribute("ctxdescAD")!=null) ? request.getSession().getAttribute("ctxdescAD") : "")%></textarea>
                         <label for="desc">Descripción</label>     
                     </div>
                         <div id="nombreCompletoDiv" class="row form-floating mb-3">
                             <div id="divNombre" class="col-6 form-check float-left">
                                 <div class="form-floating mb-2">
-                                    <input type="number" class="form-control rounded-4" name="costoAD" id="costoAD" >
+                                    <input type="number" class="form-control rounded-4" name="costoAD" id="costoAD" value="<%=((request.getSession().getAttribute("ctxcostoAD")!=null) ? request.getSession().getAttribute("ctxcostoAD") : "")%>">
                                     <label for="nomm">Costo</label>           
                                 </div>      
                             </div>
                             <div id="divApellido" class="col-6 form-check float-left">
                                 <div class="form-floating mb-2">
-                                    <input type="number" class="form-control rounded-4" name="durAD" id="durAD" >
+                                    <input type="number" class="form-control rounded-4" name="durAD" id="durAD" value="<%=((request.getSession().getAttribute("ctxdurAD")!=null) ? request.getSession().getAttribute("ctxdurAD") : "")%>" >
                                     <label for="ape">Duración <i style="font-size:0.7rem;"> (min)</i></label>           
                                 </div>                           
                             </div>           
@@ -245,23 +246,23 @@
 							<select style="width:29em;" name="catAD" id="catAD" class="cat" multiple aria-label="multiple select example">
 							  <%
 							  Set<String> s = (Set<String>)request.getAttribute("stdCategorias");
-							  for (String x: s){ %>
-							  	<option value="<%=x%>"><%=x%></option>
-							  <%} %>
-							</select>                          
-                    </div>
-                        <input style="display: none;" class="form-control miurl" name="miurl" type="text">
-                        <button class="w-100 mb-2 btn btn-lg rounded-4" style="border-color: black; color:black; background-color: rgba(255, 255, 255, 0.79);"type="submit">Confirmar Registro</button>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <hr class="my-6">
-                    <div>
-                        <i style="color: white;">Entrenamos.uy - Alta Actividad Deportiva</i>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-	<%} %>
-<%}%>
+								  for (String x: s){ %>
+								  	<option value="<%=x%>"><%=x%></option>
+								  <%} %>
+								</select>                          
+	                    </div>
+	                        <input style="display: none;" class="form-control miurl" name="miurl" type="text">
+	                        <button class="w-100 mb-2 btn btn-lg rounded-4" style="border-color: black; color:black; background-color: rgba(255, 255, 255, 0.79);" type="submit">Confirmar Registro</button>
+	                    </form>
+	                </div>
+	                <div class="modal-footer">
+	                    <hr class="my-6">
+	                    <div>
+	                        <i>Entrenamos.uy - Alta Actividad Deportiva</i>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+		<%} %>
+	<%}%>

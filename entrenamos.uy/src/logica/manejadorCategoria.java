@@ -45,11 +45,11 @@ public class manejadorCategoria {
 		return categorias.containsKey(catNombre);
 	}
 	
-//	public Set<String> getNombreCategorias() {
-//		return categorias.keySet();
-//	}
-	
 	public Set<String> getNombreCategorias() {
-		return new HashSet<>(DataPersistencia.getInstance().consultarCategorias());
+		return categorias.keySet();
 	}
+	
+//	public Set<String> getNombreCategorias() {
+//		return new HashSet<>(DataPersistencia.getInstance().consultarCategorias());
+//	}
 }

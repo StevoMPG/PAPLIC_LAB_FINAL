@@ -37,10 +37,9 @@ public class controladorActividadDeportiva  implements IcontroladorActividadDepo
 		return instance;
 	}	
 	
-	public Set<String> obtenerInstituciones(){
-		
-		return new HashSet<>(DataPersistencia.getInstance().consultarInstituciones());
-//		return getHI().obtenerInstituciones();
+	public Set<String> obtenerInstituciones(){	
+		//return new HashSet<>(DataPersistencia.getInstance().consultarInstituciones());
+		return getHI().obtenerInstituciones();
 	}		
 	
 	public Set<String> obtenerActividades(String ins) throws InstitucionException {
@@ -60,11 +59,15 @@ public class controladorActividadDeportiva  implements IcontroladorActividadDepo
 		Institucion inst = getHI().findInstitucion(nombreInsti);
 		for (String x : getHI().obtenerInstituciones()) {
 			if (getHI().findInstitucion(x).existeActDep(datosAD.getNombre())) {
-				
 				throw new ActividadDeportivaException("La Actividad Deportiva ya existe en el Sistema.");
 			}
-
 		}
+		try {
+			if (DataPersistencia.getInstance().obtenerActividades().contains(datosAD.getNombre())) {
+				throw new ActividadDeportivaException("La Actividad Deportiva ya existe en la base de datos del Sistema.");
+			}
+		} catch(ActividadDeportivaException ignore) { }
+
 		if (!inst.existeActDep(datosAD.getNombre())) {
 			Map<String,  Categoria> cat = new HashMap<>();
 			for (String x: datosAD.getCategorias())
@@ -77,12 +80,11 @@ public class controladorActividadDeportiva  implements IcontroladorActividadDepo
 			try {
 				inst.addActividadDeportiva(datosAD,  cat,  (Profesor) getHU().findUsuario(datosAD.getCreador()), inst);
 				((Profesor) getHU().findUsuario(datosAD.getCreador())).addActDep(inst.getActDep(datosAD.getNombre()));
-				
 			} catch (UsuarioNoExisteException e) {
 				e.printStackTrace();
 			}
 			return true;
-		}
+		}	
 		return false;
 	}
 
@@ -219,5 +221,20 @@ public class controladorActividadDeportiva  implements IcontroladorActividadDepo
 			}
 		}
 		return DataPersistencia.getInstance().getActividad(nombreActDep);
+	}
+	
+	public void finalizarActividad(String actDep) {
+		for (String i: getHI().obtenerInstituciones()) {
+			 try {
+				if (getHI().findInstitucion(i).getActsDeps().containsKey(actDep)) {
+					 getHI().findInstitucion(i).getActsDeps().get(actDep).setEstado(tipoEstado.finalizada);
+					// DataPersistencia.getInstance().persistir(getHI().findInstitucion(i).getActsDeps().get(actDep));
+					 getHI().findInstitucion(i).finalizarAct(actDep);
+					 break;
+				 }
+			} catch (InstitucionException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 }

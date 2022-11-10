@@ -8,6 +8,7 @@
 <%@ page import="datatypes.DtClaseExtra"%>
 <%@ page import="datatypes.DtCuponera"%>
 <%@ page import="datatypes.DtActividadDeportivaExtra"%>
+<%@ page import="datatypes.DtSocioExtra"%>
 
 <!doctype html>
 <html lang="en">
@@ -17,8 +18,7 @@
     <link rel="stylesheet" href="<%=request.getContextPath()%>/assets/styles/search.css">
 </head>
 <body>
-
-    <!--BARRA DE NAVEGACION-->
+	<!--BARRA DE NAVEGACION-->
     <jsp:include page="/template/header.jsp"/>
 
     <!--CUERPO DE LA PAGINA WEB-->
@@ -47,6 +47,7 @@
 			
 			// Auxiliares para el orden y filtro:
 			String orden = (String) request.getAttribute("orden");
+			String mostrarTodas = (String) request.getAttribute("mostrarTodas");
 			Set<?> listaInstituciones = (Set<?>) request.getAttribute("instituciones");
 			Set<?> listaCategorias = (Set<?>) request.getAttribute("categorias");
 			Set<?> filtro = null;
@@ -66,25 +67,42 @@
 							} %>
 				        	<h4><strong><%=cantidadResultados%> resultados.</strong></h4>
 				        </div>
+				        <%String linkAndFiltro = link;
+		        		  filtro = (Set<?>) request.getAttribute("filtroInsti");
+		        		  int count = 1;
+		        		  for (Object x : filtro) {
+		        			  linkAndFiltro += "&fltrI" + count + "=" + (String)x;
+		        			  count++;
+		        		  }
+		        		  filtro = (Set<?>) request.getAttribute("filtroCat");
+		        		  count = 1;
+		        		  for (Object x : filtro) {
+		        			  linkAndFiltro += "&fltrC" + count + "=" + (String)x;
+		        			  count++;
+		        		  } %>
+		        		<% if (request.getAttribute("clases") != null) {%>
+				        <div class="col-md-auto">
+				        		Mostrar clases:
+				        </div>
+				        <div class="col-md-auto">
+				        	<div id="divMostrar" class="mb-auto">
+				        		<form name="estadoMostrar" action="<%=request.getContextPath() + linkAndFiltro%>&sort=<%=orden%>" method="POST">
+			                    	<select id="mostrar" name="mostrar" class="form-select" data-live-search="true" onchange="this.form.submit()">
+			                            <option value="yes" 
+			                            	<%if (mostrarTodas.equals("yes")) {%> selected="selected" <% } %>>Todas</option>
+			                            <option value="no"
+			                            	<%if (mostrarTodas.equals("no")) {%> selected="selected" <% } %>>Disponibles</option>
+			                        </select>
+			                	</form>
+		                    </div>
+				        </div>
+				        <% } %>
 				        <div class="col-md-auto">
 				        		Ordenar por:
 				        </div>
 				        <div class="col-md-auto">
 				        	<div id="divOrder" class="mb-auto">
-				        		<%String linkAndFiltro = link;
-				        		  filtro = (Set<?>) request.getAttribute("filtroInsti");
-				        		  int count = 1;
-				        		  for (Object x : filtro) {
-				        			  linkAndFiltro += "&fltrI" + count + "=" + (String)x;
-				        			  count++;
-				        		  }
-				        		  filtro = (Set<?>) request.getAttribute("filtroCat");
-				        		  count = 1;
-				        		  for (Object x : filtro) {
-				        			  linkAndFiltro += "&fltrC" + count + "=" + (String)x;
-				        			  count++;
-				        		  } %>
-				        		<form name="orden" action="<%=request.getContextPath() + linkAndFiltro%>" method="POST">
+				        		<form name="orden" action="<%=request.getContextPath() + linkAndFiltro%>&mostrar=<%=mostrarTodas%>" method="POST">
 			                    	<select id="sort" name="sort" class="form-select" data-live-search="true" onchange="this.form.submit()">
 			                            <option value="alfaDesc" 
 			                            	<%if (orden.equals("alfaDesc")) {%> selected="selected" <% } %>>Alfabeticamente (A-Z a-z)</option>
@@ -102,7 +120,7 @@
 				        </div>
 				        <%if ((request.getAttribute("actividades") != null) || (request.getAttribute("cuponeras") != null)) {%>
 				        <div class="col-md-auto">
-				        	<button type="button" id="btn-filtro" class="btn-ir btn mb-auto" data-bs-toggle="modal" style="border-color: black; color:white; background-color: rgba(0, 0, 0, 0.79);" data-bs-target="#filtroModal">
+				        	<button type="button" id="btn-filtro" class="btn-ir btn mb-auto" style="border-color: white; color:white; background-color: rgba(0, 0, 0, 0.79);" data-bs-toggle="modal" data-bs-target="#filtroModal">
 			                	Filtrar
 			              	</button>
 				        </div>
@@ -158,6 +176,14 @@
 								        		<div class="card-body">											  
 										          	<h5 class="card-title"><strong><%=tituloCarta%></strong></h5>
 										          	<p class="card-text"><%=descripcionCarta%></p>
+										          	<% if(obj instanceof DtActividadDeportivaExtra && request.getSession().getAttribute("loggedUser") instanceof DtSocioExtra){ 
+										          			DtSocioExtra ss = (DtSocioExtra) request.getSession().getAttribute("loggedUser");
+										          			if(ss.getActividadesFavoritas().contains(tituloCarta)){ %>
+				        											<button style="background-color: #ed2553; border-color: #ed2553;" class="btn btn-primary"><i class="fa-heart fa"></i><span class="text"></span>&nbsp;<span class="nobold">(<span class="count"><%=((DtActividadDeportivaExtra)obj).getFavoritos()%></span>)</span></button>
+										          			<%} else{%>
+																	<button id="favorite"  style="background-color: #ed2553; border-color: #ed2553;" class="btn btn-primary"><i class="fa-heart far"></i><span class="text"></span>&nbsp;<span class="nobold">(<span class="count"><%=((DtActividadDeportivaExtra)obj).getFavoritos()%></span>)</span></button>
+										          			<%} %>
+										          	<%}%>
 										     	</div>
 												</a>
 											</div>
@@ -183,30 +209,30 @@
     <div class="modal fade" id="filtroModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	    <div class="modal-dialog">
 	        <div class="modal-content">
-	            <div class="modal-header">
+	            <div class="modal-header" style="color: white">
 	                <img src="<%=request.getContextPath()%>/assets/images/misc/iconoEntrenamos-uy.png" alt="EntrenamosUYLogo" width="40" height="30" class="d-inline-block align-text-top img-fluid me-2 ms-2 mb-3">
-	                <h2 class="fw-bold mb-0" style="color: white;">Entrenamos.uy</h2>
+	                <h2 class="fw-bold mb-0">Entrenamos.uy</h2>
 	                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 	            </div>
-	            <div class="modal-body">
-	                <form id="form-filtro" action="<%=request.getContextPath() + link%>&sort=<%=orden%>" method="POST" accept-charset="utf-8"> 
-	                	<h5 class="fw-bold mb-0" style="color: white;">Instituciones:</h5>
+	            <div class="modal-body" style="color: white">
+	                <form id="form-filtro" action="<%=request.getContextPath() + link%>&sort=<%=orden%>&mostrar=<%=mostrarTodas%>" method="POST" accept-charset="utf-8"> 
+	                	<h5 class="fw-bold mb-0">Instituciones:</h5>
 	                	<%int counter = 0;
 	                	filtro = (Set<?>) request.getAttribute("filtroInsti");
 	                	for (Object obj : listaInstituciones) {
 	                		counter++;%>
-	                    <div class="form-check float-left" style="color: white;">
+	                    <div class="form-check float-left">
 	                        <input type="checkbox" id="fltrI<%=counter%>" name="fltrI<%=counter%>" value="<%=(String) obj%>" 
 	                        	<%if (filtro.contains((String) obj)) {%> checked <% } %>>
 	                        <label for="fltrI<%=counter%>"><%=(String) obj%></label>
 	                    </div>
 	                    <% } %>
-	                    <h5 class="fw-bold mb-0" style="color: white;">Categorias:</h5>
+	                    <h5 class="fw-bold mb-0">Categorias:</h5>
 	                    <%counter = 0;
 	                	filtro = (Set<?>) request.getAttribute("filtroCat");
 	                    for (Object obj : listaCategorias) {
 	                    	counter++;%>
-	                    <div class="form-check float-left" style="color: white;">
+	                    <div class="form-check float-left">
 	                        <input type="checkbox" id="fltrC<%=counter%>" name="fltrC<%=counter%>" value="<%=(String) obj%>"
 	                        	<%if (filtro.contains((String) obj)) {%> checked <% } %>>
 	                        <label for="fltrC<%=counter%>"><%=(String) obj%></label>

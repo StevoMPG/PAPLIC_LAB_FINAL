@@ -22,10 +22,11 @@ import datatypes.DtUsuarioExtra;
 public class Socios extends Usuarios {
     private static final long serialVersionUID = 1L;
     
+    
     @Override
-	public DtUsuarioExtra toDtUsuarioExt() {
-		DtSocioExtra res = new DtSocioExtra(nickname, nombre, apellido, email, null, new DtFechaHora(fechaNacimiento), 
-				new HashMap<String, Set<String>>(), null, null, null, null, null);
-		return res;
-	}
+ 	public DtUsuarioExtra toDtUsuarioExt() {
+ 		DtSocioExtra res = new DtSocioExtra(nickname, nombre, apellido, email, null, new DtFechaHora(fechaNacimiento), 
+ 				new HashMap<String, Set<String>>(), null, null, null, null, null, null, null);
+ 		return res;
+ 	}
 }

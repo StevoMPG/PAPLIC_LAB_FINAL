@@ -83,9 +83,7 @@ public class Cuponera {
 		act.addClasesCup(claCup);
 		costo = costo + (1 - descuento/100)*act.getCosto()*num;
 		DataPersistencia.getInstance().persistirActividadesCuponeras(claCup);
-	
 	}
-
 	
 	public int cantidadClases(ActividadDeportiva actDep) {
 		for (ClasesCuponera cc: clasesCuphead) {
@@ -129,4 +127,10 @@ public class Cuponera {
 	public void setImg(String img) {
 		this.img = img;
 	}
+
+	public void estafar(ClasesCuponera cl) {
+		clasesCuphead.remove(cl);
+		costo = costo - (1 - descuento/100)*cl.getAd().getCosto()*cl.getCantidadClases();
+	}
 }
+

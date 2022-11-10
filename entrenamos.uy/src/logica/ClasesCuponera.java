@@ -23,5 +23,9 @@ public class ClasesCuponera {
 	public ActividadDeportiva getAd() {
 		return acDEPS;
 	}
+	
+	public void estafar() {
+		cupi.estafar(this);
+	}
 
 }

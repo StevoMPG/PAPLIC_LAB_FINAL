@@ -1,20 +1,34 @@
 package datatypes;
 
 import java.util.List;
+import java.util.Map;
 
 
 public class DtClaseExtra extends DtClase {
 	
 	private List<String> alumnos;
 	private List<String> soloNickAlumnos;
+	private Map<String, Integer> calificaciones;
 	
-	public DtClaseExtra(String nom, String nickP,String correoP, int min, int max, String url, DtFechaHora fechC, DtFechaHora fechR, 
-			List<String> als, List<String> soloNickAlumnos, byte[] imgName) {
-		super(nom, nickP,correoP, min, max, url, fechC, fechR, imgName);
+	public DtClaseExtra(String nom,   String nickP,  String correoP,   int min,   int max,   String url,   DtFechaHora fechC,   DtFechaHora fechR,   
+			List<String> als,   List<String> soloNickAlumnos) {
+		super(nom,   nickP,  correoP,   min,   max,   url,   fechC,   fechR);
 		this.alumnos = als;
 		this.soloNickAlumnos = soloNickAlumnos;
 	}
-
+	public DtClaseExtra(String nom,   String nickP,  String correoP,   int min,   int max,   String url,   DtFechaHora fechC,   DtFechaHora fechR,   
+			List<String> als,   List<String> soloNickAlumnos,  String img) {
+		super(nom,   nickP,  correoP,   min,   max,   url,   fechC,   fechR,  img);
+		this.alumnos = als;
+		this.soloNickAlumnos = soloNickAlumnos;
+	}
+	public DtClaseExtra(String nom,   String nickP,  String correoP,   int min,   int max,   String url,   DtFechaHora fechC,   DtFechaHora fechR,   
+			List<String> als,   List<String> soloNickAlumnos,  String img, String urlVideo,DtPremio prize,Map<String, Integer> calificaciones) {
+		super(nom,   nickP,  correoP,   min,   max,   url,   fechC,   fechR,  img,urlVideo,prize);
+		this.alumnos = als;
+		this.soloNickAlumnos = soloNickAlumnos;
+		this.calificaciones = calificaciones;
+	}	
 	public List<String> getAlumnos() {
 		return this.alumnos;
 	}
@@ -42,5 +56,8 @@ public class DtClaseExtra extends DtClase {
 			}
 		}
 		return res;
+	}
+	public Map<String, Integer> getCalificaciones() {
+		return calificaciones;
 	}
 }

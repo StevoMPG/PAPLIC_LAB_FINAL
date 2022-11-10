@@ -92,7 +92,7 @@ public class manejadorUsuario {
 	}
 	
 	public boolean existeNick(String userNick) {
-		return usuarios.containsKey(userNick);
+		return usuarios.containsKey(userNick) || nicksProhibidos.contains(userNick);
 	}
 	
 	public boolean existeCorreo(String userCorreo) {

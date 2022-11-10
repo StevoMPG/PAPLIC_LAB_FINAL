@@ -2,6 +2,7 @@
 <classpath>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8">
 		<attributes>
+			<attribute name="module" value="true"/>
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
@@ -31,5 +32,29 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="lib/hibernate-jpa-2.0-api-1.0.1.Final.jar"/>
+	<classpathentry kind="lib" path="lib/Webservices/angus-activation-1.0.0.jar"/>
+	<classpathentry kind="lib" path="lib/Webservices/angus-mail-1.0.0.jar"/>
+	<classpathentry kind="lib" path="lib/Webservices/FastInfoset-2.1.0.jar"/>
+	<classpathentry kind="lib" path="lib/Webservices/gmbal-api-only-4.0.3.jar"/>
+	<classpathentry kind="lib" path="lib/Webservices/ha-api-3.1.13.jar"/>
+	<classpathentry kind="lib" path="lib/Webservices/jakarta.activation-api-2.1.0.jar"/>
+	<classpathentry kind="lib" path="lib/Webservices/jakarta.annotation-api-2.1.1.jar"/>
+	<classpathentry kind="lib" path="lib/Webservices/jakarta.mail-api-2.1.0.jar"/>
+	<classpathentry kind="lib" path="lib/Webservices/jakarta.xml.bind-api-4.0.0.jar"/>
+	<classpathentry kind="lib" path="lib/Webservices/jakarta.xml.soap-api-3.0.0.jar"/>
+	<classpathentry kind="lib" path="lib/Webservices/jakarta.xml.ws-api-4.0.0.jar"/>
+	<classpathentry kind="lib" path="lib/Webservices/jaxb-core-4.0.0.jar"/>
+	<classpathentry kind="lib" path="lib/Webservices/jaxb-core-4.0.1.jar"/>
+	<classpathentry kind="lib" path="lib/Webservices/jaxb-impl-4.0.0.jar"/>
+	<classpathentry kind="lib" path="lib/Webservices/jaxb-jxc-4.0.1.jar"/>
+	<classpathentry kind="lib" path="lib/Webservices/jaxws-rt-4.0.0.jar"/>
+	<classpathentry kind="lib" path="lib/Webservices/management-api-3.2.3.jar"/>
+	<classpathentry kind="lib" path="lib/Webservices/mimepull-1.10.0.jar"/>
+	<classpathentry kind="lib" path="lib/Webservices/saaj-impl-3.0.0.jar"/>
+	<classpathentry kind="lib" path="lib/Webservices/stax2-api-4.2.1.jar"/>
+	<classpathentry kind="lib" path="lib/Webservices/stax-ex-2.1.0.jar"/>
+	<classpathentry kind="lib" path="lib/Webservices/streambuffer-2.1.0.jar"/>
+	<classpathentry kind="lib" path="lib/Webservices/woodstox-core-6.2.8.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

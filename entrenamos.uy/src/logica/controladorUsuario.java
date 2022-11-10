@@ -1,13 +1,17 @@
 package logica;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 import datatypes.DtUsuario;
 import datatypes.DtUsuarioExtra;
+import datatypes.tipoEstado;
 import datatypes.DtFechaHora;
 import datatypes.DtProfesor;
 import datatypes.DtSocio;
 import datatypes.DtProfesorExtra;
 import datatypes.DtSocioExtra;
+import excepciones.ClaseException;
 import excepciones.CuponeraNoExisteException;
 import excepciones.InstitucionException;
 import excepciones.UsuarioNoExisteException;
@@ -63,6 +67,24 @@ public class controladorUsuario implements IcontroladorUsuario {
 		manejadorUsuario handlerUsuario = manejadorUsuario .getInstance();
 		Usuario user = handlerUsuario.findUsuario(userNick);
 	
+		if(userNick.endsWith("\uEAEA")){
+			DtUsuarioExtra resu =  DataPersistencia.getInstance().getUsuario(userNick.replace("\uEAEA", ""));
+			if(resu instanceof DtSocioExtra) {
+				((DtSocioExtra) resu).setClasesDeActividadesFinalizadas(DataPersistencia.getInstance().obtenerActividadxClasesSocio(userNick.replace("\uEAEA", "")));
+				return resu;
+			}
+			else if(resu instanceof DtProfesorExtra) {
+				Set<String> f = DataPersistencia.getInstance().obtenerActividades(userNick.replace("\uEAEA", ""));
+				Map<String,tipoEstado> ff = new HashMap<>();
+				for(String fq:f) {
+					ff.put(fq, tipoEstado.finalizada);
+				}
+				((DtProfesorExtra) resu).setHistoralActDepIngresadas(ff);
+				return resu;
+			}
+		} else {
+			user = handlerUsuario.findUsuario(userNick);
+		}
 		if (user instanceof Socio) {
 			DtSocioExtra dtExt = ((Socio) user).getDtExt();
 			return dtExt;
@@ -103,6 +125,9 @@ public class controladorUsuario implements IcontroladorUsuario {
 		return manejadorCuponera.getInstance();
 	}
 	
+	private manejadorInstitucion getHI() {
+		return manejadorInstitucion.getInstance();
+	}
 
 	
 	public DtUsuarioExtra seleccionarUsuarioEmail(String userEmail) throws UsuarioNoExisteException{
@@ -156,6 +181,17 @@ public class controladorUsuario implements IcontroladorUsuario {
 		getHU().findUsuario(user2).removerSeguidor(getHU().findUsuario(user1));
 		//DataPersistencia.getInstance().persistirDESSeguidores(user1, user2);
 	}
+	
+	@Override
+	public void favoritearActividad(String nick, String ins, String actDep) throws UsuarioNoExisteException, InstitucionException{
+		((Socio) getHU().findUsuario(nick)).changeFavoritos(getHI().findInstitucion(ins).findActividad(actDep));
+		getHI().findInstitucion(ins).findActividad(actDep).changeFavoritos(((Socio) getHU().findUsuario(nick)));
+	}
+
+	@Override
+	public void valorarProfesor(String nickSocio, String ins, String actDep, String cla, int valor) throws UsuarioNoExisteException, ClaseException, InstitucionException {
+		((Socio) getHU().findUsuario(nickSocio)).valorarProfesor(getHI().findInstitucion(ins).findActividad(actDep).findClase(cla), valor);
+	} 
 	
 }
 

@@ -1,5 +1,6 @@
 package datatypes;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -10,9 +11,12 @@ public class DtProfesorExtra extends DtUsuarioExtra{
 	private Map<String,  tipoEstado> historalActDepIngresadas;
 	private Map<String,  Set<String>> actDepAsociadas;
 	private String nombreInstitucion,  descripcion,  biografia,  link;
+	private float valoracion;
 	
-	public DtProfesorExtra (String nickname, String nombre, String apellido, String email,  String contrasenia, DtFechaHora fechaNacimiento, String nombreInstitucion, String descripcion, String biografia, String link, Map<String,Set<String>> actxClase, byte[] imagen, Set<String> seguidosNickname, 
-			  Set<String> seguidoresNickname, Map<String,  tipoEstado> actividades) {
+	public DtProfesorExtra(String nickname,  String nombre,  String apellido,  String email,  String contrasenia, 
+						  DtFechaHora fechaNacimiento,  String nombreInstitucion,  String descripcion,  String biografia, 
+						  String link,  Map<String,  Set<String>> actxClase,  byte[] imagen, Set<String> seguidosNickname, 
+						  Set<String> seguidoresNickname,  Map<String,  tipoEstado> actividades, float valoracion) {
 		super(nickname,  nombre,  apellido,  email,  contrasenia,  fechaNacimiento,  imagen,  seguidosNickname,  seguidoresNickname); 
 		actDepAsociadas = actxClase;
 		this.nombreInstitucion = nombreInstitucion;
@@ -20,8 +24,9 @@ public class DtProfesorExtra extends DtUsuarioExtra{
 		this.biografia = biografia;
 		this.link = link;
 		this.historalActDepIngresadas = actividades;
+		this.valoracion = valoracion;
 	}
-	
+
 	public String getNombreInstitucion() {
 		return this.nombreInstitucion;
 	}
@@ -61,10 +66,12 @@ public class DtProfesorExtra extends DtUsuarioExtra{
 	public void setHistoralActDepIngresadas(Map<String,  tipoEstado> e){
 		historalActDepIngresadas = e;
 	}
-
+	public float getValoracion() {
+		return valoracion;
+	}
 	public DtProfesor downgrade() {
 		return new DtProfesor(this.getNickname(), this.getNombre(), this.getApellido(), this.getEmail(),
 				this.getContrasenia(), this.getFechaNacimiento(), this.getNombreInstitucion(), this.getDescripcion(),
-				this.getBiografia(), this.getLink(), this.getImagen());
+				this.getBiografia(), this.getLink(), this.getImagen(), this.getValoracion());
 	}
 }

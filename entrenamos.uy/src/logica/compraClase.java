@@ -11,9 +11,7 @@ public class compraClase {
 	private Clase aClase;
 	private Socio aSocio;
 	private Cuponera cup;
-	
-
-	
+		
 	compraClase(DtFechaHora fecha,  tipoRegistro tipoRegistro,  float precio,  Clase aula,  Socio individuoAsociadoAlClub,  Cuponera cupon){
 		aSocio = individuoAsociadoAlClub;
 		aClase = aula;
@@ -22,8 +20,6 @@ public class compraClase {
 		costo = precio;
 		cup = cupon;
 	}
-	
-	
 	
 	public DtFechaHora getFechaInscripcion() {
 		DtFechaHora ret = new DtFechaHora(fechaInscripcion);
@@ -71,7 +67,7 @@ public class compraClase {
 		return new DtcompraClase(aClase.getNombre(), aSocio.getNickname(), cuponera, fechaInscripcion,
 				tipo, costo);
 	}
-	
+
 	public void suicidar() {
 		aSocio.remClase(this);
 	}

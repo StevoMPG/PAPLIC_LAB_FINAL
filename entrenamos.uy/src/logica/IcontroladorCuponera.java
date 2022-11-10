@@ -23,6 +23,8 @@ public interface IcontroladorCuponera {
 			throws InstitucionException,  ActividadDeportivaException,  CuponeraInmutableException;
 	
 	public DtCuponera seleccionarCuponera(String n) throws NoExisteCuponeraException;
+	
+	public Set<String> getNombreCuponerasSinRecibos();
 }
 
 

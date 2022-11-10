@@ -10,12 +10,13 @@ body {
 #nav-inireg{
 	align-items: center;
 }
-.extraInfoDiv{
+.cuadritosCos{
 	border-radius: 10% / 50%;
     margin-bottom: 1em;
-    margin-left: 1em;
     background-color: rgba(0, 0, 0, 0.79);
+    margin-left: 1em;
     padding: 1em 1em 1em 1em;
+    color: white;
 }
 .btn-ir {
     margin-right: 85%;

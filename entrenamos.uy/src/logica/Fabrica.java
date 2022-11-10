@@ -32,6 +32,10 @@ public class Fabrica {
     	IcontroladorCuponera idep = controladorCuponera.getInstance();
     	return idep;
      }
+    
+    public ILogger getILogger() {
+    	return manejadorLogs.getInstance();
+    }
 		
 	
 }

@@ -17,7 +17,7 @@ body {
 	border-radius: 1em;
     margin-bottom: 1em;
     margin-left: 1em;
-    background-color: rgb(239, 41, 41);
+    background-color: rgba(0, 0, 0, 0.79);
     padding: 1em 1em 1em 1em;
 }
 .btn-ir {

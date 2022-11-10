@@ -3,6 +3,7 @@ package logica;
 import datatypes.DtProfesor;
 import datatypes.DtProfesorExtra;
 import datatypes.tipoEstado;
+import logica.persistencia.DataPersistencia;
 
 import java.util.Set;
 import java.util.Map;
@@ -13,11 +14,10 @@ import java.util.HashSet;
 
 public class Profesor extends Usuario {
 	
-	private String descripcion, biografia, website;
+	private String descripcion,  biografia,  website;
 	private Institucion instituto;
-	private Map<String, Clase> misClases;
+	private Map<String,  Clase> misClases;
 	private Map<String,  ActividadDeportiva> misActividadesIngresadas;
-	
 	
 	public Profesor(DtProfesor datos) {
 		super(datos.getNickname(),  datos.getNombre(),  datos.getApellido(),  datos.getEmail(),  datos.getContrasenia(),  datos.getFechaNacimiento(),  datos.getImagen());
@@ -28,12 +28,7 @@ public class Profesor extends Usuario {
 		misClases = new HashMap<>();
 		misActividadesIngresadas = new HashMap<>();
 	}
-	
-
-	public boolean esSocio() {
-		return false;
-	}
-	
+		
 	private void setDescripcion(String desc) {
 		this.descripcion = desc;
 	}
@@ -51,15 +46,17 @@ public class Profesor extends Usuario {
 	}
 	
 	// Devuelve true si la Clase 'cl' se añade con exito al conjunto de Clases asociadas al Profesor.
-	public boolean addClase(Clase cl) {
-		if (misClases.containsKey(cl.getNombre())) {
+	public boolean addClase(Clase clasdf) {
+		if (misClases.containsKey(clasdf.getNombre())) {
 			return false;
 		} else {
-			misClases.put(cl.getNombre(), cl);
+			misClases.put(clasdf.getNombre(),  clasdf);
 			return true;
 		}
 	}
-	
+	public void addActDep(ActividadDeportiva dasdf) {
+		misActividadesIngresadas.put(dasdf.getNombre(),  dasdf);
+	}
 	public String getDescripcion() {
 		return descripcion;
 	}
@@ -76,44 +73,54 @@ public class Profesor extends Usuario {
 		return instituto;
 	}
 	
-	public Map<String, Clase> getClasesDictadas() {
+	public Map<String,  Clase> getClasesDictadas() {
 		return misClases;
 	}
-	
-	 public DtProfesorExtra getDtExt() {
-	    	Set<String> clasesDictadas = new HashSet<>(misClases.keySet());
-	    	Map<String,  tipoEstado> adm = new HashMap<>();
-	    	Map<String, Set<String>> xargs = new HashMap<>();
-	    	if (instituto != null)
-		    	for (String aa: instituto.getMiTrabajo(this)) {
-		    		Set<String> yqwerty = new HashSet<>();
-		    		xargs.put(aa, yqwerty);
-		    		for (String c: clasesDictadas) {
-		    			if (getClasesDictadas().get(c).tieneActividadDeportiva(aa)) {
-		    				yqwerty.add(c);
-		    			}
-		    		}
-		    	}
-	    	for (ActividadDeportiva ad : misActividadesIngresadas.values())
-	    		adm.put(ad.getNombre(),  ad.getEstado());
-	    	DtProfesorExtra datosExt = new DtProfesorExtra(getNickname(), getNombre(), getApellido(), getCorreo(), getContrasenia(), getFecha(), getInstitucion().getNombre(), 
-	    			getDescripcion(), getBiografia(), getWebsite(), xargs, getImagen(), this.getSeguidos().keySet(), this.getSeguidores().keySet(), adm);
-	    	return datosExt;
-	    }
+
+    public DtProfesorExtra getDtExt() {
+    	Set<String> clasesDictadas = new HashSet<>(misClases.keySet());
+    	Map<String,  tipoEstado> adm = new HashMap<>();
+    	Map<String, Set<String>> xargs = new HashMap<>();
+    	if (instituto != null)
+	    	for (String aa: instituto.getMiTrabajo(this)) {
+	    		Set<String> yqwerty = new HashSet<>();
+	    		xargs.put(aa, yqwerty);
+	    		for (String c: clasesDictadas) {
+	    			if (getClasesDictadas().get(c).tieneActividadDeportiva(aa)) {
+	    				yqwerty.add(c);
+	    			}
+	    		}
+	    	}
+    	for (ActividadDeportiva ad : misActividadesIngresadas.values())
+    		adm.put(ad.getNombre(),  ad.getEstado());
+//    	for (String x : DataPersistencia.getInstance().obtenerActividades(getNickname())) {
+//    		adm.put(x, tipoEstado.finalizada);
+//    	}
+    	DtProfesorExtra datosExt = new DtProfesorExtra(getNickname(), getNombre(), getApellido(), getCorreo(), getContrasenia(), getFecha(), getInstitucion().getNombre(), 
+    			getDescripcion(), getBiografia(), getWebsite(), xargs, getImagen(), this.getSeguidos().keySet(), this.getSeguidores().keySet(), adm, getValoracion());
+    	return datosExt;
+    }
     public void editarDatos(DtProfesor datos) {
     	super.editarDatos(datos);
     	this.setDescripcion(datos.getDescripcion());
     	this.setBiografia(datos.getBiografia());
     	this.setWebsite(datos.getLink());
     }
-    
-    
-    
-    
-    public void addActDep(ActividadDeportiva dasdf) {
-		misActividadesIngresadas.put(dasdf.getNombre(),  dasdf);
-	}
-    
+    public float getValoracion() {
+    	float awksejlfls = 0;
+    	int count=0;
+    	for (Entry<String, Clase> x : misClases.entrySet()) {
+    		for (Entry<String, Calificacion> y : x.getValue().getCalificaciones().entrySet()) {
+    			awksejlfls += y.getValue().getValor() + 0.0;
+    			count+=1;
+    		}
+    	}
+    	if(count>0)
+    		return awksejlfls/count;
+    	else
+    		return 0;
+    }
+
 	public void remActDep(ActividadDeportiva ad) {
 		Set<String> todel = new HashSet<>();
 		for(Entry<String, Clase> d: misClases.entrySet()) {
@@ -123,5 +130,9 @@ public class Profesor extends Usuario {
 		for(String x: todel)
 			misClases.remove(x);
 		misActividadesIngresadas.remove(ad.getNombre());
+	}
+	
+	public boolean esSocio() {
+		return false;
 	}
 }

@@ -7,7 +7,7 @@ import datatypes.DtClaseExtra;
 import datatypes.DtFechaHora;
 import datatypes.DtcompraClase;
 import datatypes.tipoRegistro;
-
+import datatypesWS.TRegWS;
 import excepciones.ActividadDeportivaException;
 import excepciones.ClaseException;
 import excepciones.FechaInvalidaException;
@@ -18,8 +18,7 @@ import excepciones.UsuarioNoExisteException;
 
 public interface IcontroladorClase {
 
-
-	public Set<String> obtenerUsuarios();
+public Set<String> obtenerUsuarios();
 	
 	public Set<String> obtenerInstituciones();
 	
@@ -36,6 +35,7 @@ public interface IcontroladorClase {
 	public DtClaseExtra seleccionarClase(String  ins,  String actDep,  String clase) throws InstitucionException,  ClaseException, 
 			ActividadDeportivaException;
 	
+	public DtClaseExtra buscarClase(String nombreClase) throws ClaseException;
 	
 	public int ingresarDatosClase(String ins,  String actDep,  DtClase datos) throws  InstitucionException,  FechaInvalidaException, 
 			ClaseException,  UsuarioNoExisteException,  ActividadDeportivaException;
@@ -50,8 +50,14 @@ public interface IcontroladorClase {
 	
 	public Set<String> getCuponerasDisponibles(String nombreSocio,  String nombreInst,  String nombreAd) 
 			throws UsuarioNoExisteException,  InstitucionException,  ActividadDeportivaException;
+
+	public Set<String> sortearPremios(String  ins,  String actDep,  String clase) throws InstitucionException,  ClaseException, 
+	ActividadDeportivaException;
+	//public void modificarDatosClase(String ins, String actDep, DtClase datos);
 	
 	public Set<DtcompraClase> bringTheRegistersPls(String nombreClase) throws ClaseException;
 	
-	public DtClaseExtra buscarClase(String nombreClase) throws ClaseException;
+	public void sorteoLegal(Set<String> socios, String inst, String act, String clas, String descPremio,int cantPremio, DtFechaHora fec) throws UsuarioNoExisteException, ClaseException, InstitucionException;
+
+
 }

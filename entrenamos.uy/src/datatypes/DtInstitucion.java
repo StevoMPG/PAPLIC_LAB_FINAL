@@ -1,17 +1,23 @@
 package datatypes;
 
-public class DtInstitucion {
-	
+import java.io.Serializable;
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+
+@SuppressWarnings("serial")
+@XmlAccessorType(XmlAccessType.FIELD)
+public class DtInstitucion implements Serializable{
+
 	private String nombre;
 	private String descripcion;
-	private String URL;
+	private String url;
 	
-	public DtInstitucion(String nom, String desc, String web){
-		this.nombre = nom;
-		this.descripcion = desc;
-		this.URL = web;
+	public DtInstitucion(String nom,  String desc,  String web){
+		this.setNombre(nom);
+		this.setDescripcion(desc);
+		this.setUrl(web);
 	}
-	
+	public DtInstitucion() { }
 	public String getNombre() {
 		return this.nombre;
 	}
@@ -21,6 +27,22 @@ public class DtInstitucion {
 	}
 	
 	public String getURL() {
-		return this.URL;
+		return this.url;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
 	}
 }

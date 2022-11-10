@@ -15,16 +15,8 @@
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/catalina-ssi.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/catalina-storeconfig.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/catalina-tribes.jar"/>
-	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/commons-io-2.11.0.jar"/>
-	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/ecj-4.20.jar"/>
-	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/el-api.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/itextpdf-5.4.0.jar"/>
-	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/jasper.jar"/>
-	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/jasper-el.jar"/>
-	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/jaspic-api.jar"/>
-	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/jaxws-api-2.2.8.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/jsp-api.jar"/>
-	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/jsr181-api-1.0-MR1.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/org.yaml.snakeyaml_1.27.0.v20201111-1638.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/servlet-api.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/tomcat-api.jar"/>
@@ -36,26 +28,35 @@
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/tomcat-util-scan.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/tomcat-websocket.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/uap-java-1.5.3.jar"/>
-	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/websocket-api.jar"/>
-	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/bootstrap.jar"/>
-	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/commons-daemon.jar"/>
-	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/tomcat-i18n-cs.jar"/>
-	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/tomcat-i18n-de.jar"/>
-	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/tomcat-i18n-es.jar"/>
-	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/tomcat-i18n-fr.jar"/>
-	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/tomcat-i18n-ja.jar"/>
-	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/tomcat-i18n-ko.jar"/>
-	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/tomcat-i18n-pt-BR.jar"/>
-	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/tomcat-i18n-ru.jar"/>
-	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/tomcat-i18n-zh-CN.jar"/>
-	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/tomcat-juli.jar"/>
-	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/commons-logging-1.2.jar"/>
-	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/commons-logging-1.2-javadoc.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/org.eclipse.jst.server.tomcat.runtimeTarget/Apache Tomcat v9.0">
 		<attributes>
 			<attribute name="owner.project.facets" value="jst.web"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/servidorCentral.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/datatypes_excepciones.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/angus-activation-1.0.0.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/angus-mail-1.0.0.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/FastInfoset-2.1.0.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/gmbal-api-only-4.0.3.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/ha-api-3.1.13.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/jakarta.activation-api-2.1.0.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/jakarta.annotation-api-2.1.1.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/jakarta.mail-api-2.1.0.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/jakarta.xml.bind-api-4.0.0.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/jakarta.xml.soap-api-3.0.0.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/jakarta.xml.ws-api-4.0.0.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/jaxb-core-4.0.0.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/jaxb-core-4.0.1.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/jaxb-impl-4.0.0.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/jaxb-jxc-4.0.1.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/jaxws-rt-4.0.0.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/management-api-3.2.3.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/mimepull-1.10.0.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/saaj-impl-3.0.0.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/stax2-api-4.2.1.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/stax-ex-2.1.0.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/streambuffer-2.1.0.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/woodstox-core-6.2.8.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/commons-io-2.11.0.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

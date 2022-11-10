@@ -48,6 +48,8 @@ public Set<String> obtenerInstituciones();
 	public Set<String> obtenerCategorias();
 	
 	public DtActividadDeportivaExtra buscarActDep(String nombreActDep) throws ActividadDeportivaException;
+	
+	public void finalizarActividad(String actividadDeportiva);
 
 }
 
