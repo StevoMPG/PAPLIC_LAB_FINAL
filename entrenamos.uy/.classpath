@@ -56,5 +56,6 @@
 	<classpathentry kind="lib" path="lib/Webservices/stax-ex-2.1.0.jar"/>
 	<classpathentry kind="lib" path="lib/Webservices/streambuffer-2.1.0.jar"/>
 	<classpathentry kind="lib" path="lib/Webservices/woodstox-core-6.2.8.jar"/>
+	<classpathentry kind="lib" path="lib/hsqldb/itextpdf-5.4.0.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

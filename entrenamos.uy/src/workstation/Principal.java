@@ -34,6 +34,19 @@ import excepciones.FechaInvalidaException;
 import excepciones.InstitucionException;
 import excepciones.UsuarioNoExisteException;
 
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+import java.awt.HeadlessException;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 
 
 public class Principal {
@@ -55,12 +68,14 @@ public class Principal {
 	private RegistroUsuarioClase regUsuClass;
 	private ConsultaDictadoClase consultaClass;
 	private ConsultaActividadDeportiva consActDep;
+	
 	private ConsultaCuponeras consultaCup;
 	private ConsultaUsuario consultaUsu;
 	private ModificarDatosUsuario modificarUsu;
 	private AgregarActividadDeportivaCuponera aggCup;
 	private AceptarRechazarActividadDeportiva acceptActDep;
 	private AltaCategoria altaCat;
+
 
 
 	/**
@@ -504,7 +519,64 @@ public class Principal {
 				manejadorLogs.getInstance().nuketownDetonator();
 			}
 		});
+		
+		
+		JMenuItem itemPDF = new JMenuItem("Descargar logs en PDF");
+		menuBaseDeDatos.add(itemPDF);
+		itemPDF.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				descargar();
+				}
+		});	
 	}
+	
+    private void descargar() {
+
+        Document documento = new Document();
+        
+         try {
+             String ruta = System.getProperty("user.home");
+             PdfWriter.getInstance(documento, new FileOutputStream(ruta + "/Escritorio/Reporte_Logs.pdf"));
+             documento.open();
+             
+             PdfPTable tabla = new PdfPTable(7);
+             tabla.addCell("ID");
+             tabla.addCell("BROWSER");
+             tabla.addCell("DATE");
+             tabla.addCell("EXPIRES");
+             tabla.addCell("IP");
+             tabla.addCell("OS");
+             tabla.addCell("URL");
+             
+             try {
+                 Connection cn = DriverManager.getConnection("jdbc:mysql://localhost:3306/loggerdb", "tecnologo", "tecnologo");
+                 PreparedStatement pst = cn.prepareStatement("SELECT * FROM LOGENTRY");
+                 
+                 ResultSet rs = pst.executeQuery();
+                 
+                 if(rs.next()){
+                                        
+                     do {                        
+                         tabla.addCell(rs.getString(1));
+                         tabla.addCell(rs.getString(2));
+                         tabla.addCell(rs.getString(3));
+                         tabla.addCell(rs.getString(4));
+                         tabla.addCell(rs.getString(5));
+                         tabla.addCell(rs.getString(6));
+                         tabla.addCell(rs.getString(7));
+                     } while (rs.next());
+                     documento.add(tabla);                    
+                 }
+                 
+             } catch (DocumentException | SQLException e) {
+             }
+             documento.close();
+             JOptionPane.showMessageDialog(null, "Reporte creado.");
+         } catch (DocumentException | HeadlessException | FileNotFoundException e) {
+         }
+        }
+        
+	
 
 
 	public JFrame getEntrenamosUy() {
