@@ -13,6 +13,7 @@ import datatypes.DtSocio;
 import datatypes.DtSocioExtra;
 import datatypes.tipoEstado;
 import excepciones.NoExisteCuponeraException;
+import excepciones.UsuarioNoExisteException;
 import logica.persistencia.DataPersistencia;
 import excepciones.ClaseException;
 import datatypes.DtFechaHora;
@@ -70,20 +71,21 @@ public class Socio extends Usuario {
     	}
     	clasesDeActividadesAceptadas = clasesDeActividadesAceptadasLimpiarSetsVacios;
     	
-    	Map<String,  Set<String>> clasesDeActividadesFinalizadas = DataPersistencia.getInstance().obtenerActividadxClasesSocio(getNickname());
-    	/* Viejo codigo de cuando las actividades finalizadas estaban en memoria (F)
+    	
+    	Map<String,  Set<String>> clasesDeActividadesFinalizadas =new HashMap<>();
+//    	Map<String,  Set<String>> clasesDeActividadesFinalizadas = DataPersistencia.getInstance().obtenerActividadxClasesSocio(getNickname());
+//    	 Viejo codigo de cuando las actividades finalizadas estaban en memoria (F)
     	for (compraClase compraClase: reciboClases) {  
     		String nombreAD = compraClase.getClase().getAD().getNombre();
     		if (!clasesDeActividadesFinalizadas.containsKey(nombreAD)) {
     			Set<String> nombreClases = new HashSet<>();
     			clasesDeActividadesFinalizadas.put(nombreAD,  nombreClases);
     			for (compraClase rc2: reciboClases) {
-    				if (rc2.getClase().getAD().getNombre().equals(nombreAD) && rc2.getClase().getAD().getEstado().equals(TEstado.finalizada))
+    				if (rc2.getClase().getAD().getNombre().equals(nombreAD) && rc2.getClase().getAD().getEstado().equals(tipoEstado.finalizada))
     					nombreClases.add(rc2.getClase().getNombre());
     			}
     		}
     	}
-    	*/
     	Map<String,  Set<String>> clasesDeActividadesFinalizadasLimpiarSetsVacios = new HashMap<>();
     	for(Entry<String, Set<String>> x : clasesDeActividadesFinalizadas.entrySet()) {
     		if(x.getValue().size()>0)
@@ -130,7 +132,7 @@ public class Socio extends Usuario {
 			if (tipoCuponera.equals(tipoRegistro.general)) {
 				compraClase nuevoRecibo = new compraClase(reg,   tipoRegistro.general,   actDep.getCosto(),   clase,   this,   null);
 				reciboClases.add(nuevoRecibo);
-				clase.addRecibo(nuevoRecibo);	
+				clase.addRecibo(nuevoRecibo, actDep);	
 			} else {
 				int iteradorMagico=0;
 				for (compraClase reciboCl: reciboClases)
@@ -140,7 +142,7 @@ public class Socio extends Usuario {
 					throw new NoExisteCuponeraException("La cuponera seleccionada no es válida.");
 				compraClase nuevoRecibo = new compraClase(reg,  tipoRegistro.cuponera,  actDep.getCosto(),  clase,  this,  cupi);
 				reciboClases.add(nuevoRecibo);
-				clase.addRecibo(nuevoRecibo);
+				clase.addRecibo(nuevoRecibo, actDep);
 			}
 		} else {
 			throw new ClaseException("Este Usuario ya esta inscripto a esta Clase.");
@@ -168,7 +170,7 @@ public class Socio extends Usuario {
 			favoritos.add(favfav);
 	}
 	
-	public void valorarProfesor(Clase clasee, int valor) {
+	public void valorarProfesor(Clase clasee, int valor) throws UsuarioNoExisteException {
 		Calificacion calif = new Calificacion(clasee, this, valor);
 		calificaciones.put(clasee.getProfesor().getNickname(), calif);
 		clasee.addCalifiacion(getNickname(), calif);

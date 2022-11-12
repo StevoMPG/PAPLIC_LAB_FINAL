@@ -33,8 +33,8 @@ public interface WSActividadController {
      * @param arg0
      * @return
      *     returns boolean
-     * @throws ActividadDeportivaException_Exception
      * @throws InstitucionException_Exception
+     * @throws ActividadDeportivaException_Exception
      */
     @WebMethod
     @WebResult(partName = "return")
@@ -80,45 +80,14 @@ public interface WSActividadController {
 
     /**
      * 
-     * @return
-     *     returns net.java.dev.jaxb.array.StringArray
-     */
-    @WebMethod
-    @WebResult(partName = "return")
-    @Action(input = "http://webServices/WSActividadController/obtenerInstitucionesRequest", output = "http://webServices/WSActividadController/obtenerInstitucionesResponse")
-    public StringArray obtenerInstituciones();
-
-    /**
-     * 
-     * @param arg1
-     * @param arg0
-     * @return
-     *     returns net.java.dev.jaxb.array.StringArray
-     * @throws InstitucionException_Exception
-     */
-    @WebMethod
-    @WebResult(partName = "return")
-    @Action(input = "http://webServices/WSActividadController/obtenerDeltaInstitucionesRequest", output = "http://webServices/WSActividadController/obtenerDeltaInstitucionesResponse", fault = {
-        @FaultAction(className = InstitucionException_Exception.class, value = "http://webServices/WSActividadController/obtenerDeltaInstituciones/Fault/InstitucionException")
-    })
-    public StringArray obtenerDeltaInstituciones(
-        @WebParam(name = "arg0", partName = "arg0")
-        String arg0,
-        @WebParam(name = "arg1", partName = "arg1")
-        String arg1)
-        throws InstitucionException_Exception
-    ;
-
-    /**
-     * 
      * @param arg2
      * @param arg1
      * @param arg0
      * @return
      *     returns webservices.DtClaseWS
+     * @throws InstitucionException_Exception
      * @throws ActividadDeportivaException_Exception
      * @throws ClaseException_Exception
-     * @throws InstitucionException_Exception
      */
     @WebMethod
     @WebResult(partName = "return")
@@ -153,8 +122,8 @@ public interface WSActividadController {
      * @param arg0
      * @return
      *     returns webservices.DtActividadWS
-     * @throws ActividadDeportivaException_Exception
      * @throws InstitucionException_Exception
+     * @throws ActividadDeportivaException_Exception
      */
     @WebMethod
     @WebResult(partName = "return")
@@ -224,6 +193,37 @@ public interface WSActividadController {
         @WebParam(name = "arg0", partName = "arg0")
         String arg0)
         throws ActividadDeportivaException_Exception
+    ;
+
+    /**
+     * 
+     * @return
+     *     returns net.java.dev.jaxb.array.StringArray
+     */
+    @WebMethod
+    @WebResult(partName = "return")
+    @Action(input = "http://webServices/WSActividadController/obtenerInstitucionesRequest", output = "http://webServices/WSActividadController/obtenerInstitucionesResponse")
+    public StringArray obtenerInstituciones();
+
+    /**
+     * 
+     * @param arg1
+     * @param arg0
+     * @return
+     *     returns net.java.dev.jaxb.array.StringArray
+     * @throws InstitucionException_Exception
+     */
+    @WebMethod
+    @WebResult(partName = "return")
+    @Action(input = "http://webServices/WSActividadController/obtenerDeltaInstitucionesRequest", output = "http://webServices/WSActividadController/obtenerDeltaInstitucionesResponse", fault = {
+        @FaultAction(className = InstitucionException_Exception.class, value = "http://webServices/WSActividadController/obtenerDeltaInstituciones/Fault/InstitucionException")
+    })
+    public StringArray obtenerDeltaInstituciones(
+        @WebParam(name = "arg0", partName = "arg0")
+        String arg0,
+        @WebParam(name = "arg1", partName = "arg1")
+        String arg1)
+        throws InstitucionException_Exception
     ;
 
 }

@@ -13,6 +13,7 @@
 		</properties>
 	</persistence-unit>
 
+
 <persistence-unit name="actividaddb" transaction-type="RESOURCE_LOCAL">
 	<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
 		<class>logica.persistencia.Entidades.ActividadesDeportivas</class>
@@ -26,8 +27,9 @@
 		<class>logica.persistencia.Entidades.ActividadesCuponeras</class>
 		<class>logica.persistencia.Entidades.Categorias</class>
 		<class>logica.persistencia.Entidades.Seguidores</class>
+		<class>logica.persistencia.Entidades.Valoraciones</class>
 		<properties>
-					<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/actividaddb"/>
+			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/actividaddb"/>
 			<property name="javax.persistence.jdbc.user" value="tecnologo"/>
 			<property name="javax.persistence.jdbc.password" value="tecnologo"/>
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>

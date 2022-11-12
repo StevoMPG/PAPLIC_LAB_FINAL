@@ -7,6 +7,12 @@ public class DtActividadDeportivaExtra extends DtActividadDeportiva{
 	private Set<String> cup;
 	private int favoritos=0;
 	
+	public DtActividadDeportivaExtra(String nombre,   String desc,   int durmin,   float costo,   DtFechaHora fechaReg,   Set<String> cat,   Set<String> clases,   tipoEstado state,  String creador){
+		super(nombre,   desc,   durmin,   costo,   fechaReg,   cat,   state,   creador);
+		this.clases = clases;
+
+	}
+	
 	public DtActividadDeportivaExtra(String nombre,   String desc,   int durmin,   float costo,   DtFechaHora fechaReg,   Set<String> cat,   Set<String> clases,   Set<String> cuponeras,   tipoEstado state,  String creador){
 		super(nombre,   desc,   durmin,   costo,   fechaReg,   cat,   state,   creador);
 		this.clases = clases;

@@ -62,11 +62,11 @@ public class controladorActividadDeportiva  implements IcontroladorActividadDepo
 				throw new ActividadDeportivaException("La Actividad Deportiva ya existe en el Sistema.");
 			}
 		}
-		try {
-			if (DataPersistencia.getInstance().obtenerActividades().contains(datosAD.getNombre())) {
-				throw new ActividadDeportivaException("La Actividad Deportiva ya existe en la base de datos del Sistema.");
-			}
-		} catch(ActividadDeportivaException ignore) { }
+//		try {
+//			if (DataPersistencia.getInstance().obtenerActividades().contains(datosAD.getNombre())) {
+//				throw new ActividadDeportivaException("La Actividad Deportiva ya existe en la base de datos del Sistema.");
+//			}
+//		} catch(ActividadDeportivaException ignore) { }
 
 		if (!inst.existeActDep(datosAD.getNombre())) {
 			Map<String,  Categoria> cat = new HashMap<>();
@@ -220,7 +220,6 @@ public class controladorActividadDeportiva  implements IcontroladorActividadDepo
 				;
 			}
 		}
-
 		return DataPersistencia.getInstance().getActividad(nombreActDep);
 	}
 	
@@ -229,7 +228,7 @@ public class controladorActividadDeportiva  implements IcontroladorActividadDepo
 			 try {
 				if (getHI().findInstitucion(i).getActsDeps().containsKey(actDep)) {
 					 getHI().findInstitucion(i).getActsDeps().get(actDep).setEstado(tipoEstado.finalizada);
-					// DataPersistencia.getInstance().persistir(getHI().findInstitucion(i).getActsDeps().get(actDep));
+					 DataPersistencia.getInstance().persistirFinalizarActividad(getHI().findInstitucion(i).getActsDeps().get(actDep));
 					 getHI().findInstitucion(i).finalizarAct(actDep);
 					 break;
 				 }

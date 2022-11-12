@@ -4,6 +4,7 @@ import datatypes.DtClaseExtra;
 import datatypes.DtClase;
 import datatypes.DtFechaHora;
 import datatypes.DtPremio;
+import excepciones.UsuarioNoExisteException;
 import logica.persistencia.DataPersistencia;
 
 import java.util.ArrayList;
@@ -105,7 +106,7 @@ public class Clase {
 		return listaReciboClase;
 	}
 
-	public void addCalifiacion(String socioNick, Calificacion calif) {
+	public void addCalifiacion(String socioNick, Calificacion calif) throws UsuarioNoExisteException {
 		calificaciones.put(socioNick, calif);
 	}
 	
@@ -140,9 +141,9 @@ public class Clase {
 	public void setPremio(Premio premio) {
 		prize = premio;
 	}
-	public void addRecibo(compraClase recibo) {
+	public void addRecibo(compraClase recibo, ActividadDeportiva act) {
 		listaReciboClase.add(recibo);
-		DataPersistencia.getInstance().persistirRegistroClase(recibo);
+		DataPersistencia.getInstance().persistirRegistroClase(recibo, act);
 	}
 	
 }

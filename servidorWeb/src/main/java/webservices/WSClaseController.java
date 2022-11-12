@@ -34,11 +34,11 @@ public interface WSClaseController {
      * @param arg0
      * @return
      *     returns int
-     * @throws ActividadDeportivaException_Exception
      * @throws FechaInvalidaException_Exception
+     * @throws UsuarioNoExisteException_Exception
      * @throws InstitucionException_Exception
      * @throws ClaseException_Exception
-     * @throws UsuarioNoExisteException_Exception
+     * @throws ActividadDeportivaException_Exception
      */
     @WebMethod
     @WebResult(partName = "return")
@@ -68,12 +68,12 @@ public interface WSClaseController {
      * @param arg1
      * @param arg0
      * @param arg6
-     * @throws NoExisteCuponeraException_Exception
-     * @throws ActividadDeportivaException_Exception
      * @throws FechaInvalidaException_Exception
-     * @throws InstitucionException_Exception
-     * @throws ClaseException_Exception
      * @throws UsuarioNoExisteException_Exception
+     * @throws NoExisteCuponeraException_Exception
+     * @throws ClaseException_Exception
+     * @throws InstitucionException_Exception
+     * @throws ActividadDeportivaException_Exception
      */
     @WebMethod
     @Action(input = "http://webServices/WSClaseController/inscribirSocioRequest", output = "http://webServices/WSClaseController/inscribirSocioResponse", fault = {
@@ -140,6 +140,54 @@ public interface WSClaseController {
         String arg1)
         throws InstitucionException_Exception
     ;
+
+    /**
+     * 
+     * @param arg2
+     * @param arg1
+     * @param arg0
+     * @return
+     *     returns webservices.DtClaseWS
+     * @throws InstitucionException_Exception
+     * @throws ClaseException_Exception
+     * @throws ActividadDeportivaException_Exception
+     */
+    @WebMethod
+    @WebResult(partName = "return")
+    @Action(input = "http://webServices/WSClaseController/seleccionarClaseRequest", output = "http://webServices/WSClaseController/seleccionarClaseResponse", fault = {
+        @FaultAction(className = InstitucionException_Exception.class, value = "http://webServices/WSClaseController/seleccionarClase/Fault/InstitucionException"),
+        @FaultAction(className = ClaseException_Exception.class, value = "http://webServices/WSClaseController/seleccionarClase/Fault/ClaseException"),
+        @FaultAction(className = ActividadDeportivaException_Exception.class, value = "http://webServices/WSClaseController/seleccionarClase/Fault/ActividadDeportivaException")
+    })
+    public DtClaseWS seleccionarClase(
+        @WebParam(name = "arg0", partName = "arg0")
+        String arg0,
+        @WebParam(name = "arg1", partName = "arg1")
+        String arg1,
+        @WebParam(name = "arg2", partName = "arg2")
+        String arg2)
+        throws ActividadDeportivaException_Exception, ClaseException_Exception, InstitucionException_Exception
+    ;
+
+    /**
+     * 
+     * @return
+     *     returns net.java.dev.jaxb.array.StringArray
+     */
+    @WebMethod
+    @WebResult(partName = "return")
+    @Action(input = "http://webServices/WSClaseController/obtenerSociosRequest", output = "http://webServices/WSClaseController/obtenerSociosResponse")
+    public StringArray obtenerSocios();
+
+    /**
+     * 
+     * @return
+     *     returns net.java.dev.jaxb.array.StringArray
+     */
+    @WebMethod
+    @WebResult(partName = "return")
+    @Action(input = "http://webServices/WSClaseController/obtenerInstitucionesRequest", output = "http://webServices/WSClaseController/obtenerInstitucionesResponse")
+    public StringArray obtenerInstituciones();
 
     /**
      * 
@@ -242,62 +290,14 @@ public interface WSClaseController {
 
     /**
      * 
-     * @return
-     *     returns net.java.dev.jaxb.array.StringArray
-     */
-    @WebMethod
-    @WebResult(partName = "return")
-    @Action(input = "http://webServices/WSClaseController/obtenerInstitucionesRequest", output = "http://webServices/WSClaseController/obtenerInstitucionesResponse")
-    public StringArray obtenerInstituciones();
-
-    /**
-     * 
-     * @param arg2
-     * @param arg1
-     * @param arg0
-     * @return
-     *     returns webservices.DtClaseWS
-     * @throws ActividadDeportivaException_Exception
-     * @throws InstitucionException_Exception
-     * @throws ClaseException_Exception
-     */
-    @WebMethod
-    @WebResult(partName = "return")
-    @Action(input = "http://webServices/WSClaseController/seleccionarClaseRequest", output = "http://webServices/WSClaseController/seleccionarClaseResponse", fault = {
-        @FaultAction(className = InstitucionException_Exception.class, value = "http://webServices/WSClaseController/seleccionarClase/Fault/InstitucionException"),
-        @FaultAction(className = ClaseException_Exception.class, value = "http://webServices/WSClaseController/seleccionarClase/Fault/ClaseException"),
-        @FaultAction(className = ActividadDeportivaException_Exception.class, value = "http://webServices/WSClaseController/seleccionarClase/Fault/ActividadDeportivaException")
-    })
-    public DtClaseWS seleccionarClase(
-        @WebParam(name = "arg0", partName = "arg0")
-        String arg0,
-        @WebParam(name = "arg1", partName = "arg1")
-        String arg1,
-        @WebParam(name = "arg2", partName = "arg2")
-        String arg2)
-        throws ActividadDeportivaException_Exception, ClaseException_Exception, InstitucionException_Exception
-    ;
-
-    /**
-     * 
-     * @return
-     *     returns net.java.dev.jaxb.array.StringArray
-     */
-    @WebMethod
-    @WebResult(partName = "return")
-    @Action(input = "http://webServices/WSClaseController/obtenerSociosRequest", output = "http://webServices/WSClaseController/obtenerSociosResponse")
-    public StringArray obtenerSocios();
-
-    /**
-     * 
      * @param arg2
      * @param arg1
      * @param arg0
      * @return
      *     returns net.java.dev.jaxb.array.StringArray
-     * @throws ActividadDeportivaException_Exception
-     * @throws InstitucionException_Exception
      * @throws UsuarioNoExisteException_Exception
+     * @throws InstitucionException_Exception
+     * @throws ActividadDeportivaException_Exception
      */
     @WebMethod
     @WebResult(partName = "return")
@@ -323,9 +323,9 @@ public interface WSClaseController {
      * @param arg0
      * @return
      *     returns net.java.dev.jaxb.array.StringArray
-     * @throws ActividadDeportivaException_Exception
-     * @throws InstitucionException_Exception
      * @throws ClaseException_Exception
+     * @throws InstitucionException_Exception
+     * @throws ActividadDeportivaException_Exception
      */
     @WebMethod
     @WebResult(partName = "return")

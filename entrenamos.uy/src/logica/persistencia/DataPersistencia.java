@@ -22,6 +22,7 @@ import excepciones.ClaseException;
 import excepciones.InstitucionException;
 import excepciones.UsuarioNoExisteException;
 import logica.ActividadDeportiva;
+import logica.Calificacion;
 import logica.Categoria;
 import logica.Clase;
 import logica.ClasesCuponera;
@@ -91,6 +92,10 @@ public class DataPersistencia {
 				x.setnicknameProfesor(clase.getProfesor().getNickname());
 				x.setActividad(clase.getAD().getNombre());
 				x.setInstitucion(ins.getNombre());
+				x.setDesPremio(clase.getPrize().getDescription());
+				x.setUrlVideo(clase.getUrlVideo());
+				x.setPremios(clase.getPrize().getCantidad());
+			
 			    em.getTransaction().begin();
 		    	em.persist(x);
 		    	em.getTransaction().commit();
@@ -313,6 +318,7 @@ public class DataPersistencia {
 					s.setFechaInicio(cup.getFechaInicio().toCalendar());
 					s.setFechaFin(cup.getFechaFin().toCalendar());
 					s.setFechaAlta(cup.getFechaAlta().toCalendar());
+					
 			
 					em.getTransaction().begin();
 					em.persist(s);
@@ -326,7 +332,7 @@ public class DataPersistencia {
 			}
 	}
 		
-	 public void persistirRegistroClase(compraClase cup) {
+	 public void persistirRegistroClase(compraClase cup, ActividadDeportiva act) {
 			EntityManager em = emFabrica.createEntityManager();
 			try {
 					Registros s = new Registros();
@@ -335,6 +341,7 @@ public class DataPersistencia {
 					s.setFechaRegistro(cup.getFechaInscripcion().toCalendar());
 					s.setCosto(cup.getCosto());
 					s.setTipoPago(cup.esTipoCuponera());
+					s.setAct(act.getNombre());
 					
 
 					em.getTransaction().begin();
@@ -414,7 +421,84 @@ public class DataPersistencia {
 	 }
 	 
 	 
+	 public void persistirValoraciones(Socio nickSocio, Clase cla, int valor) throws UsuarioNoExisteException {
+			EntityManager em = emFabrica.createEntityManager();
+			
+			try {
+					Valoraciones s = new Valoraciones();
+					s.setNombreSoc(nickSocio.getNickname());
+					s.setNombreClase(cla.getNombre());
+					s.setValoracion(valor);
+					s.setNombreProf(cla.getProfesor().getNickname());
+
+					em.getTransaction().begin();
+					em.persist(s);
+					em.getTransaction().commit();
+		
+			} catch (Exception e) {
+				e.printStackTrace();
+				em.getTransaction().rollback();
+			} finally {
+				em.close();
+			}
+	 }
+	 
+	 
+	 public void persistirFavoritas(Socio nickSocio, Clase cla, int valor) throws UsuarioNoExisteException {
+			EntityManager em = emFabrica.createEntityManager();
+			
+			try {
+					Valoraciones s = new Valoraciones();
+					s.setNombreSoc(nickSocio.getNickname());
+					s.setNombreClase(cla.getNombre());
+					s.setValoracion(valor);
+					s.setNombreProf(cla.getProfesor().getNickname());
+
+					em.getTransaction().begin();
+					em.persist(s);
+					em.getTransaction().commit();
+		
+			} catch (Exception e) {
+				e.printStackTrace();
+				em.getTransaction().rollback();
+			} finally {
+				em.close();
+			}
+	 }
+	 
+	 
+	 
 	 public void persistirAprobarActividad(ActividadDeportiva act) {
+			EntityManager em = emFabrica.createEntityManager();
+
+			try {
+
+				Query s = em.createNativeQuery("UPDATE `ACTIVIDADES_DEPORTIVAS` "
+		                + "SET "
+		                + "`ESTADO` = ? "
+		                + "WHERE `NOMBRE_ACTIVIDAD` = ?; ");
+				
+			
+	
+				s.setParameter(1, act.getEstado().name());
+				
+				s.setParameter(2, act.getNombre());
+
+			//	s.setImagen(user.getImagen());
+				em.getTransaction().begin();
+				s.executeUpdate();
+				em.getTransaction().commit();
+			
+			} catch (Exception e) {
+				e.printStackTrace();
+				em.getTransaction().rollback();
+			} finally {
+				em.close();
+			}
+		}
+	 
+	 
+	 public void persistirFinalizarActividad(ActividadDeportiva act) {
 			EntityManager em = emFabrica.createEntityManager();
 
 			try {
@@ -487,6 +571,7 @@ public class DataPersistencia {
 		    Query q8 = em.createQuery("DELETE FROM ActividadesCuponeras");
 		    Query q9 = em.createQuery("DELETE FROM Categorias");
 		    Query q10 = em.createQuery("DELETE FROM Seguidores");
+		    Query q11 = em.createQuery("DELETE FROM Valoraciones");
 		    q1.executeUpdate();
 		    q2.executeUpdate();
 		    q3.executeUpdate();
@@ -497,6 +582,7 @@ public class DataPersistencia {
 		    q8.executeUpdate();
 		    q9.executeUpdate();
 		    q10.executeUpdate();
+		    q11.executeUpdate();
 		    em.getTransaction().commit();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -612,7 +698,7 @@ public Vector<String> consultarInstituciones() {
 //	
 //	
 //
-//	// PRECONDICION!!! Existe al menos una actividad con 'nombreActDep' en la persistencia.
+	// PRECONDICION!!! Existe al menos una actividad con 'nombreActDep' en la persistencia.
 //	public DtActividadDeportivaExtra getActividad(String nombreActDep) throws ActividadDeportivaException {
 //		EntityManager em = emFabrica.createEntityManager();
 //		try {
@@ -685,6 +771,26 @@ public Vector<String> consultarInstituciones() {
 //		}
 //		throw new UsuarioNoExisteException("El usuario "+nombreSocio+" no se encuentra presente en el sistema.");
 //	}
+
+
+
+
+
+
+
+
+
+
+
+//
+
+
+
+
+
+
+
+
 
 public Set<String> obtenerActividades() {
 	EntityManager em = emFabrica.createEntityManager();

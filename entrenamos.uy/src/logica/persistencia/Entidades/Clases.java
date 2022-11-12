@@ -59,6 +59,17 @@ public class Clases implements Serializable {
     @Column(name = "INSTITUCION")
     private String institucion;
     
+    @Column(name = "CANT_PREMIOS",
+    		nullable = true)
+    private int premios;
+    
+    @Column(name = "DESC_PREMIOS",
+    		nullable = true)
+    private String descPremios;
+    
+    @Column(name = "URL_VIDEO")
+    private String URLvideo;
+    
     public String getActividad() {
 		return actividad;
 	}
@@ -133,6 +144,33 @@ public class Clases implements Serializable {
     public void setFechaAlta(Calendar fechaAlta) {
         this.fechaAlta = fechaAlta;
     }
+        
+    public int getPremios() {
+        return premios;
+    }
+
+    public void setPremios(int premios) {
+        this.premios = premios;
+    }
+    
+    public String getUrlVideo() {
+        return URLvideo;
+    }
+
+    public void setUrlVideo(String URLvideo) {
+		this.URLvideo = URLvideo;
+	}   
+    
+    public String getDesPremio() {
+        return descPremios;
+    }
+
+    public void setDesPremio(String descPremios) {
+		this.descPremios = descPremios;
+	}  
+        
+        
+    
     
 
     @Override

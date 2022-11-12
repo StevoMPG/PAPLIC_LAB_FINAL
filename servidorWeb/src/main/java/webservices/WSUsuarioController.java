@@ -92,9 +92,9 @@ public interface WSUsuarioController {
      * @param arg4
      * @param arg1
      * @param arg0
+     * @throws UsuarioNoExisteException_Exception
      * @throws InstitucionException_Exception
      * @throws ClaseException_Exception
-     * @throws UsuarioNoExisteException_Exception
      */
     @WebMethod
     @Action(input = "http://webServices/WSUsuarioController/valorarProfesorRequest", output = "http://webServices/WSUsuarioController/valorarProfesorResponse", fault = {
@@ -121,8 +121,8 @@ public interface WSUsuarioController {
      * @param arg2
      * @param arg1
      * @param arg0
-     * @throws InstitucionException_Exception
      * @throws UsuarioNoExisteException_Exception
+     * @throws InstitucionException_Exception
      */
     @WebMethod
     @Action(input = "http://webServices/WSUsuarioController/favoritearActividadRequest", output = "http://webServices/WSUsuarioController/favoritearActividadResponse", fault = {
@@ -142,12 +142,12 @@ public interface WSUsuarioController {
     /**
      * 
      * @return
-     *     returns webservices.DtCapsula
+     *     returns java.lang.String
      */
     @WebMethod
     @WebResult(partName = "return")
-    @Action(input = "http://webServices/WSUsuarioController/obtenerUsuariosRequest", output = "http://webServices/WSUsuarioController/obtenerUsuariosResponse")
-    public DtCapsula obtenerUsuarios();
+    @Action(input = "http://webServices/WSUsuarioController/pingRequest", output = "http://webServices/WSUsuarioController/pingResponse")
+    public String ping();
 
     /**
      * 
@@ -205,6 +205,26 @@ public interface WSUsuarioController {
 
     /**
      * 
+     * @return
+     *     returns webservices.DtCapsula
+     */
+    @WebMethod
+    @WebResult(partName = "return")
+    @Action(input = "http://webServices/WSUsuarioController/obtenerInstitucionesRequest", output = "http://webServices/WSUsuarioController/obtenerInstitucionesResponse")
+    public DtCapsula obtenerInstituciones();
+
+    /**
+     * 
+     * @return
+     *     returns webservices.DtCapsula
+     */
+    @WebMethod
+    @WebResult(partName = "return")
+    @Action(input = "http://webServices/WSUsuarioController/obtenerUsuariosRequest", output = "http://webServices/WSUsuarioController/obtenerUsuariosResponse")
+    public DtCapsula obtenerUsuarios();
+
+    /**
+     * 
      * @param arg1
      * @param arg0
      * @return
@@ -218,26 +238,6 @@ public interface WSUsuarioController {
         String arg0,
         @WebParam(name = "arg1", partName = "arg1")
         String arg1);
-
-    /**
-     * 
-     * @return
-     *     returns webservices.DtCapsula
-     */
-    @WebMethod
-    @WebResult(partName = "return")
-    @Action(input = "http://webServices/WSUsuarioController/obtenerInstitucionesRequest", output = "http://webServices/WSUsuarioController/obtenerInstitucionesResponse")
-    public DtCapsula obtenerInstituciones();
-
-    /**
-     * 
-     * @return
-     *     returns java.lang.String
-     */
-    @WebMethod
-    @WebResult(partName = "return")
-    @Action(input = "http://webServices/WSUsuarioController/pingRequest", output = "http://webServices/WSUsuarioController/pingResponse")
-    public String ping();
 
     /**
      * 

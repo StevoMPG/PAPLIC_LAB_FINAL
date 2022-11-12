@@ -38,9 +38,8 @@ public class Registros implements Serializable {
     @Column(name = "NOMBRE_CLASE")
     private String nclase;
     
-    @Column(name = "NOMBRE_ACTIVIDAD")
+    @Column(name = "NOMBRE_ACT")
     private String nact;
-
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "FECHA_REGISTRO")

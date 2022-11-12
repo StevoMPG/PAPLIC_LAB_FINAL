@@ -357,7 +357,7 @@ public class Main {
 		        // Aparatos #C3
 		        IDCC.ingresarDatosClase("Fuerza Bruta",  "Aparatos y pesas",  new DtClase("Aparatos",  "viktor",  "viktor",  
 		        		1,  7,  "https://www.musculos.com/aparatos",  new DtFechaHora(2021, 6, 1, 18, 0, 0),  new DtFechaHora(2021, 3, 31, 0, 0, 0),"Aparatos.png",
-		        		"https://www.youtube.com/watch?v=6YTVPjjm3e8"));
+		        		"https://www.youtube.com/watch?v=6YTVPjjm3e8",new DtPremio("No hay ",0,null, null)));
 		        // Voleibol #C4
 		        IDCC.ingresarDatosClase("Telón",  "Voleibol",  new DtClase("Voleibol",  "denis",  "denis", 
 		        		10,  21,  "https://telon.com.uy/voley",  new DtFechaHora(2021, 6, 10, 19, 0, 0),  new DtFechaHora(2021, 4, 20, 0, 0, 0), "Voleibol.png",
@@ -369,11 +369,11 @@ public class Main {
 		        // Mariposa #C6
 		        IDCC.ingresarDatosClase("Telón",  "Voleibol",  new DtClase("Mariposa",  "Nelson",  "Nelson", 
 		        		2,  6,  "https://telon.com.uy/natacionM",  new DtFechaHora(2021, 8, 10, 17, 45, 0),  new DtFechaHora(2021, 4, 20, 0, 0, 0),  "Mariposa.png", 
-		        		null));
+		        		null, new DtPremio("No hay ",0,null, null)));
 		        // Aeróbica niños #C7
 		        IDCC.ingresarDatosClase("Instituto Natural",  "Aeróbica",  new DtClase("Aeróbica niños",  "clazar",  "clazar", 
 		        		5,  10,  "https://www.inatural.com/aeroni",  new DtFechaHora(2021, 8, 15, 16, 30, 0),  new DtFechaHora(2021, 5, 30, 0, 0, 0), null, 
-		        		null));
+		        		null, new DtPremio("No hay ",0,null, null)));
 		        // Aeróbico adulto mayor #C8
 		        IDCC.ingresarDatosClase("Instituto Natural",  "Aeróbica",  new DtClase("Aeróbico adulto mayor",  "clazar",  "clazar", 
 		        		5,  12,  "https://www.inatural.com/aeroam",  new DtFechaHora(2021, 8, 31, 19, 30, 0),  new DtFechaHora(2021, 5, 30, 0, 0, 0), null, 
@@ -381,7 +381,7 @@ public class Main {
 		        // Aeróbico #C9
 		        IDCC.ingresarDatosClase("Instituto Natural",  "Aeróbica",  new DtClase("Aeróbica",  "clazar",  "clazar", 
 		        		5,  20,  "https://www.inatural.com/aerogral",  new DtFechaHora(2021, 9, 30, 20, 0, 0),  new DtFechaHora(2021, 5, 30, 0, 0, 0), null, 
-		        		null));
+		        		null, new DtPremio("No hay ",0,null, null)));
 		        // Boxeo I #C10
 		        IDCC.ingresarDatosClase("Fuerza Bruta",  "Kickboxing",  new DtClase("Boxeo I",  "TheBoss",  "TheBoss", 
 		        		1,  4,  "https://www.musculos.com/boxeo1",  new DtFechaHora(2021, 9, 1, 19, 30, 0),  new DtFechaHora(2021, 6, 7, 0, 0, 0),  "Boxeo I.png",
@@ -389,7 +389,7 @@ public class Main {
 		        // Boxeo II #C11
 		        IDCC.ingresarDatosClase("Fuerza Bruta",  "Kickboxing",  new DtClase("Boxeo II",  "TheBoss",  "TheBoss", 
 		        		2,  2,  "https://www.musculos.com/boxeo2",  new DtFechaHora(2021, 9, 30, 17, 0, 0),  new DtFechaHora(2021, 6, 7, 0, 0, 0),  "Boxeo II.png", 
-		        		"https://www.youtube.com/watch?v=-gGx_WqKAh8"));
+		        		"https://www.youtube.com/watch?v=-gGx_WqKAh8", new DtPremio("No hay ",0,null, null)));
 		        // Músculos para boxeo #C12
 		        IDCC.ingresarDatosClase("Fuerza Bruta",  "Kickboxing",  new DtClase("Músculos para boxeo",  "viktor",  "viktor", 
 		        		1,  5,  "https://www.musculos.com/muscbox",  new DtFechaHora(2021, 10, 15, 20, 0, 0),  new DtFechaHora(2021, 6, 7, 0, 0, 0),  "Músculos para boxeo.png", 
