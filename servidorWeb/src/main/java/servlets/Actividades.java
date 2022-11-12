@@ -50,7 +50,7 @@ public class Actividades extends HttpServlet {
     	
 		try {
 			datosActDep = buscarActDep(nombreActDep);
-			finalizada = (datosActDep.getEstado() == tipoEstado.finalizada) ? true : false;
+			finalizada = (datosActDep.getEstado()== tipoEstado.finalizada) ? true : false;
 	    	if(!finalizada)
 	    		institucion = LaFabricaWS.getInstance().obtenerIDictadoClaseController().obtenerInstitucionActDep(datosActDep.getNombre());
 		} catch(ActividadDeportivaException e) {

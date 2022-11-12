@@ -483,23 +483,6 @@
 					</ul>
 					<% if ((usrLogged != null) && (usrProfile.getNickname().equals(usrLogged.getNickname()))) { %>
 					<br>
-					<h5 style="color: white">Actividades Finalizadas</h5>
-					  <ul id="listaActividadesClasesFin" style="background-color: rgba(0, 0, 0, 0.79);" class="list-group list-group-horizontal">
-					  	<% for ( Object ad: dtad ) { %>
-					  		<% if (((DtActividadDeportivaExtra)ad).getEstado() == tipoEstado.finalizada) { %>
-							<li class="list-group-item container border card-body elementoLista elementoListaPequenio">
-								<div class="row">
-							 		<div class="col-auto">
-							 			<a href="<%=request.getContextPath()%>/actividades?actividad=<%=((DtActividadDeportivaExtra)ad).getNombre()%>" class="link-dark">
-							 				<b><%=((DtActividadDeportivaExtra)ad).getNombre()%></b>
-							 			</a>
-							 		</div>
-								  </div>
-							 </li>
-							<% } %>
-						<% } %>
-					  </ul>
-					<br>
 					<h5 style="color: white">Actividades Ingresadas</h5>
 					  <ul id="listaActividadesClases" style="background-color: rgba(0, 0, 0, 0.79);" class="list-group list-group-horizontal">
 					  	<% for ( Object ad: dtad ) { %>

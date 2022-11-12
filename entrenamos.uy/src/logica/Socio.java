@@ -72,8 +72,8 @@ public class Socio extends Usuario {
     	clasesDeActividadesAceptadas = clasesDeActividadesAceptadasLimpiarSetsVacios;
     	
     	
-    	Map<String,  Set<String>> clasesDeActividadesFinalizadas =new HashMap<>();
-//    	Map<String,  Set<String>> clasesDeActividadesFinalizadas = DataPersistencia.getInstance().obtenerActividadxClasesSocio(getNickname());
+//    	Map<String,  Set<String>> clasesDeActividadesFinalizadas =new HashMap<>();
+    	Map<String,  Set<String>> clasesDeActividadesFinalizadas = DataPersistencia.getInstance().obtenerActividadxClasesSocio(getNickname());
 //    	 Viejo codigo de cuando las actividades finalizadas estaban en memoria (F)
     	for (compraClase compraClase: reciboClases) {  
     		String nombreAD = compraClase.getClase().getAD().getNombre();

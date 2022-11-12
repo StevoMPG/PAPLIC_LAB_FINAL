@@ -67,24 +67,24 @@ public class controladorUsuario implements IcontroladorUsuario {
 		manejadorUsuario handlerUsuario = manejadorUsuario .getInstance();
 		Usuario user = handlerUsuario.findUsuario(userNick);
 	
-//		if(userNick.endsWith("\uEAEA")){
-//			DtUsuarioExtra resu =  DataPersistencia.getInstance().getUsuario(userNick.replace("\uEAEA", ""));
-//			if(resu instanceof DtSocioExtra) {
-//				((DtSocioExtra) resu).setClasesDeActividadesFinalizadas(DataPersistencia.getInstance().obtenerActividadxClasesSocio(userNick.replace("\uEAEA", "")));
-//				return resu;
-//			}
-//			else if(resu instanceof DtProfesorExtra) {
-//				Set<String> f = DataPersistencia.getInstance().obtenerActividades(userNick.replace("\uEAEA", ""));
-//				Map<String,tipoEstado> ff = new HashMap<>();
-//				for(String fq:f) {
-//					ff.put(fq, tipoEstado.finalizada);
-//				}
-//				((DtProfesorExtra) resu).setHistoralActDepIngresadas(ff);
-//				return resu;
-//			}
-//		} else {
-//			user = handlerUsuario.findUsuario(userNick);
-//		}
+		if(userNick.endsWith("\uEAEA")){
+			DtUsuarioExtra resu =  DataPersistencia.getInstance().getUsuario(userNick.replace("\uEAEA", ""));
+			if(resu instanceof DtSocioExtra) {
+				((DtSocioExtra) resu).setClasesDeActividadesFinalizadas(DataPersistencia.getInstance().obtenerActividadxClasesSocio(userNick.replace("\uEAEA", "")));
+				return resu;
+			}
+			else if(resu instanceof DtProfesorExtra) {
+				Set<String> f = DataPersistencia.getInstance().obtenerActividades(userNick.replace("\uEAEA", ""));
+				Map<String,tipoEstado> ff = new HashMap<>();
+				for(String fq:f) {
+					ff.put(fq, tipoEstado.finalizada);
+				}
+				((DtProfesorExtra) resu).setHistoralActDepIngresadas(ff);
+				return resu;
+			}
+		} else {
+			user = handlerUsuario.findUsuario(userNick);
+		}
 		if (user instanceof Socio) {
 			DtSocioExtra dtExt = ((Socio) user).getDtExt();
 			return dtExt;

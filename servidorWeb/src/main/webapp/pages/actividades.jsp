@@ -135,7 +135,7 @@
 				</div>
 				<%} else if(datosActDep.getEstado()==tipoEstado.finalizada) {%>
 				<div class="alert alert-info mt-4" role="alert">
-				  Esta actividad fue <b>FINALIZADA</b>. Usted está visualizando los registros la actividad finalizada disponibles en la base de datos de Entrenamos.uy <i class="fas fa-database"></i>
+				  Esta actividad fue <b>FINALIZADA</b>.  Pongase en contacto con un asesor para obtener más información.
 				</div>
 				<%} %>
 	        </div>
@@ -306,7 +306,7 @@
          <div class="modal-content" style="color: white">
              <div class="modal-header">
                  <img src="<%=request.getContextPath()%>/assets/images/misc/iconoEntrenamos-uy.png" alt="EntrenamosUYLogo" width="40" height="30" class="d-inline-block align-text-top img-fluid me-2 ms-2 mb-3">
-                 <h2 class="fw-bold mb-0">Inscripción a Clase</h2>
+                 <h2 class="fw-bold mb-0">Finalizar Actividad</h2>
                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
              </div>
              <div class="modal-body">

@@ -121,10 +121,9 @@ public class ActividadDeportiva {
         return false;
 	}
 	public DtActividadDeportivaExtra getDtExt() {
-		Set<String> nombresClases = new HashSet<>(clases.keySet());
 		Set<String> nombresClasesCuponeras = new HashSet<>(clCuponera.keySet());
 		DtActividadDeportivaExtra actDep = new DtActividadDeportivaExtra(getNombre(),  getDescripcion(),  getDuracionMinutos(),  
-				getCosto(),  getFechaRegistro() ,  cats.keySet(),  nombresClases,  nombresClasesCuponeras,  estado,  creador.getNickname(),  imgName,favoritos.size());
+				getCosto(),  getFechaRegistro() ,  cats.keySet(),  getNombreClases(),  nombresClasesCuponeras,  estado,  creador.getNickname(),  imgName,favoritos.size());
 		return actDep;
 	}
 	public tipoEstado getEstado() {
