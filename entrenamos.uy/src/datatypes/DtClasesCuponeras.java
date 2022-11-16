@@ -18,5 +18,5 @@ public class DtClasesCuponeras {
 	public int getCantidadClases() {
 		return cantidadClases;
 	}
-	
+
 }
