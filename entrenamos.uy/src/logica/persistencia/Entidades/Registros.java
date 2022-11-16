@@ -51,6 +51,9 @@ public class Registros implements Serializable {
     
     @Column(name = "TIPO_PAGO")
     private boolean pago;
+    
+    @Column(name = "ESTADO_ACTIVIDAD")
+    private String tipoEstado;
 
     
     public Long getId() {
@@ -109,6 +112,13 @@ public class Registros implements Serializable {
 	public void setTipoPago(boolean pago) {
 		this.pago = pago;
 	}
-   
+	
+	public String getEstado() {
+	     return tipoEstado;
+	}
+
+	public void setEstado(String tipoEstado) {
+	     this.tipoEstado = tipoEstado;
+	}
 
 }

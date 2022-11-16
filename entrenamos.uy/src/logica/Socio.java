@@ -72,20 +72,20 @@ public class Socio extends Usuario {
     	clasesDeActividadesAceptadas = clasesDeActividadesAceptadasLimpiarSetsVacios;
     	
     	
-//    	Map<String,  Set<String>> clasesDeActividadesFinalizadas =new HashMap<>();
+ //   	Map<String,  Set<String>> clasesDeActividadesFinalizadas =new HashMap<>();
     	Map<String,  Set<String>> clasesDeActividadesFinalizadas = DataPersistencia.getInstance().obtenerActividadxClasesSocio(getNickname());
 //    	 Viejo codigo de cuando las actividades finalizadas estaban en memoria (F)
-    	for (compraClase compraClase: reciboClases) {  
-    		String nombreAD = compraClase.getClase().getAD().getNombre();
-    		if (!clasesDeActividadesFinalizadas.containsKey(nombreAD)) {
-    			Set<String> nombreClases = new HashSet<>();
-    			clasesDeActividadesFinalizadas.put(nombreAD,  nombreClases);
-    			for (compraClase rc2: reciboClases) {
-    				if (rc2.getClase().getAD().getNombre().equals(nombreAD) && rc2.getClase().getAD().getEstado().equals(tipoEstado.finalizada))
-    					nombreClases.add(rc2.getClase().getNombre());
-    			}
-    		}
-    	}
+//    	for (compraClase compraClase: reciboClases) {  
+//    		String nombreAD = compraClase.getClase().getAD().getNombre();
+//    		if (!clasesDeActividadesFinalizadas.containsKey(nombreAD)) {
+//    			Set<String> nombreClases = new HashSet<>();
+//    			clasesDeActividadesFinalizadas.put(nombreAD,  nombreClases);
+//    			for (compraClase rc2: reciboClases) {
+//    				if (rc2.getClase().getAD().getNombre().equals(nombreAD) && rc2.getClase().getAD().getEstado().equals(tipoEstado.finalizada))
+//    					nombreClases.add(rc2.getClase().getNombre());
+//    			}
+//    		}
+//    	}
     	Map<String,  Set<String>> clasesDeActividadesFinalizadasLimpiarSetsVacios = new HashMap<>();
     	for(Entry<String, Set<String>> x : clasesDeActividadesFinalizadas.entrySet()) {
     		if(x.getValue().size()>0)

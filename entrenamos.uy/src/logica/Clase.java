@@ -4,7 +4,6 @@ import datatypes.DtClaseExtra;
 import datatypes.DtClase;
 import datatypes.DtFechaHora;
 import datatypes.DtPremio;
-import excepciones.UsuarioNoExisteException;
 import logica.persistencia.DataPersistencia;
 
 import java.util.ArrayList;
@@ -20,7 +19,7 @@ public class Clase {
 	private int maxSocios;
 	private String url;
 	private DtFechaHora fechaRegistro;
-	private List<compraClase> listaReciboClase;
+	private List<compraClase> listacompraClase;
 	private Profesor vasilev;
 	private ActividadDeportiva actDep;
 	private String imgName, urlVideo;
@@ -36,7 +35,7 @@ public class Clase {
 		this.url = datoClase.getURL();
 		this.fechaRegistro = datoClase.getFechaRegistro();
 		this.vasilev = profe;
-		this.listaReciboClase = new ArrayList<compraClase>();
+		this.listacompraClase = new ArrayList<compraClase>();
 		this.calificaciones = new HashMap<>();
 		this.urlVideo = datoClase.getUrlVideo();
 		this.imgName = datoClase.getImgName();
@@ -78,7 +77,7 @@ public class Clase {
 	public DtClaseExtra getDt() {
 		List<String> SoloNombres = new ArrayList<>();
 		List<String> ListNombres = new ArrayList<>();
-		for (compraClase x: listaReciboClase) {
+		for (compraClase x: listacompraClase) {
 			ListNombres.add(x.getNickCorreoSocio());
 			SoloNombres.add(x.getNick());
 		}
@@ -96,17 +95,21 @@ public class Clase {
 	}
 	
 	public boolean hayLugar() {
-		return listaReciboClase.size() < maxSocios;
+		return listacompraClase.size() < maxSocios;
 	}
 	
 	public boolean tieneActividadDeportiva(ActividadDeportiva actDep) {
 		return this.actDep == actDep;
 	}
 	public List<compraClase> getRecibo(){
-		return listaReciboClase;
+		return listacompraClase;
 	}
-
-	public void addCalifiacion(String socioNick, Calificacion calif) throws UsuarioNoExisteException {
+	
+	public void addRecibo(compraClase recibo, ActividadDeportiva act) {
+		listacompraClase.add(recibo);
+		DataPersistencia.getInstance().persistirRegistroClase(recibo, act);
+	}
+	public void addCalifiacion(String socioNick, Calificacion calif) {
 		calificaciones.put(socioNick, calif);
 	}
 	
@@ -134,16 +137,12 @@ public class Clase {
 	}
 
 	public void suicidar() {
-		for(compraClase rc: listaReciboClase)
+		for(compraClase rc: listacompraClase)
 			rc.suicidar();
 		
 	}
 	public void setPremio(Premio premio) {
 		prize = premio;
-	}
-	public void addRecibo(compraClase recibo, ActividadDeportiva act) {
-		listaReciboClase.add(recibo);
-		DataPersistencia.getInstance().persistirRegistroClase(recibo, act);
 	}
 	
 }

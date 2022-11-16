@@ -17,6 +17,7 @@ import datatypes.DtClaseExtra;
 import datatypes.DtSocio;
 import datatypes.DtUsuario;
 import datatypes.DtUsuarioExtra;
+import datatypes.tipoEstado;
 import excepciones.ActividadDeportivaException;
 import excepciones.ClaseException;
 import excepciones.InstitucionException;
@@ -342,6 +343,7 @@ public class DataPersistencia {
 					s.setCosto(cup.getCosto());
 					s.setTipoPago(cup.esTipoCuponera());
 					s.setAct(act.getNombre());
+					s.setEstado(act.getEstado().name());
 					
 
 					em.getTransaction().begin();
@@ -425,16 +427,40 @@ public class DataPersistencia {
 			EntityManager em = emFabrica.createEntityManager();
 			
 			try {
+				
+				em.getTransaction().begin();
+				TypedQuery<Valoraciones> select = em.createQuery("SELECT val FROM Valoraciones val WHERE val.nombreSoc=:nombreSoc AND val.nombreClase=:nombreClase AND val.nombreProf=:nombreProf ", Valoraciones.class);
+				select.setParameter("nombreSoc", nickSocio.getNickname());
+				select.setParameter("nombreClase", cla.getNombre());
+				select.setParameter("nombreProf", cla.getProfesor().getNickname());
+				if (select.getResultList().size() == 0) {
+				
 					Valoraciones s = new Valoraciones();
 					s.setNombreSoc(nickSocio.getNickname());
 					s.setNombreClase(cla.getNombre());
 					s.setValoracion(valor);
 					s.setNombreProf(cla.getProfesor().getNickname());
 
-					em.getTransaction().begin();
 					em.persist(s);
-					em.getTransaction().commit();
+					em.getTransaction().commit();					
+				}
+				else {
+					
+					Query y = em.createNativeQuery("UPDATE `VALORACIONES` "
+			                + "SET "
+			                + "`VALORACION` = ? "
+			                + "WHERE `SOCIO` = ? AND `CLASE` = ? AND `PROFESOR` = ?; ");
 		
+					y.setParameter(1, valor);
+					y.setParameter(2, nickSocio.getNickname());
+					y.setParameter(3, cla.getNombre());
+					y.setParameter(4, cla.getProfesor().getNickname());
+
+
+					y.executeUpdate();
+					em.getTransaction().commit();
+					
+				}
 			} catch (Exception e) {
 				e.printStackTrace();
 				em.getTransaction().rollback();
@@ -444,20 +470,25 @@ public class DataPersistencia {
 	 }
 	 
 	 
-	 public void persistirFavoritas(Socio nickSocio, Clase cla, int valor) throws UsuarioNoExisteException {
+	 public void persistirFavoritas(Socio soc, String act) throws UsuarioNoExisteException {
 			EntityManager em = emFabrica.createEntityManager();
 			
-			try {
-					Valoraciones s = new Valoraciones();
-					s.setNombreSoc(nickSocio.getNickname());
-					s.setNombreClase(cla.getNombre());
-					s.setValoracion(valor);
-					s.setNombreProf(cla.getProfesor().getNickname());
+			try {	
+				
+			em.getTransaction().begin();
+			TypedQuery<Favoritas> select = em.createQuery("SELECT fav FROM Favoritas fav WHERE fav.nombreSoc=:nombreSoc AND fav.nombreAct=:nombreAct", Favoritas.class);
+			select.setParameter("nombreSoc", soc.getNickname());
+			select.setParameter("nombreAct", act);
 
-					em.getTransaction().begin();
-					em.persist(s);
-					em.getTransaction().commit();
-		
+				if (select.getResultList().size() == 0) {	
+				
+						Favoritas s = new Favoritas();
+						s.setNombreAct(act);
+						s.setNombreSoc(soc.getNickname());
+
+						em.persist(s);
+						em.getTransaction().commit();
+				}
 			} catch (Exception e) {
 				e.printStackTrace();
 				em.getTransaction().rollback();
@@ -465,8 +496,7 @@ public class DataPersistencia {
 				em.close();
 			}
 	 }
-	 
-	 
+	 	 
 	 
 	 public void persistirAprobarActividad(ActividadDeportiva act) {
 			EntityManager em = emFabrica.createEntityManager();
@@ -507,6 +537,36 @@ public class DataPersistencia {
 		                + "SET "
 		                + "`ESTADO` = ? "
 		                + "WHERE `NOMBRE_ACTIVIDAD` = ?; ");
+				
+			
+	
+				s.setParameter(1, act.getEstado().name());
+				
+				s.setParameter(2, act.getNombre());
+
+			//	s.setImagen(user.getImagen());
+				em.getTransaction().begin();
+				s.executeUpdate();
+				em.getTransaction().commit();
+			
+			} catch (Exception e) {
+				e.printStackTrace();
+				em.getTransaction().rollback();
+			} finally {
+				em.close();
+			}
+		}
+	 
+	 
+	 public void persistirFinalizarActividadReg(ActividadDeportiva act) {
+			EntityManager em = emFabrica.createEntityManager();
+
+			try {
+
+				Query s = em.createNativeQuery("UPDATE `REGISTROS_CLASES` "
+		                + "SET "
+		                + "`ESTADO_ACTIVIDAD` = ? "
+		                + "WHERE `NOMBRE_ACT` = ?; ");
 				
 			
 	
@@ -572,6 +632,7 @@ public class DataPersistencia {
 		    Query q9 = em.createQuery("DELETE FROM Categorias");
 		    Query q10 = em.createQuery("DELETE FROM Seguidores");
 		    Query q11 = em.createQuery("DELETE FROM Valoraciones");
+		    Query q12 = em.createQuery("DELETE FROM Favoritas");
 		    q1.executeUpdate();
 		    q2.executeUpdate();
 		    q3.executeUpdate();
@@ -583,6 +644,7 @@ public class DataPersistencia {
 		    q9.executeUpdate();
 		    q10.executeUpdate();
 		    q11.executeUpdate();
+		    q12.executeUpdate();
 		    em.getTransaction().commit();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -870,12 +932,14 @@ public Set<String> obtenerActividades(String nickProfesor){
 	return nombresAD;
 }	
 
+
 public Map<String, Set<String>> obtenerActividadxClasesSocio(String nombreSocio) {
 	EntityManager em = emFabrica.createEntityManager();
 	Map<String, Set<String>> res = new HashMap<>();
 	try {
 		em.getTransaction().begin();
-		TypedQuery<Registros> select = em.createQuery("SELECT reg FROM Registros reg", Registros.class);
+		TypedQuery<Registros> select = em.createQuery("SELECT reg FROM Registros reg WHERE reg.tipoEstado=:tipoEstado", Registros.class);
+		select.setParameter("tipoEstado", tipoEstado.finalizada.toString());
 		Map<String,String> clasexact = new HashMap<>();
 		for(Registros x: select.getResultList()) {
 			if (x.getSocio().equals(nombreSocio))

@@ -28,6 +28,7 @@
 		<class>logica.persistencia.Entidades.Categorias</class>
 		<class>logica.persistencia.Entidades.Seguidores</class>
 		<class>logica.persistencia.Entidades.Valoraciones</class>
+		<class>logica.persistencia.Entidades.Favoritas</class>
 		<properties>
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/actividaddb"/>
 			<property name="javax.persistence.jdbc.user" value="tecnologo"/>

@@ -23,17 +23,10 @@ public class DtCuponera {
 		img = null;
 	}
 	public DtCuponera(String nom,  String descr,  float desc,  float precio,  DtFechaHora fechaIni,  DtFechaHora fechaFini,  DtFechaHora fechaAltaini,  List<DtClasesCuponeras> content,  List<String> cat,  String imagen){
-		nombre = nom;
-		descripcion = descr;
-		descuento = desc;
-		fechaInicio = fechaIni;
-		fechaFin = fechaFini;
-		fechaAlta = fechaAltaini;
-		costo = precio;
-		contenido = content;
-		categorias=cat;
+		this(nom, descr, desc, precio, fechaIni, fechaFini, fechaAltaini, content, cat);
 		img = imagen;
 	}
+	
 	public String getImgName() {
 		return img;
 	}

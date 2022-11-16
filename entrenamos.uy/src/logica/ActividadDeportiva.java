@@ -7,6 +7,7 @@ import datatypes.DtFechaHora;
 import datatypes.tipoEstado;
 import excepciones.ClaseException;
 import excepciones.InstitucionException;
+import excepciones.UsuarioNoExisteException;
 import logica.persistencia.DataPersistencia;
 import datatypes.DtActividadDeportivaExtra;
 
@@ -157,11 +158,13 @@ public class ActividadDeportiva {
 	public void setFavoritos(Set<Socio> favoritos) {
 		this.favoritos = favoritos;
 	}
-	public void changeFavoritos(Socio user) {
-		if (favoritos.contains(user))
+	public void changeFavoritos(Socio user) throws UsuarioNoExisteException {
+		if (favoritos.contains(user)) 
 			favoritos.remove(user);
-		else
+		else 
 			favoritos.add(user);
+			DataPersistencia.getInstance().persistirFavoritas(user, getNombre());
+		
 	}
 	public void suicidar() {
 		// TODO Auto-generated method stub

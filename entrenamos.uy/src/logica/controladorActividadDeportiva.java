@@ -220,6 +220,7 @@ public class controladorActividadDeportiva  implements IcontroladorActividadDepo
 				;
 			}
 		}
+		
 		return DataPersistencia.getInstance().getActividad(nombreActDep);
 	}
 	
@@ -229,6 +230,7 @@ public class controladorActividadDeportiva  implements IcontroladorActividadDepo
 				if (getHI().findInstitucion(i).getActsDeps().containsKey(actDep)) {
 					 getHI().findInstitucion(i).getActsDeps().get(actDep).setEstado(tipoEstado.finalizada);
 					 DataPersistencia.getInstance().persistirFinalizarActividad(getHI().findInstitucion(i).getActsDeps().get(actDep));
+					 DataPersistencia.getInstance().persistirFinalizarActividadReg(getHI().findInstitucion(i).getActsDeps().get(actDep));
 					 getHI().findInstitucion(i).finalizarAct(actDep);
 					 break;
 				 }

@@ -1,6 +1,5 @@
 package logica;
 
-
 public class ClasesCuponera {
 	private int cantidadClases;
 	private ActividadDeportiva acDEPS;
@@ -23,9 +22,7 @@ public class ClasesCuponera {
 	public ActividadDeportiva getAd() {
 		return acDEPS;
 	}
-	
 	public void estafar() {
 		cupi.estafar(this);
 	}
-
 }
