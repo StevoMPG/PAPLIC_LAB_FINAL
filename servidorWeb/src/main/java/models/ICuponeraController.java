@@ -20,4 +20,6 @@ public interface ICuponeraController {
 	public DtCuponera seleccionarCuponera(String nombre) throws NoExisteCuponeraException;
 	
 	public Set<String> getNombreCuponerasSinRecibos();
+	
+	public Set<String> buscarCuponeras(String coincidencia);
 }

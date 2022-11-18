@@ -61,7 +61,8 @@ public class LaFabricaWS {
 		    }
 		    port = service.getWSUsuarioControllerPort();
 		}
-
+		//"http://"+prp.getProperty("hostIP")+":"+prp.getProperty("hostPort")+prp.getProperty("contentController_ServiceName"
+		//http://localhost:9129/entrenamosuy/usuarioController?wsdl
 		@Override
 		public void comprarCuponera(String cuponera,  String socio,  DtFechaHora fechaCompra)
 				throws UsuarioNoExisteException, CuponeraNoExisteException {
@@ -306,6 +307,13 @@ public class LaFabricaWS {
 				throw new ActividadDeportivaException(e.getMessage());
 			}
 		}
+
+		@Override
+		public Set<String> buscarActividades(String coincidencia) {
+			Set<String> x = new HashSet<>();
+			x.addAll(port.buscarActividades(coincidencia).getItem());
+			return null;
+		}
 		
 	}
 	public class DictadoClaseController implements IDictadoClaseController{
@@ -530,6 +538,13 @@ public class LaFabricaWS {
 			Set<String> x = new HashSet<>();
 			x.addAll(port.getNombreCuponerasSinRecibos().getItem());
 			return x;
+		}
+
+		@Override
+		public Set<String> buscarCuponeras(String coincidencia) {
+			Set<String> x = new HashSet<>();
+			x.addAll(port.buscarCuponeras(coincidencia).getItem());
+			return null;
 		}
 		
 	}

@@ -48,4 +48,6 @@ public interface IActividadDeportivaController {
 	public Set<String> obtenerCategorias();
 
 	public DtActividadDeportivaExtra buscarActDep(String nombreActDep) throws ActividadDeportivaException;
+	
+	public Set<String> buscarActividades(String coincidencia);
 }

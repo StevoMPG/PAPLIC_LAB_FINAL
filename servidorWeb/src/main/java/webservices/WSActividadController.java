@@ -33,8 +33,8 @@ public interface WSActividadController {
      * @param arg0
      * @return
      *     returns boolean
-     * @throws InstitucionException_Exception
      * @throws ActividadDeportivaException_Exception
+     * @throws InstitucionException_Exception
      */
     @WebMethod
     @WebResult(partName = "return")
@@ -80,64 +80,16 @@ public interface WSActividadController {
 
     /**
      * 
-     * @param arg2
-     * @param arg1
      * @param arg0
-     * @return
-     *     returns webservices.DtClaseWS
-     * @throws InstitucionException_Exception
-     * @throws ActividadDeportivaException_Exception
-     * @throws ClaseException_Exception
-     */
-    @WebMethod
-    @WebResult(partName = "return")
-    @Action(input = "http://webServices/WSActividadController/seleccionarClaseRequest", output = "http://webServices/WSActividadController/seleccionarClaseResponse", fault = {
-        @FaultAction(className = InstitucionException_Exception.class, value = "http://webServices/WSActividadController/seleccionarClase/Fault/InstitucionException"),
-        @FaultAction(className = ActividadDeportivaException_Exception.class, value = "http://webServices/WSActividadController/seleccionarClase/Fault/ActividadDeportivaException"),
-        @FaultAction(className = ClaseException_Exception.class, value = "http://webServices/WSActividadController/seleccionarClase/Fault/ClaseException")
-    })
-    public DtClaseWS seleccionarClase(
-        @WebParam(name = "arg0", partName = "arg0")
-        String arg0,
-        @WebParam(name = "arg1", partName = "arg1")
-        String arg1,
-        @WebParam(name = "arg2", partName = "arg2")
-        String arg2)
-        throws ActividadDeportivaException_Exception, ClaseException_Exception, InstitucionException_Exception
-    ;
-
-    /**
-     * 
      * @return
      *     returns net.java.dev.jaxb.array.StringArray
      */
     @WebMethod
     @WebResult(partName = "return")
-    @Action(input = "http://webServices/WSActividadController/obtenerSociosRequest", output = "http://webServices/WSActividadController/obtenerSociosResponse")
-    public StringArray obtenerSocios();
-
-    /**
-     * 
-     * @param arg1
-     * @param arg0
-     * @return
-     *     returns webservices.DtActividadWS
-     * @throws InstitucionException_Exception
-     * @throws ActividadDeportivaException_Exception
-     */
-    @WebMethod
-    @WebResult(partName = "return")
-    @Action(input = "http://webServices/WSActividadController/getActDepExtRequest", output = "http://webServices/WSActividadController/getActDepExtResponse", fault = {
-        @FaultAction(className = InstitucionException_Exception.class, value = "http://webServices/WSActividadController/getActDepExt/Fault/InstitucionException"),
-        @FaultAction(className = ActividadDeportivaException_Exception.class, value = "http://webServices/WSActividadController/getActDepExt/Fault/ActividadDeportivaException")
-    })
-    public DtActividadWS getActDepExt(
+    @Action(input = "http://webServices/WSActividadController/buscarActividadesRequest", output = "http://webServices/WSActividadController/buscarActividadesResponse")
+    public StringArray buscarActividades(
         @WebParam(name = "arg0", partName = "arg0")
-        String arg0,
-        @WebParam(name = "arg1", partName = "arg1")
-        String arg1)
-        throws ActividadDeportivaException_Exception, InstitucionException_Exception
-    ;
+        String arg0);
 
     /**
      * 
@@ -224,6 +176,67 @@ public interface WSActividadController {
         @WebParam(name = "arg1", partName = "arg1")
         String arg1)
         throws InstitucionException_Exception
+    ;
+
+    /**
+     * 
+     * @param arg2
+     * @param arg1
+     * @param arg0
+     * @return
+     *     returns webservices.DtClaseWS
+     * @throws ActividadDeportivaException_Exception
+     * @throws ClaseException_Exception
+     * @throws InstitucionException_Exception
+     */
+    @WebMethod
+    @WebResult(partName = "return")
+    @Action(input = "http://webServices/WSActividadController/seleccionarClaseRequest", output = "http://webServices/WSActividadController/seleccionarClaseResponse", fault = {
+        @FaultAction(className = InstitucionException_Exception.class, value = "http://webServices/WSActividadController/seleccionarClase/Fault/InstitucionException"),
+        @FaultAction(className = ActividadDeportivaException_Exception.class, value = "http://webServices/WSActividadController/seleccionarClase/Fault/ActividadDeportivaException"),
+        @FaultAction(className = ClaseException_Exception.class, value = "http://webServices/WSActividadController/seleccionarClase/Fault/ClaseException")
+    })
+    public DtClaseWS seleccionarClase(
+        @WebParam(name = "arg0", partName = "arg0")
+        String arg0,
+        @WebParam(name = "arg1", partName = "arg1")
+        String arg1,
+        @WebParam(name = "arg2", partName = "arg2")
+        String arg2)
+        throws ActividadDeportivaException_Exception, ClaseException_Exception, InstitucionException_Exception
+    ;
+
+    /**
+     * 
+     * @return
+     *     returns net.java.dev.jaxb.array.StringArray
+     */
+    @WebMethod
+    @WebResult(partName = "return")
+    @Action(input = "http://webServices/WSActividadController/obtenerSociosRequest", output = "http://webServices/WSActividadController/obtenerSociosResponse")
+    public StringArray obtenerSocios();
+
+    /**
+     * 
+     * @param arg1
+     * @param arg0
+     * @return
+     *     returns webservices.DtActividadWS
+     * @throws ActividadDeportivaException_Exception
+     * @throws InstitucionException_Exception
+     */
+    @WebMethod
+    @WebResult(partName = "return")
+    @Action(input = "http://webServices/WSActividadController/getActDepExtRequest", output = "http://webServices/WSActividadController/getActDepExtResponse", fault = {
+        @FaultAction(className = InstitucionException_Exception.class, value = "http://webServices/WSActividadController/getActDepExt/Fault/InstitucionException"),
+        @FaultAction(className = ActividadDeportivaException_Exception.class, value = "http://webServices/WSActividadController/getActDepExt/Fault/ActividadDeportivaException")
+    })
+    public DtActividadWS getActDepExt(
+        @WebParam(name = "arg0", partName = "arg0")
+        String arg0,
+        @WebParam(name = "arg1", partName = "arg1")
+        String arg1)
+        throws ActividadDeportivaException_Exception, InstitucionException_Exception
     ;
 
 }

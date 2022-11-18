@@ -58,5 +58,6 @@
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/streambuffer-2.1.0.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/woodstox-core-6.2.8.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/commons-io-2.11.0.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/json-simple-1.1.1.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

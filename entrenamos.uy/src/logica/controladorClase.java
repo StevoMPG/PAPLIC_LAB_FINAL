@@ -242,6 +242,8 @@ public class controladorClase implements IcontroladorClase {
 		return DataPersistencia.getInstance().getClase(nombreClase);
 	}
 	
+	
+	
 	@Override
 	public Set<String> sortearPremios(String ins, String actDep, String clase)
 			throws InstitucionException, ClaseException, ActividadDeportivaException {

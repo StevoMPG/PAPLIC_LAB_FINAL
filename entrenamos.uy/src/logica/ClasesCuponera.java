@@ -25,4 +25,9 @@ public class ClasesCuponera {
 	public void estafar() {
 		cupi.estafar(this);
 	}
+	
+	public ActividadDeportiva pepe() {
+		return acDEPS;
+	}
+
 }

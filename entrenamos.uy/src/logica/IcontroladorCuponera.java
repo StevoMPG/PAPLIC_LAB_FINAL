@@ -25,6 +25,8 @@ public interface IcontroladorCuponera {
 	public DtCuponera seleccionarCuponera(String n) throws NoExisteCuponeraException;
 	
 	public Set<String> getNombreCuponerasSinRecibos();
+	
+	public Set<String> buscarCuponeras(String coincidencia);
 }
 
 

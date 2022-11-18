@@ -50,6 +50,8 @@ public Set<String> obtenerInstituciones();
 	public DtActividadDeportivaExtra buscarActDep(String nombreActDep) throws ActividadDeportivaException;
 	
 	public void finalizarActividad(String actividadDeportiva);
+	
+	public Set<String> buscarActividades(String coincidencia);
 
 }
 

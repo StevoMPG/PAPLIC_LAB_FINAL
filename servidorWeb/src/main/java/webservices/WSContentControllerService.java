@@ -17,7 +17,6 @@ import jakarta.xml.ws.WebServiceFeature;
  * Generated source version: 2.2
  * 
  */
-
 @WebServiceClient(name = "WSContentControllerService", targetNamespace = "http://webServices/", wsdlLocation = "http://localhost:9129/entrenamosuy/contentController?wsdl")
 public class WSContentControllerService
     extends Service

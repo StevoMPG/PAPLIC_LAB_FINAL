@@ -16,8 +16,13 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <form class="d-flex me-5 pe-5 container-fluid" action="<%=request.getContextPath()%>/search?actividades=yes&cuponeras=yes" method="POST">
-            <input class="form-control me-2" type="search" id="campoTexto" name="campoTexto" placeholder="Actividades Deportivas,  Cuponeras" aria-label="Search">
-            <button type="submit" class="btn" style="border-color: white; color:white;">Buscar</button>
+            <div class="w-100">
+            <div class="input-group">
+            	<input class="form-control me-2" type="search" id="campoTexto" name="campoTexto" placeholder="Actividades Deportivas,  Cuponeras" aria-label="Search" autocomplete="off">
+            	<button type="submit" class="btn" style="border-color: white; color:white;">Buscar</button>
+            </div>
+            	<ul class="dropdown-menu" data-bs-auto-close="true" aria-labelledby="dropdownMenuReference" id="opciones"></ul>
+            </div> 
         </form>
         
         <% if (request.getSession().getAttribute("loggedUser")==null){ %>

@@ -12,3 +12,5 @@
     <script src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
     <script src="<%=request.getContextPath()%>/assets/scripts/main.js"></script>
     
+    <script src="<%=request.getContextPath()%>/assets/scripts/autocomplited.js"></script>
+    

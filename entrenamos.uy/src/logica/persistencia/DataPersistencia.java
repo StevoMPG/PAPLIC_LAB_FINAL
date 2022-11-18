@@ -856,6 +856,29 @@ public DtUsuarioExtra getUsuario(String nombreSocio) throws UsuarioNoExisteExcep
 	throw new UsuarioNoExisteException("El usuario "+nombreSocio+" no se encuentra presente en el sistema.");
 }
 
+
+///////// Para AJAX ///////////
+
+@SuppressWarnings("unchecked")
+public Set<String> buscarCuponeras(String coincidencia){
+	EntityManager em = emFabrica.createEntityManager();
+	String query = "SELECT NOMBRE_CUPONERA FROM CUPONERAS WHERE NOMBRE_CUPONERA LIKE '%"+coincidencia+"%'";
+	@SuppressWarnings("unchecked")
+	List<String> r = (List<String>) em.createNativeQuery(query).getResultList();
+	return (Set<String>) r;
+	
+}
+
+public Set<String> buscarActividades(String coincidencia){
+	EntityManager em = emFabrica.createEntityManager();
+	String query = "SELECT NOMBRE_ACTIVIDAD FROM ACTIVIDADES_DEPORTIVAS WHERE NOMBRE_ACTIVIDAD LIKE '%"+coincidencia+"%'";
+	@SuppressWarnings("unchecked")
+	List<String> r = (List<String>) em.createNativeQuery(query).getResultList();
+	return (Set<String>) r;
+	
+}
+
+
 }
 
 

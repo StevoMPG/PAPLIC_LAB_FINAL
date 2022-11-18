@@ -4,11 +4,14 @@ package main;
 
 import java.awt.EventQueue;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Properties;
 import java.util.Set;
@@ -91,19 +94,53 @@ public class Main {
     	}
     }
 
+//    public static void cargarConfig() {
+//    	String result = "";
+//    	InputStream inputStream;
+//    	
+//    	try {
+//    		Properties prp = new Properties();
+//    		String prpFileName = "entrenamosuy.properties";
+//    		
+//    		inputStream = getClass().getClassLoader().getSystemResourceAsStream(prpFileName);
+//    		
+//    		
+//    		 if (inputStream != null) {
+//                 prp.load(inputStream);
+//             } else {
+//                 throw new FileNotFoundException("property file '" + prpFileName + "' not found in the classpath");
+//             }
+//    		
+//    		 Date time = new Date(System.currentTimeMillis());
+//             // get the property value and print it out
+//             String user = prp.getProperty("user");
+//             String company1 = prp.getProperty("company1");
+//             String company2 = prp.getProperty("company2");
+//             String company3 = prp.getProperty("company3");
+//             result = "Company List = " + company1 + ", " + company2 + ", " + company3;
+//             System.out.println(result + "\nProgram Ran on " + time + " by user=" + user);
+//         } catch (Exception e) {
+//             System.out.println("Exception: " + e);
+//         } finally {
+//             inputStream.close();
+//         }
+//         return result;
+//     }
+    
+    
     public static void cargarConfig() {
     	String home = System.getProperty("user.home");
-    	File srvCentralprp = new File(home + "/.entrenamosUy");
+    	File srvCentralprp = new File(home + "/entrenamosUy");
     	if(srvCentralprp.mkdir()) {
     		System.out.println("Config folder was not found... creating default config folder at "+home);
         	try(InputStream s = Main.class.getClassLoader().getResourceAsStream("META-INF/entrenamosuy.properties")){
-        		Files.copy(s, (new File(home + "/.entrenamosUy/servidorCentral.properties").toPath()));
+        		Files.copy(s, (new File(home + "/entrenamosUy/servidorCentral.properties").toPath()));
         	} catch (IOException e) {
     			e.printStackTrace();
     		}
     	}
     	else {
-	    	File prp = new File(home+"/.entrenamosUy/servidorCentral.properties");
+	    	File prp = new File(home+"/entrenamosUy/servidorCentral.properties");
 	    	if(!(prp.exists())) {
 	    		System.out.println("Config file was not found... generating default config at "+prp);
 	        	try(InputStream s = Main.class.getClassLoader().getResourceAsStream("META-INF/entrenamosuy.properties")){
@@ -113,7 +150,7 @@ public class Main {
 	    		}
 	    	}
     	}
-    	File prp = new File(home+"/.entrenamosUy/servidorCentral.properties");
+    	File prp = new File(home+"/entrenamosUy/servidorCentral.properties");
     	config = new Properties();
     	try(InputStream s = Files.newInputStream(prp.toPath())){
     		config.load(s);
@@ -128,7 +165,7 @@ public class Main {
 				if(config.getProperty((String) x.getKey())==null)
 					config.setProperty((String) x.getKey(), def.getProperty((String) x.getKey()));
 			}
-			config.store(new FileOutputStream(home+"/.entrenamosUy/servidorCentral.properties"), "");
+			config.store(new FileOutputStream(home+"/entrenamosUy/servidorCentral.properties"), "");
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}   

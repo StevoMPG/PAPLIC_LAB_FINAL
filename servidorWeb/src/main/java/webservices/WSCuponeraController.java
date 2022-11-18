@@ -29,13 +29,16 @@ public interface WSCuponeraController {
 
     /**
      * 
+     * @param arg0
      * @return
      *     returns net.java.dev.jaxb.array.StringArray
      */
     @WebMethod
     @WebResult(partName = "return")
-    @Action(input = "http://webServices/WSCuponeraController/getNombreCuponerasRequest", output = "http://webServices/WSCuponeraController/getNombreCuponerasResponse")
-    public StringArray getNombreCuponeras();
+    @Action(input = "http://webServices/WSCuponeraController/buscarCuponerasRequest", output = "http://webServices/WSCuponeraController/buscarCuponerasResponse")
+    public StringArray buscarCuponeras(
+        @WebParam(name = "arg0", partName = "arg0")
+        String arg0);
 
     /**
      * 
@@ -64,5 +67,15 @@ public interface WSCuponeraController {
     @WebResult(partName = "return")
     @Action(input = "http://webServices/WSCuponeraController/getNombreCuponerasSinRecibosRequest", output = "http://webServices/WSCuponeraController/getNombreCuponerasSinRecibosResponse")
     public StringArray getNombreCuponerasSinRecibos();
+
+    /**
+     * 
+     * @return
+     *     returns net.java.dev.jaxb.array.StringArray
+     */
+    @WebMethod
+    @WebResult(partName = "return")
+    @Action(input = "http://webServices/WSCuponeraController/getNombreCuponerasRequest", output = "http://webServices/WSCuponeraController/getNombreCuponerasResponse")
+    public StringArray getNombreCuponeras();
 
 }

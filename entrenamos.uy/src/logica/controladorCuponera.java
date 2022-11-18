@@ -12,6 +12,8 @@ import excepciones.FechaInvalidaException;
 import excepciones.InstitucionException;
 import excepciones.NoExisteCuponeraException;
 
+import logica.persistencia.DataPersistencia;
+
 public class controladorCuponera implements IcontroladorCuponera {
 
 	private static controladorCuponera instance = null;
@@ -74,5 +76,13 @@ public class controladorCuponera implements IcontroladorCuponera {
 		}
 		return res;
 	}
+	
+
+	public Set<String> buscarCuponeras(String coincidencia) {
+			return (DataPersistencia.getInstance().buscarCuponeras(coincidencia));
+		}
+
+	
+	
 }
 

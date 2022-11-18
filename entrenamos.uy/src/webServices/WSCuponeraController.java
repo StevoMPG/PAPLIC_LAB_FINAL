@@ -1,6 +1,7 @@
 package webServices;
 
 import java.util.Properties;
+import java.util.Set;
 
 import jakarta.jws.WebMethod;
 import jakarta.jws.WebService;
@@ -57,5 +58,9 @@ public class WSCuponeraController {
 	
 	public String [] getNombreCuponerasSinRecibos() {
 		return ICC.getNombreCuponerasSinRecibos().toArray(new String[0]);
+	}
+	
+	public String [] buscarCuponeras(String coincidencia) {
+		return ICC.buscarCuponeras(coincidencia).toArray(new String[0]);
 	}
 }

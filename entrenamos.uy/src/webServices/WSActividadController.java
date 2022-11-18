@@ -1,6 +1,7 @@
 package webServices;
 
 import java.util.Properties;
+import java.util.Set;
 
 import jakarta.jws.WebMethod;
 import jakarta.jws.WebService;
@@ -101,5 +102,9 @@ public class WSActividadController {
 
 	public DtActividadWS buscarActDep(String nombreActDep) throws ActividadDeportivaException{
 		return new DtActividadWS(IADC.buscarActDep(nombreActDep));
+	}
+	
+	public String[] buscarActividades(String coincidencia){
+		return IADC.buscarActividades(coincidencia).toArray(new String[0]);
 	}
 }

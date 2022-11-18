@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.Vector;
 
 import excepciones.ActividadDeportivaException;
 import excepciones.CategoriaException;
@@ -19,6 +20,8 @@ import datatypes.DtCategoria;
 import datatypes.DtClaseExtra;
 import datatypes.DtInstitucion;
 import datatypes.tipoEstado;
+
+import logica.persistencia.DataPersistencia;
 
 
 public class controladorActividadDeportiva  implements IcontroladorActividadDeportiva {
@@ -239,4 +242,10 @@ public class controladorActividadDeportiva  implements IcontroladorActividadDepo
 			}
 		}
 	}
+	
+	public Set<String> buscarActividades(String coincidencia){
+		return (DataPersistencia.getInstance().buscarActividades(coincidencia));
+	}
+
+	
 }

@@ -151,6 +151,66 @@ public interface WSUsuarioController {
 
     /**
      * 
+     * @param arg1
+     * @param arg0
+     * @return
+     *     returns boolean
+     */
+    @WebMethod
+    @WebResult(partName = "return")
+    @Action(input = "http://webServices/WSUsuarioController/verificarIdentidadEmailRequest", output = "http://webServices/WSUsuarioController/verificarIdentidadEmailResponse")
+    public boolean verificarIdentidadEmail(
+        @WebParam(name = "arg0", partName = "arg0")
+        String arg0,
+        @WebParam(name = "arg1", partName = "arg1")
+        String arg1);
+
+    /**
+     * 
+     * @param arg1
+     * @param arg0
+     * @return
+     *     returns boolean
+     */
+    @WebMethod
+    @WebResult(partName = "return")
+    @Action(input = "http://webServices/WSUsuarioController/verificarIdentidadNicknameRequest", output = "http://webServices/WSUsuarioController/verificarIdentidadNicknameResponse")
+    public boolean verificarIdentidadNickname(
+        @WebParam(name = "arg0", partName = "arg0")
+        String arg0,
+        @WebParam(name = "arg1", partName = "arg1")
+        String arg1);
+
+    /**
+     * 
+     * @param arg1
+     * @param arg0
+     * @throws UsuarioNoExisteException_Exception
+     */
+    @WebMethod
+    @Action(input = "http://webServices/WSUsuarioController/dejarDeSeguirRequest", output = "http://webServices/WSUsuarioController/dejarDeSeguirResponse", fault = {
+        @FaultAction(className = UsuarioNoExisteException_Exception.class, value = "http://webServices/WSUsuarioController/dejarDeSeguir/Fault/UsuarioNoExisteException")
+    })
+    public void dejarDeSeguir(
+        @WebParam(name = "arg0", partName = "arg0")
+        String arg0,
+        @WebParam(name = "arg1", partName = "arg1")
+        String arg1)
+        throws UsuarioNoExisteException_Exception
+    ;
+
+    /**
+     * 
+     * @return
+     *     returns webservices.DtCapsula
+     */
+    @WebMethod
+    @WebResult(partName = "return")
+    @Action(input = "http://webServices/WSUsuarioController/obtenerUsuariosRequest", output = "http://webServices/WSUsuarioController/obtenerUsuariosResponse")
+    public DtCapsula obtenerUsuarios();
+
+    /**
+     * 
      * @param arg0
      * @return
      *     returns webservices.DtUsuarioWS
@@ -212,66 +272,6 @@ public interface WSUsuarioController {
     @WebResult(partName = "return")
     @Action(input = "http://webServices/WSUsuarioController/obtenerInstitucionesRequest", output = "http://webServices/WSUsuarioController/obtenerInstitucionesResponse")
     public DtCapsula obtenerInstituciones();
-
-    /**
-     * 
-     * @return
-     *     returns webservices.DtCapsula
-     */
-    @WebMethod
-    @WebResult(partName = "return")
-    @Action(input = "http://webServices/WSUsuarioController/obtenerUsuariosRequest", output = "http://webServices/WSUsuarioController/obtenerUsuariosResponse")
-    public DtCapsula obtenerUsuarios();
-
-    /**
-     * 
-     * @param arg1
-     * @param arg0
-     * @return
-     *     returns boolean
-     */
-    @WebMethod
-    @WebResult(partName = "return")
-    @Action(input = "http://webServices/WSUsuarioController/verificarIdentidadEmailRequest", output = "http://webServices/WSUsuarioController/verificarIdentidadEmailResponse")
-    public boolean verificarIdentidadEmail(
-        @WebParam(name = "arg0", partName = "arg0")
-        String arg0,
-        @WebParam(name = "arg1", partName = "arg1")
-        String arg1);
-
-    /**
-     * 
-     * @param arg1
-     * @param arg0
-     * @return
-     *     returns boolean
-     */
-    @WebMethod
-    @WebResult(partName = "return")
-    @Action(input = "http://webServices/WSUsuarioController/verificarIdentidadNicknameRequest", output = "http://webServices/WSUsuarioController/verificarIdentidadNicknameResponse")
-    public boolean verificarIdentidadNickname(
-        @WebParam(name = "arg0", partName = "arg0")
-        String arg0,
-        @WebParam(name = "arg1", partName = "arg1")
-        String arg1);
-
-    /**
-     * 
-     * @param arg1
-     * @param arg0
-     * @throws UsuarioNoExisteException_Exception
-     */
-    @WebMethod
-    @Action(input = "http://webServices/WSUsuarioController/dejarDeSeguirRequest", output = "http://webServices/WSUsuarioController/dejarDeSeguirResponse", fault = {
-        @FaultAction(className = UsuarioNoExisteException_Exception.class, value = "http://webServices/WSUsuarioController/dejarDeSeguir/Fault/UsuarioNoExisteException")
-    })
-    public void dejarDeSeguir(
-        @WebParam(name = "arg0", partName = "arg0")
-        String arg0,
-        @WebParam(name = "arg1", partName = "arg1")
-        String arg1)
-        throws UsuarioNoExisteException_Exception
-    ;
 
     /**
      * 
