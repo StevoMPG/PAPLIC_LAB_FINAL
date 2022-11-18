@@ -30,7 +30,7 @@ public class ConfigListener implements ServletContextListener {
     public static void cargarConfig(ServletContextEvent sce) {
     	ServletContext ctx = sce.getServletContext();
     	String home = System.getProperty("user.home");
-    	File cfgfolder = new File(home + "/.entrenamosUy");
+    	File cfgfolder = new File(home + "/entrenamosUy");
     	Properties config = cfg;
     	config.setProperty("usuarioControllerURL", ctx.getInitParameter("usuarioControllerURL"));
     	config.setProperty("actividadControllerURL", ctx.getInitParameter("actividadControllerURL"));
@@ -43,17 +43,17 @@ public class ConfigListener implements ServletContextListener {
     	if(cfgfolder.mkdir()) {
     		System.out.println("Config folder was not found... creating default config folder at "+home);
         	try {
-				config.store(new FileOutputStream(home+"/.entrenamosUy/servidorWeb.properties"), null);
+				config.store(new FileOutputStream(home+"/entrenamosUy/servidorWeb.properties"), null);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
     	}
     	else {
-	    	File prp = new File(home+"/.entrenamosUy/servidorWeb.properties");
+	    	File prp = new File(home+"/entrenamosUy/servidorWeb.properties");
 	    	if(!(prp.exists())) {
 	    		System.out.println("Config file was not found... generating default config at "+prp);
 	    		try {
-					config.store(new FileOutputStream(home+"/.entrenamosUy/servidorWeb.properties"), null);
+					config.store(new FileOutputStream(home+"/entrenamosUy/servidorWeb.properties"), null);
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -61,7 +61,7 @@ public class ConfigListener implements ServletContextListener {
     	}
     	config = new Properties();
     	try {
-    		config.load(new FileInputStream(home+"/.entrenamosUy/servidorWeb.properties"));
+    		config.load(new FileInputStream(home+"/entrenamosUy/servidorWeb.properties"));
     		for(Entry<Object, Object> x: config.entrySet()) {
     			if(x.getValue()==null)
     				config.setProperty((String) x.getKey(), ctx.getInitParameter((String) x.getKey()));
