@@ -190,6 +190,7 @@ public class LaFabricaWS {
 		
 		public ActividadDeportivaController() {
 		    try {
+		    	//service = new webservices.WSActividadControllerService(new URL (ConfigListener.cfg.getProperty("actividadControllerURL")));
 		    	service = new webservices.WSActividadControllerService(new URL ("http://localhost:9129/entrenamosuy/actividadController?wsdl"));
 		    } catch (MalformedURLException ex) {
 		        throw new RuntimeException(ex);
@@ -561,7 +562,7 @@ public class LaFabricaWS {
 			}
 			private synchronized void pushReports(LogEntryWS entry, WSContentController port) {
 				pool.getItem().add(entry);
-				if(pool.getItem().size()>=Integer.parseInt("100")) {
+				if(pool.getItem().size()>=Integer.parseInt("10")) {
 					port.sendReports(pool);
 					pool.getItem().clear();
 				}
