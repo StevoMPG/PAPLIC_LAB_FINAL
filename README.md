@@ -7,9 +7,8 @@ Proyecto del curso, realizada con los compañeros:
  *      Andres Romano - andres.romano@utec.edu.uy 
  *      German Torres - german.torres@utec.edu.uy 
 
-Este proyecto se implementó como un sistema distribuido de mediano porte utilizando tecnologías Java. Ambos 
-  sistemas 'servidor.jar' y 'web.war', que corresponden al servidorCentral (también workstation) y al servidorWeb están listos para ejecutarse.
-Este proyecto tuvo como finalidad integrar e incorporar conocimientos avanzados para la construcción de sistemas de software de mediano y gran porte, como también aplicar conceptos de la orientación a objetos y diversas tecnologías, de las cuales se destacan:
+Este proyecto se implementó como un sistema distribuido. Existe un servidor central el cual almacena todos los datos de la plataforma y un servidor web el cual despliega el servicio desde una aplicación web. La comunicación entre el servidor central y el servidor web es a través de web services (SOAP). Adicionalmente, el servidor central contiene una interfaz gráfica hecha en Swing para realizar actividades de administración.
+También tiene como idea el aplicar conceptos de la orientación a objetos y diversas tecnologías, de las cuales se destacan:
  *      Java (+ Swing, WebServices).
  *      HTML (en conjunto con JSP y CSS).
  *      javascript y AJAX.
